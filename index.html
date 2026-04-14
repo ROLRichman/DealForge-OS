@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DealForge OS</title>
+<title>DealForge OS - Closing Mode</title>
+
 <link rel="stylesheet" href="styles.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
 </head>
 
@@ -14,26 +16,23 @@
 <div class="app">
 
 <h1>🏡 DealForge OS</h1>
-
-<p class="sub">
-Investor-grade deal analysis. Enter numbers → get offers instantly.
-</p>
+<p class="sub">Analyze → Package → Send → Close</p>
 
 <!-- INPUTS -->
 <div class="card">
 
-<input type="number" id="arv" placeholder="ARV (After Repair Value)">
+<input type="number" id="arv" placeholder="ARV">
 <input type="number" id="price" placeholder="Purchase Price">
 
 <select id="rehab">
-<option value="25000">Light Rehab ($25K)</option>
-<option value="50000">Medium Rehab ($50K)</option>
-<option value="100000">Heavy Rehab ($100K)</option>
+<option value="25000">Light ($25K)</option>
+<option value="50000">Medium ($50K)</option>
+<option value="100000">Heavy ($100K)</option>
 <option value="150000">Full Gut ($150K)</option>
 </select>
 
-<input type="number" id="fee" value="15000" placeholder="Assignment Fee">
-<input type="number" id="months" value="6" placeholder="Holding Months">
+<input type="number" id="fee" value="15000">
+<input type="number" id="months" value="6">
 
 <button onclick="analyzeDeal()">Analyze Deal</button>
 
@@ -42,30 +41,35 @@ Investor-grade deal analysis. Enter numbers → get offers instantly.
 <!-- RESULTS -->
 <div class="card" id="results"></div>
 
-<!-- ACTIONS -->
-  <div class="card actions">
+<!-- CONTACT PRELOAD -->
+<div class="card">
+<h3>📇 Deal Contacts</h3>
 
-<button onclick="sendEmail()">📧 Send to Email</button>
-<button onclick="downloadPDF()">📊 Download Report</button>
-<button onclick="generateContract()">🧾 Generate Contract</button>
-
-  </div>
-<div class="card actions">
-
-<button onclick="sendEmail()">📧 Send to Email</button>
-<button onclick="downloadPDF()">📊 Download Report</button>
+<input id="contractor" value="RJ Construction">
+<input id="lender" value="Cogo Capital">
+<input id="email" value="richman@rootoflyfe.com">
 
 </div>
-  
 
-<!-- CONTRACT HUB -->
+<!-- SIGNATURE -->
 <div class="card">
+<h3>✍️ Signature</h3>
+<canvas id="sigPad"></canvas>
+<button onclick="clearSig()">Clear Signature</button>
+</div>
 
-<h3>📄 Contracts</h3>
+<!-- ACTIONS -->
+<div class="card actions">
 
-<a href="docs/purchase-agreement.pdf" download><button>Purchase Agreement</button></a>
-<a href="docs/assignment-contract.pdf" download><button>Assignment Contract</button></a>
-<a href="docs/realtor-offer.pdf" download><button>Realtor Offer</button></a>
+<h3>⚡ Execute</h3>
+
+<button onclick="downloadPDF()">📊 Deal Report</button>
+
+<button onclick="fillPDF('purchase')">🧾 Purchase PDF</button>
+<button onclick="fillPDF('assignment')">📑 Assignment PDF</button>
+<button onclick="fillPDF('realtor')">🏡 Realtor PDF</button>
+
+<button onclick="sendDeal()">📧 Send Deal</button>
 
 </div>
 
