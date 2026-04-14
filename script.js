@@ -87,6 +87,34 @@ lines.forEach(line => {
 doc.save("Deal-Report.pdf");
 }
 
+
+
+function generateContract() {
+
+let price = document.getElementById("price").value;
+let arv = document.getElementById("arv").value;
+
+let contract = `
+PURCHASE AGREEMENT
+
+Buyer: Root Of Lyfe Holdings LLC
+Property Price: $${price}
+Estimated ARV: $${arv}
+
+This agreement is assignable.
+
+`;
+
+let blob = new Blob([contract], { type: "text/plain" });
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+link.download = "Contract.txt";
+link.click();
+}
+
+
+
 let blob = new Blob([content], { type: "text/plain" });
 let link = document.createElement("a");
 
