@@ -26,7 +26,7 @@ if (profit > 50000) {
     rating = "🔥 Strong Deal";
     ratingClass = "good";
 } else if (profit > 20000) {
-    rating = "⚠️ متوسط Deal";
+    rating = "⚠️ Solid Deal";
     ratingClass = "warn";
 } else {
     rating = "❌ Bad Deal";
@@ -52,74 +52,31 @@ Rating: ${rating}
 document.getElementById("results").innerHTML = `
 <h3>📊 Results</h3>
 
-<p><b>MAO:</b> $${mao.toFixed(0)}</p>
-
-<p>💰 Cash: $${cash.toFixed(0)}</p>
-<p>🏦 Seller: $${seller.toFixed(0)}</p>
-<p>🔁 Refi: $${refi.toFixed(0)}</p>
+<div class="result-line"><span>MAO</span><b>$${mao.toFixed(0)}</b></div>
+<div class="result-line"><span>Cash</span><b>$${cash.toFixed(0)}</b></div>
+<div class="result-line"><span>Seller</span><b>$${seller.toFixed(0)}</b></div>
+<div class="result-line"><span>Refi</span><b>$${refi.toFixed(0)}</b></div>
 
 <hr>
 
-<p><b>Profit:</b> $${profit.toFixed(0)}</p>
+<div class="result-line"><span>Profit</span><b>$${profit.toFixed(0)}</b></div>
 <p class="${ratingClass}"><b>${rating}</b></p>
 `;
-
 }
 
+// 📧 EMAIL
+function sendEmail() {
+let subject = "Deal Analysis";
+let body = encodeURIComponent(resultsText);
+
+window.location.href = `mailto:richman@rootoflyfe.com?subject=${subject}&body=${body}`;
+}
+
+// 📊 PDF EXPORT
 function downloadPDF() {
 
 const { jsPDF } = window.jspdf;
 const doc = new jsPDF();
 
 doc.setFontSize(16);
-doc.text("DealForge OS - Deal Report", 20, 20);
-
-doc.setFontSize(12);
-
-let lines = resultsText.split("\n");
-let y = 40;
-
-lines.forEach(line => {
-    doc.text(line, 20, y);
-    y += 8;
-});
-
-doc.save("Deal-Report.pdf");
-}
-
-
-
-function generateContract() {
-
-let price = document.getElementById("price").value;
-let arv = document.getElementById("arv").value;
-
-let contract = `
-PURCHASE AGREEMENT
-
-Buyer: Root Of Lyfe Holdings LLC
-Property Price: $${price}
-Estimated ARV: $${arv}
-
-This agreement is assignable.
-
-`;
-
-let blob = new Blob([contract], { type: "text/plain" });
-let link = document.createElement("a");
-
-link.href = URL.createObjectURL(blob);
-link.download = "Contract.txt";
-link.click();
-}
-
-
-
-let blob = new Blob([content], { type: "text/plain" });
-let link = document.createElement("a");
-
-link.href = URL.createObjectURL(blob);
-link.download = "Deal-Report.txt";
-link.click();
-
-}
+doc.text("DealForge OS - Deal Report", 20,
