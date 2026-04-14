@@ -1,44 +1,44 @@
-body {
-    margin:0;
-    font-family: Arial;
-    background:#020617;
-    color:white;
+body{
+margin:0;
+font-family:Arial;
+background:#020617;
+color:white;
 }
 
-.app {
-    max-width:420px;
-    margin:auto;
-    padding:15px;
+.app{
+max-width:420px;
+margin:auto;
+padding:15px;
 }
 
-.card {
-    background:#1e293b;
-    padding:15px;
-    border-radius:12px;
-    margin-bottom:12px;
+.card{
+background:#1e293b;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
 }
 
-input {
-    width:100%;
-    padding:12px;
-    margin-top:8px;
-    border-radius:8px;
-    border:none;
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+border-radius:8px;
+border:none;
 }
 
-button {
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border-radius:10px;
-    border:none;
-    background:#22c55e;
-    font-weight:bold;
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:none;
+background:#22c55e;
+font-weight:bold;
 }
 
-#sigPad {
-    width:100%;
-    height:150px;
-    background:white;
-    touch-action:none;
+canvas{
+width:100%;
+height:150px;
+background:white;
+touch-action:none;
 }
