@@ -1,6 +1,7 @@
 let deal = {};
+let inspectionTotal = 0;
 
-// DEAL ENGINE
+// DEAL
 function runDeal(){
 
 let arv = +val("arv");
@@ -10,44 +11,47 @@ let cash = arv * 0.50;
 let seller = arv * 0.65;
 let finance = arv * 0.75;
 
+let overage = arv - price;
+
 deal = {arv, price, cash, seller, finance};
 
 id("offers").innerHTML = `
 Cash: $${cash}<br>
-Seller Carry: $${seller}<br>
-Seller Finance: $${finance}
+Seller: $${seller}<br>
+Finance: $${finance}
+`;
+
+id("overage").innerHTML = `
+Overage: $${overage} ${overage > 50000 ? "🔥 IT'S A DEAL" : ""}
 `;
 
 }
 
-// REPAIRS
-function calcRepairs(){
-let r = val("repairs");
-id("repairOut").innerHTML = "Rehab: $" + r;
+// QUICK REPAIR
+function calcQuick(){
+let total =
+(+val("roof")||0)+
+(+val("floor")||0)+
+(+val("electrical")||0)+
+(+val("plumbing")||0);
+
+id("quickOut").innerHTML = "Total: $" + total;
 }
 
-// PDF EXPORT (WITH SIGNATURE)
-function downloadPDF(){
+// INSPECTION
+function addInspection(){
 
-const { jsPDF } = window.jspdf;
-const doc = new jsPDF();
+let name = id("inspection").options[id("inspection").selectedIndex].text;
+let cost = +val("inspectCost");
 
-doc.text("Deal Report", 20,20);
+inspectionTotal += cost;
 
-doc.text(`Address: ${val("address")}`,20,40);
-doc.text(`ARV: ${deal.arv}`,20,50);
+id("inspectionList").innerHTML += `${name}: $${cost}<br>`;
+id("inspectionTotal").innerHTML = "Total: $" + inspectionTotal;
 
-doc.text(`Cash: ${deal.cash}`,20,70);
-doc.text(`Seller: ${deal.seller}`,20,80);
-
-let img = canvas.toDataURL();
-
-doc.addImage(img, "PNG", 20,100,100,40);
-
-doc.save("Deal.pdf");
 }
 
-// CONTRACT
+// CONTRACT (FULL CLAUSES)
 function generateContract(){
 
 let text = `
@@ -56,27 +60,59 @@ PURCHASE AGREEMENT
 Buyer: Root Of Lyfe Holdings LLC
 Address: ${val("address")}
 
-Offer: $${deal.cash}
+Offer Price: $${deal.cash}
 
-Assignable Contract.
+ASSIGNMENT:
+Buyer may assign this contract.
+
+INSPECTION:
+Buyer has 10 day inspection period.
+
+EXIT CLAUSE:
+Buyer may cancel during inspection.
+
+MARKETING:
+Buyer may market property.
+
+DOUBLE CLOSE:
+Buyer may close directly or assign.
+
 `;
 
 download(text,"contract.txt");
 }
 
-// SEND
-function sendOffer(){
+// PDF
+function downloadPDF(){
 
-let msg = `
-Deal: ${val("address")}
-Cash: ${deal.cash}
-Seller: ${deal.seller}
-`;
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
 
-window.open(`mailto:richman@rootoflyfe.com?subject=Deal&body=${encodeURIComponent(msg)}`);
+doc.text("Deal Report",20,20);
+doc.text(`Address: ${val("address")}`,20,30);
+
+doc.text(`Cash: ${deal.cash}`,20,50);
+
+let img = canvas.toDataURL();
+doc.addImage(img,"PNG",20,100,100,40);
+
+doc.save("deal.pdf");
 }
 
-// SIGNATURE (SMOOTH LINE)
+// SEND
+function sendOffer(){
+window.open(`mailto:richman@rootoflyfe.com`);
+}
+
+// SEARCH
+function openZillow(){
+window.open("https://www.zillow.com");
+}
+function openRedfin(){
+window.open("https://www.redfin.com");
+}
+
+// SIGNATURE FIXED
 let canvas = document.getElementById("sigPad");
 let ctx = canvas.getContext("2d");
 
@@ -94,7 +130,7 @@ let rect=canvas.getBoundingClientRect();
 let x=e.touches[0].clientX-rect.left;
 let y=e.touches[0].clientY-rect.top;
 
-ctx.lineWidth=2;
+ctx.lineWidth=3;
 ctx.lineCap="round";
 
 ctx.lineTo(x,y);
@@ -117,4 +153,4 @@ let a=document.createElement("a");
 a.href=URL.createObjectURL(blob);
 a.download=name;
 a.click();
-}
+            }
