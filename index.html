@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DealForge OS - Closing Machine</title>
+<title>DealForge OS - Closing System</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="styles.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
 </head>
 
@@ -18,82 +17,42 @@
 <div class="app">
 
 <h1>🏡 DealForge OS</h1>
-<p class="sub">Analyze → Package → Send → Close</p>
+<p class="sub">Analyze → Offer → Contract → Close</p>
 
-<!-- PROPERTY ANALYZER -->
 <div class="card">
-<h2>Property Analyzer</h2>
 
 <input id="address" placeholder="Property Address">
-<button onclick="openZillow()">Check Zillow</button>
+<input id="arv" placeholder="ARV">
+<input id="price" placeholder="Purchase Price">
 
-<input id="arv" placeholder="ARV (Example: 300000)">
-<input id="price" placeholder="Purchase Price (Example: 130000)">
+<input id="months" value="6" placeholder="Months Holding">
 
-<select id="rehab">
-<option value="25000">Light Rehab ($25K)</option>
-<option value="50000">Medium Rehab ($50K)</option>
-<option value="100000">Heavy Rehab ($100K)</option>
-<option value="150000">Full Gut ($150K)</option>
-</select>
-
-<input id="fee" value="15000" placeholder="Assignment Fee">
-<input id="months" value="6" placeholder="Holding Months">
-
-<button onclick="analyzeDeal()">Analyze Deal</button>
-
-<p class="hint">💡 Example: ARV 300K, Buy 130K → Strong flip zone</p>
+<button onclick="runDeal()">Analyze Deal</button>
 
 <div id="results"></div>
+
 </div>
 
-<!-- REPAIRS -->
+<!-- 3 TIER OFFERS -->
 <div class="card">
-<h2>Repair Estimator</h2>
+<h2>💰 3-Tier Offers</h2>
 
-<input id="roof" value="10000" placeholder="Roof">
-<input id="hvac" value="10000" placeholder="HVAC">
-<input id="paint" value="8000" placeholder="Paint">
-<input id="flooring" value="12000" placeholder="Flooring">
-<input id="plumbing" value="15000" placeholder="Plumbing">
-<input id="other" value="5000" placeholder="Other">
-
-<button onclick="calcRepairs()">Calculate Repairs</button>
-
-<div id="repairsOut"></div>
-</div>
-
-<!-- CONTACTS -->
-<div class="card">
-<h2>📇 Deal Contacts</h2>
-
-<input id="contractor" value="RJ Construction">
-<input id="lender" value="Cogo Capital">
-<input id="email" value="richman@rootoflyfe.com">
+<div id="offers"></div>
 
 </div>
 
 <!-- SIGNATURE -->
 <div class="card">
-<h2>✍️ Signature</h2>
-
+<h2>✍️ Sign Deal</h2>
 <canvas id="sigPad"></canvas>
-
-<button onclick="clearSig()">Clear Signature</button>
+<button onclick="clearSig()">Clear</button>
 </div>
 
 <!-- ACTIONS -->
-<div class="card actions">
+<div class="card">
 
-<h2>⚡ Execute Deal</h2>
-
-<button onclick="downloadPDF()">📊 Deal Report</button>
-
-<button onclick="fillPDF('purchase')">🧾 Purchase Contract</button>
-<button onclick="fillPDF('assignment')">📑 Assignment Contract</button>
-<button onclick="fillPDF('realtor')">🏡 Realtor Offer</button>
-
-<button onclick="sendDeal()">📧 Send Deal</button>
+<button onclick="generateContract()">🧾 Generate Full Contract</button>
+<button onclick="sendOffer()">📤 Send Offer (SendFuse)</button>
 
 </div>
 
