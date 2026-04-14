@@ -1,15 +1,60 @@
-/* 
-DealForge OS Styling
-Purpose: Clean mobile-friendly UI for fast deal input
-*/
-
 body {
     font-family: Arial;
-    background: #020617;
+    background: linear-gradient(135deg,#020617,#0f172a);
     color: white;
+    margin: 0;
 }
 
-.container {
-    max-width: 500px;
+.app {
+    max-width: 420px;
     margin: auto;
+    padding: 20px;
 }
+
+h1 {
+    text-align: center;
+}
+
+.sub {
+    text-align: center;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.card {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    background: #22c55e;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.actions button {
+    background: #3b82f6;
+}
+
+.good { color: #22c55e; }
+.warn { color: orange; }
+.bad { color: red; }
