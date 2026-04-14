@@ -1,149 +1,65 @@
-<!--
-DealForge OS - Main Deal Calculator
-Purpose: Analyze deals quickly and generate offer strategies
-Used for: Wholesale, Fix & Flip, Funding Preparation
--->
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RO’Lyfe Deal Machine V2</title>
-
-<style>
-body {
-    font-family: Arial;
-    background: linear-gradient(135deg,#020617,#0f172a);
-    color: white;
-    padding: 20px;
-}
-.container {
-    max-width: 500px;
-    margin: auto;
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 12px;
-}
-input, select, button {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 6px;
-    border: none;
-}
-button {
-    background: #22c55e;
-    font-weight: bold;
-    cursor: pointer;
-}
-.email-btn {
-    background: #3b82f6;
-}
-.result {
-    margin-top: 15px;
-    background: #020617;
-    padding: 15px;
-    border-radius: 8px;
-}
-h2 {
-    text-align: center;
-}
-</style>
+<title>DealForge OS</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<h2>🏡 RO’Lyfe Deal Machine</h2>
+<h1>🏡 DealForge OS</h1>
 
-<label>ARV</label>
-<input type="number" id="arv">
+<p class="sub">
+Investor-grade deal analysis. Enter numbers → get offers instantly.
+</p>
 
-<label>Purchase Price</label>
-<input type="number" id="price">
+<!-- INPUTS -->
+<div class="card">
 
-<label>Rehab Type</label>
+<input type="number" id="arv" placeholder="ARV (After Repair Value)">
+<input type="number" id="price" placeholder="Purchase Price">
+
 <select id="rehab">
-<option value="25000">Light ($25K)</option>
-<option value="50000">Medium ($50K)</option>
-<option value="100000">Heavy ($100K)</option>
+<option value="25000">Light Rehab ($25K)</option>
+<option value="50000">Medium Rehab ($50K)</option>
+<option value="100000">Heavy Rehab ($100K)</option>
 <option value="150000">Full Gut ($150K)</option>
 </select>
 
-<label>Assignment Fee</label>
-<input type="number" id="fee" value="15000">
+<input type="number" id="fee" value="15000" placeholder="Assignment Fee">
+<input type="number" id="months" value="6" placeholder="Holding Months">
 
-<label>Holding Months</label>
-<input type="number" id="months" value="6">
-
-<button onclick="calc()">Analyze Deal</button>
-
-<button class="email-btn" onclick="sendEmail()">📧 Send Results</button>
-
-<div class="result" id="output"></div>
+<button onclick="analyzeDeal()">Analyze Deal</button>
 
 </div>
 
-<script>
+<!-- RESULTS -->
+<div class="card" id="results"></div>
 
-let resultsText = "";
+<!-- ACTIONS -->
+<div class="card actions">
 
-function calc() {
+<button onclick="sendEmail()">📧 Send to Email</button>
+<button onclick="downloadPDF()">📊 Download Report</button>
 
-let arv = +document.getElementById("arv").value;
-let price = +document.getElementById("price").value;
-let rehab = +document.getElementById("rehab").value;
-let fee = +document.getElementById("fee").value;
-let months = +document.getElementById("months").value;
+</div>
 
-// MAO (Cogo style conservative)
-let mao = (arv * 0.65) - rehab;
+<!-- CONTRACT HUB -->
+<div class="card">
 
-// Offers
-let cash = mao - fee;
-let seller = mao + 10000;
-let refi = (arv * 0.7) - rehab;
+<h3>📄 Contracts</h3>
 
-// Costs
-let holding = months * 2000;
-let profit = arv - (price + rehab + fee + holding);
+<a href="docs/purchase-agreement.pdf" download><button>Purchase Agreement</button></a>
+<a href="docs/assignment-contract.pdf" download><button>Assignment Contract</button></a>
+<a href="docs/realtor-offer.pdf" download><button>Realtor Offer</button></a>
 
-resultsText = `
-MAO: $${mao.toFixed(0)}
-Cash Offer: $${cash.toFixed(0)}
-Seller Finance: $${seller.toFixed(0)}
-Refi Offer: $${refi.toFixed(0)}
-Estimated Profit: $${profit.toFixed(0)}
-`;
+</div>
 
-document.getElementById("output").innerHTML = `
-<h3>📊 Deal Breakdown</h3>
-<p><b>MAO:</b> $${mao.toFixed(0)}</p>
+</div>
 
-<hr>
-
-<p>💰 Cash: $${cash.toFixed(0)}</p>
-<p>🏦 Seller: $${seller.toFixed(0)}</p>
-<p>🔁 Refi: $${refi.toFixed(0)}</p>
-
-<hr>
-
-<p>🔥 Profit: $${profit.toFixed(0)}</p>
-`;
-
-}
-
-function sendEmail() {
-
-let subject = "RO’Lyfe Deal Analysis";
-let body = encodeURIComponent(resultsText);
-
-window.location.href = `mailto:richman@rootoflyfe.com?subject=${subject}&body=${body}`;
-
-}
-
-</script>
-
+<script src="script.js"></script>
 </body>
-  </html>
+</html>
