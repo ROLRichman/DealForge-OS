@@ -66,20 +66,26 @@ document.getElementById("results").innerHTML = `
 
 }
 
-function sendEmail() {
-let subject = "Deal Analysis";
-let body = encodeURIComponent(resultsText);
-
-window.location.href = `mailto:richman@rootoflyfe.com?subject=${subject}&body=${body}`;
-}
-
 function downloadPDF() {
 
-let content = `
-DEAL REPORT
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
 
-${resultsText}
-`;
+doc.setFontSize(16);
+doc.text("DealForge OS - Deal Report", 20, 20);
+
+doc.setFontSize(12);
+
+let lines = resultsText.split("\n");
+let y = 40;
+
+lines.forEach(line => {
+    doc.text(line, 20, y);
+    y += 8;
+});
+
+doc.save("Deal-Report.pdf");
+}
 
 let blob = new Blob([content], { type: "text/plain" });
 let link = document.createElement("a");
