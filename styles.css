@@ -1,0 +1,15 @@
+/* 
+DealForge OS Styling
+Purpose: Clean mobile-friendly UI for fast deal input
+*/
+
+body {
+    font-family: Arial;
+    background: #020617;
+    color: white;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+}
