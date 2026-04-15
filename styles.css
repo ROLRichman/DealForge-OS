@@ -1,6 +1,6 @@
 body {
 background:#020617;
-color:white;
+color:#e5e7eb;
 font-family:Arial;
 margin:0;
 }
@@ -39,5 +39,6 @@ background:#3b82f6;
 canvas {
 width:100%;
 background:white;
+border-radius:10px;
 touch-action:none;
 }
