@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="styles.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </head>
 
 <body>
@@ -37,20 +36,18 @@
 </div>
 
 <!-- RESULTS -->
-  <div id="nextStep" style="display:none">
+<div class="card" id="results"></div>
 
+<!-- NEXT STEP -->
+<div class="card" id="nextStep" style="display:none;">
 <h3>Next Step</h3>
-<p>👉 Do you have this property under contract?</p>
-
+<p>Do you have this property under contract?</p>
 <select>
 <option>Yes</option>
 <option>No</option>
 </select>
+</div>
 
-</div>
-<div class="card" id="results"></div>
-</div>
-  
 <!-- REPAIRS -->
 <div class="card">
 
@@ -70,7 +67,7 @@
 <!-- COGO -->
 <div class="card">
 
-<h3>🧠 COGO Inspecti</div>on</h3>
+<h3>🧠 COGO Inspection</h3>
 
 <select id="cogoItem"></select>
 <input id="cogoCost" placeholder="Cost">
@@ -81,7 +78,7 @@
 
 </div>
 
-<!-- SIGN -->
+<!-- SIGNATURE -->
 <div class="card">
 
 <h3>✍️ Signature</h3>
@@ -95,13 +92,9 @@
 <div class="card actions">
 
 <button onclick="exportPDF()">📊 Deal Report</button>
-
 <button onclick="generateContract()">🧾 Purchase Agreement</button>
-
 <button onclick="brokerAgreement()">📑 Broker Agreement</button>
-
 <button onclick="preApp()">🏦 Pre Application</button>
-
 <button onclick="sendText()">📤 Send Offer</button>
 
 </div>
@@ -126,4 +119,4 @@
 
 <script src="script.js"></script>
 </body>
-</html>
+  </html>
