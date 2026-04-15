@@ -28,13 +28,15 @@
 <input id="arv" placeholder="ARV">
 <input id="price" placeholder="Purchase Price">
 
+<input type="date" id="closingDate">
+
 <button onclick="analyzeDeal()">Analyze Deal</button>
 </div>
 
 <div class="card" id="results"></div>
 
 <div class="card">
-<h3>Repairs</h3>
+<h3>🏗️ Quick Repairs</h3>
 
 <input id="r1" placeholder="Roof">
 <input id="r2" placeholder="Electrical">
@@ -46,7 +48,7 @@
 </div>
 
 <div class="card">
-<h3>COGO Inspection</h3>
+<h3>🧠 COGO Inspection</h3>
 
 <select id="cogoItem"></select>
 <input id="cogoCost" placeholder="Cost">
@@ -56,16 +58,17 @@
 </div>
 
 <div class="card">
-<h3>Signature</h3>
+<h3>✍️ Signature</h3>
 <canvas id="sig"></canvas>
 <button onclick="clearSig()">Clear</button>
 </div>
 
 <div class="card actions">
-<button onclick="generateContract()">Purchase Agreement</button>
-<button onclick="brokerAgreement()">Broker Agreement</button>
-<button onclick="preApp()">Pre App</button>
-<button onclick="oneClickClose()">ONE CLICK CLOSE</button>
+<button onclick="exportPDF()">📊 Deal Report</button>
+<button onclick="generateContract()">🧾 Purchase Agreement</button>
+<button onclick="brokerAgreement()">📑 Broker Agreement</button>
+<button onclick="preApp()">🏦 Pre Application</button>
+<button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
 </div>
 
 </div>
