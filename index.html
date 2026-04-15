@@ -15,7 +15,7 @@
 <div class="app">
 
 <h1>🏡 DealForge OS</h1>
-<p class="sub">Analyze → Package → Sign → Send → Close</p>
+<p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
 <!-- PROPERTY -->
 <div class="card">
@@ -31,6 +31,9 @@
 <input id="arv" placeholder="ARV">
 <input id="price" placeholder="Purchase Price">
 
+<label>📅 Closing Date</label>
+<input type="date" id="closingDate">
+
 <button onclick="analyzeDeal()">Analyze Deal</button>
 
 </div>
@@ -38,19 +41,8 @@
 <!-- RESULTS -->
 <div class="card" id="results"></div>
 
-<!-- NEXT STEP -->
-<div class="card" id="nextStep" style="display:none;">
-<h3>Next Step</h3>
-<p>Do you have this property under contract?</p>
-<select>
-<option>Yes</option>
-<option>No</option>
-</select>
-</div>
-
 <!-- REPAIRS -->
 <div class="card">
-
 <h3>🏗️ Quick Repairs</h3>
 
 <input id="r1" placeholder="Roof">
@@ -59,43 +51,44 @@
 <input id="r4" placeholder="Other">
 
 <button onclick="calcRepairs()">Calculate</button>
-
 <div id="repairOut"></div>
-
 </div>
 
 <!-- COGO -->
 <div class="card">
-
 <h3>🧠 COGO Inspection</h3>
 
 <select id="cogoItem"></select>
 <input id="cogoCost" placeholder="Cost">
 
 <button onclick="addCogo()">Add Item</button>
-
 <div id="cogoList"></div>
-
 </div>
 
-<!-- SIGNATURE -->
+<!-- CONTACTS -->
 <div class="card">
+<h3>📇 Deal Contacts</h3>
 
+<input value="RJ Construction">
+<input value="Cogo Capital">
+<input value="richman@rootoflyfe.com">
+</div>
+
+<!-- SIGN -->
+<div class="card">
 <h3>✍️ Signature</h3>
-
 <canvas id="sig"></canvas>
 <button onclick="clearSig()">Clear</button>
-
 </div>
 
 <!-- ACTIONS -->
 <div class="card actions">
 
-<button onclick="exportPDF()">📊 Deal Report</button>
 <button onclick="generateContract()">🧾 Purchase Agreement</button>
 <button onclick="brokerAgreement()">📑 Broker Agreement</button>
 <button onclick="preApp()">🏦 Pre Application</button>
-<button onclick="sendText()">📤 Send Offer</button>
+
+<button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
 
 </div>
 
@@ -119,4 +112,4 @@
 
 <script src="script.js"></script>
 </body>
-  </html>
+</html>
