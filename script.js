@@ -276,4 +276,4 @@ let msg = encodeURIComponent(
 );
 
 window.open("sms:?body=" + msg);
-  }
+}
