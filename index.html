@@ -6,7 +6,6 @@
 <title>DealForge OS</title>
 
 <link rel="stylesheet" href="styles.css">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
@@ -32,7 +31,7 @@
 <!-- RESULTS -->
 <div class="card" id="results"></div>
 
-<!-- QUICK REPAIRS -->
+<!-- REPAIRS -->
 <div class="card">
 <h3>🏗️ Quick Repairs</h3>
 
@@ -42,11 +41,10 @@
 <input id="r4" placeholder="Other">
 
 <button onclick="calcRepairs()">Calculate</button>
-
 <div id="repairsOut"></div>
 </div>
 
-<!-- COGO INSPECTION -->
+<!-- COGO -->
 <div class="card">
 <h3>🧠 COGO Inspection</h3>
 
@@ -56,6 +54,7 @@
 <button onclick="addCogo()">Add Item</button>
 
 <div id="cogoList"></div>
+<div id="cogoTotal"></div>
 </div>
 
 <!-- SIGNATURE -->
@@ -65,26 +64,10 @@
 <button onclick="clearSig()">Clear</button>
 </div>
 
-<!-- ACTION -->
+<!-- ACTIONS -->
 <div class="card actions">
 <button onclick="downloadPDF()">📊 Export PDF</button>
 <button onclick="generateContract()">🧾 Contract</button>
-<button onclick="sendEmail()">📤 Send Offer</button>
-</div>
-
-<!-- LINKS -->
-<div class="card links">
-<h3>🔗 Funding & Tools</h3>
-
-<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures</a>
-<a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit</a>
-<a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">Funding Experts</a>
-<a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
-<a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
-<a href="https://form.jotform.com/2530967310210469" target="_blank">Funding App</a>
-<a href="https://form.jotform.com/253154859148062" target="_blank">Upload Docs</a>
-<a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Your Intake</a>
-
 </div>
 
 </div>
