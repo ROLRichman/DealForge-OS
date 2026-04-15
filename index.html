@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealForge OS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="styles.css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </head>
 
 <body>
@@ -18,14 +20,20 @@
 
 <!-- PROPERTY -->
 <div class="card">
+
 <input id="address" placeholder="Property Address">
+
+<div class="links-row">
 <button onclick="openZillow()">🔎 Zillow</button>
 <button onclick="openRedfin()">🔎 Redfin</button>
+<button onclick="openRural()">🌾 Rural</button>
+</div>
 
 <input id="arv" placeholder="ARV">
 <input id="price" placeholder="Purchase Price">
 
 <button onclick="analyzeDeal()">Analyze Deal</button>
+
 </div>
 
 <!-- RESULTS -->
@@ -33,6 +41,7 @@
 
 <!-- REPAIRS -->
 <div class="card">
+
 <h3>🏗️ Quick Repairs</h3>
 
 <input id="r1" placeholder="Roof">
@@ -41,33 +50,58 @@
 <input id="r4" placeholder="Other">
 
 <button onclick="calcRepairs()">Calculate</button>
-<div id="repairsOut"></div>
+
+<div id="repairOut"></div>
+
 </div>
 
 <!-- COGO -->
 <div class="card">
+
 <h3>🧠 COGO Inspection</h3>
 
 <select id="cogoItem"></select>
-<input id="cogoPrice" placeholder="Cost">
+<input id="cogoCost" placeholder="Cost">
 
 <button onclick="addCogo()">Add Item</button>
 
 <div id="cogoList"></div>
-<div id="cogoTotal"></div>
+
 </div>
 
-<!-- SIGNATURE -->
+<!-- SIGN -->
 <div class="card">
+
 <h3>✍️ Signature</h3>
-<canvas id="sigPad"></canvas>
+
+<canvas id="sig"></canvas>
 <button onclick="clearSig()">Clear</button>
+
 </div>
 
 <!-- ACTIONS -->
 <div class="card actions">
-<button onclick="downloadPDF()">📊 Export PDF</button>
+
+<button onclick="exportPDF()">📊 Export Full Deal</button>
 <button onclick="generateContract()">🧾 Contract</button>
+<button onclick="sendText()">📤 Send Offer</button>
+
+</div>
+
+<!-- LINKS -->
+<div class="card links">
+
+<h3>🔗 Funding & Tools</h3>
+
+<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures</a>
+<a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit</a>
+<a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">Funding Experts</a>
+<a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
+<a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
+<a href="https://form.jotform.com/2530967310210469" target="_blank">Funding App</a>
+<a href="https://form.jotform.com/253154859148062" target="_blank">Upload Docs</a>
+<a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Your Intake</a>
+
 </div>
 
 </div>
