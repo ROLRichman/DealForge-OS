@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="styles.css">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
@@ -17,33 +16,25 @@
 <h1>🏡 DealForge OS</h1>
 <p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
-<!-- PROPERTY -->
 <div class="card">
-
 <input id="address" placeholder="Property Address">
 
 <div class="links-row">
-<button onclick="openZillow()">🔎 Zillow</button>
-<button onclick="openRedfin()">🔎 Redfin</button>
-<button onclick="openRural()">🌾 Rural</button>
+<button onclick="openZillow()">Zillow</button>
+<button onclick="openRedfin()">Redfin</button>
+<button onclick="openRural()">Rural</button>
 </div>
 
 <input id="arv" placeholder="ARV">
 <input id="price" placeholder="Purchase Price">
 
-<label>📅 Closing Date</label>
-<input type="date" id="closingDate">
-
 <button onclick="analyzeDeal()">Analyze Deal</button>
-
 </div>
 
-<!-- RESULTS -->
 <div class="card" id="results"></div>
 
-<!-- REPAIRS -->
 <div class="card">
-<h3>🏗️ Quick Repairs</h3>
+<h3>Repairs</h3>
 
 <input id="r1" placeholder="Roof">
 <input id="r2" placeholder="Electrical">
@@ -54,9 +45,8 @@
 <div id="repairOut"></div>
 </div>
 
-<!-- COGO -->
 <div class="card">
-<h3>🧠 COGO Inspection</h3>
+<h3>COGO Inspection</h3>
 
 <select id="cogoItem"></select>
 <input id="cogoCost" placeholder="Cost">
@@ -65,47 +55,17 @@
 <div id="cogoList"></div>
 </div>
 
-<!-- CONTACTS -->
 <div class="card">
-<h3>📇 Deal Contacts</h3>
-
-<input value="RJ Construction">
-<input value="Cogo Capital">
-<input value="richman@rootoflyfe.com">
-</div>
-
-<!-- SIGN -->
-<div class="card">
-<h3>✍️ Signature</h3>
+<h3>Signature</h3>
 <canvas id="sig"></canvas>
 <button onclick="clearSig()">Clear</button>
 </div>
 
-<!-- ACTIONS -->
 <div class="card actions">
-
-<button onclick="generateContract()">🧾 Purchase Agreement</button>
-<button onclick="brokerAgreement()">📑 Broker Agreement</button>
-<button onclick="preApp()">🏦 Pre Application</button>
-
-<button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
-
-</div>
-
-<!-- LINKS -->
-<div class="card links">
-
-<h3>🔗 Funding & Tools</h3>
-
-<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures</a>
-<a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit</a>
-<a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">Funding Experts</a>
-<a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
-<a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
-<a href="https://form.jotform.com/2530967310210469" target="_blank">Funding App</a>
-<a href="https://form.jotform.com/253154859148062" target="_blank">Upload Docs</a>
-<a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Your Intake</a>
-
+<button onclick="generateContract()">Purchase Agreement</button>
+<button onclick="brokerAgreement()">Broker Agreement</button>
+<button onclick="preApp()">Pre App</button>
+<button onclick="oneClickClose()">ONE CLICK CLOSE</button>
 </div>
 
 </div>
