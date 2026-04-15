@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealForge OS</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="stylesheet" href="styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
@@ -20,107 +19,71 @@
 
 <!-- PROPERTY -->
 <div class="card">
-
-<input id="address" value="5503 West Blvd, Youngstown, OH 44512">
-
-<div class="flex">
+<input id="address" placeholder="Property Address">
 <button onclick="openZillow()">🔎 Zillow</button>
 <button onclick="openRedfin()">🔎 Redfin</button>
+
+<input id="arv" placeholder="ARV">
+<input id="price" placeholder="Purchase Price">
+
+<button onclick="analyzeDeal()">Analyze Deal</button>
 </div>
 
-<input id="arv" value="350000">
-<input id="price" value="140000">
+<!-- RESULTS -->
+<div class="card" id="results"></div>
 
-<button onclick="runDeal()">Analyze Deal</button>
-
-<div id="results"></div>
-
-</div>
-
-<!-- OFFERS -->
+<!-- QUICK REPAIRS -->
 <div class="card">
-<h2>💰 3 Tier Offers</h2>
-<div id="offers"></div>
+<h3>🏗️ Quick Repairs</h3>
+
+<input id="r1" placeholder="Roof">
+<input id="r2" placeholder="Electrical">
+<input id="r3" placeholder="Plumbing">
+<input id="r4" placeholder="Other">
+
+<button onclick="calcRepairs()">Calculate</button>
+
+<div id="repairsOut"></div>
 </div>
 
-<!-- QUICK REPAIR -->
+<!-- COGO INSPECTION -->
 <div class="card">
-<h2>🏗️ Quick Repairs</h2>
+<h3>🧠 COGO Inspection</h3>
 
-<input id="roof" value="10000">
-<input id="floor" value="10000">
-<input id="electrical" value="10000">
-<input id="plumbing" value="10000">
+<select id="cogoItem"></select>
+<input id="cogoPrice" placeholder="Cost">
 
-<button onclick="calcQuick()">Calculate</button>
+<button onclick="addCogo()">Add Item</button>
 
-<div id="quickOut"></div>
+<div id="cogoList"></div>
 </div>
 
-<!-- INSPECTION -->
+<!-- SIGNATURE -->
 <div class="card">
-<h2>🧠 COGO Inspection</h2>
-
-<select id="inspection">
-<option>Roofing</option>
-<option>Electrical</option>
-<option>Plumbing</option>
-<option>HVAC</option>
-<option>Foundation</option>
-<option>Kitchen</option>
-<option>Bathroom</option>
-<option>Flooring</option>
-<option>Framing</option>
-<option>Windows</option>
-<option>Doors</option>
-<option>Drywall</option>
-<option>Paint</option>
-<option>Exterior</option>
-<option>Landscaping</option>
-<option>Demolition</option>
-</select>
-
-<input id="inspectCost" placeholder="Cost">
-
-<button onclick="addInspection()">Add Item</button>
-
-<div id="inspectionList"></div>
-<div id="inspectionTotal"></div>
-
-</div>
-
-<!-- SIGN -->
-<div class="card">
-<h2>✍️ Signature</h2>
+<h3>✍️ Signature</h3>
 <canvas id="sigPad"></canvas>
 <button onclick="clearSig()">Clear</button>
 </div>
 
-<!-- ACTIONS -->
-<div class="card">
+<!-- ACTION -->
+<div class="card actions">
 <button onclick="downloadPDF()">📊 Export PDF</button>
 <button onclick="generateContract()">🧾 Contract</button>
-<button onclick="sendOffer()">📤 Send Offer</button>
+<button onclick="sendEmail()">📤 Send Offer</button>
 </div>
 
 <!-- LINKS -->
 <div class="card links">
-<h2>🔗 Funding & Tools</h2>
+<h3>🔗 Funding & Tools</h3>
 
-<a href="https://www.7figurescredit.com/?a_aid=ROLFunding">7Figures Credit</a>
-<a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR">Corporate Credit</a>
-<a href="https://my.americasfundingexperts.com/?id=1820217000190862001">Funding Experts</a>
-
-<a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi">Loan LP1</a>
-<a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi">Loan LP2</a>
-
-<a href="https://form.jotform.com/2530967310210469">Funding App</a>
-<a href="https://form.jotform.com/253154859148062">Upload Docs</a>
-
-<a href="https://rootoflyfe.blnsoftware.com/">Your Intake</a>
-
-<a href="https://eligibility.sc.egov.usda.gov/">USDA</a>
-<a href="https://www.consumerfinance.gov/">Rural Tool</a>
+<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures</a>
+<a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit</a>
+<a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">Funding Experts</a>
+<a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
+<a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
+<a href="https://form.jotform.com/2530967310210469" target="_blank">Funding App</a>
+<a href="https://form.jotform.com/253154859148062" target="_blank">Upload Docs</a>
+<a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Your Intake</a>
 
 </div>
 
