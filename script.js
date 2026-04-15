@@ -1,110 +1,198 @@
-// =========================
-// DEAL ENGINE
-// =========================
+let cogoTotal = 0;
 
+// INIT
+window.onload = () => {
+initSignature();
+loadCogo();
+};
+
+// ================= DEAL =================
 function analyzeDeal(){
 
-let arv = Number(document.getElementById("arv").value) || 0;
-let price = Number(document.getElementById("price").value) || 0;
+let arv = Number(arvInput("arv"));
+let price = Number(arvInput("price"));
 
-// --- 3 TIER SETTINGS (FROM YOU)
-let cashPct = 0.50;
-let sellerPct = 0.65;
-let financePct = 0.75;
+let cash = arv * 0.5;
+let seller = arv * 0.65;
+let finance = arv * 0.75;
 
-let downPct = 0.05;
-let sellerRate = 0.05;
-let financeRate = 0.06;
+let down = seller * 0.05;
+let monthly = (seller - down) * 0.05 / 12;
+let financeMonthly = finance * 0.06 / 12;
 
-// --- CALCULATIONS
-let cash = arv * cashPct;
-let seller = arv * sellerPct;
-let finance = arv * financePct;
-
-// SELLER CARRY DETAILS
-let down = seller * downPct;
-let loanAmount = seller - down;
-
-let monthly = (loanAmount * sellerRate) / 12;
-
-// SELLER FINANCE DETAILS
-let financeMonthly = (finance * financeRate) / 12;
-
-// OVERAGE
 let overage = arv - price;
 
-// DEAL STATUS
-let status = overage > 50000 ? "🔥 IT'S A DEAL!" : "⚠️ Tight Deal";
-
-// DISPLAY
 document.getElementById("results").innerHTML = `
 <h3>💰 3 Tier Offers</h3>
 
-<b>Cash:</b> $${cash.toFixed(0)}<br>
-
-<b>Seller Carry:</b> $${seller.toFixed(0)}<br>
+Cash: $${cash.toFixed(0)}<br>
+Seller Carry: $${seller.toFixed(0)}<br>
 Down: $${down.toFixed(0)}<br>
 Monthly: $${monthly.toFixed(0)}<br><br>
 
-<b>Seller Finance:</b> $${finance.toFixed(0)}<br>
+Seller Finance: $${finance.toFixed(0)}<br>
 Monthly: $${financeMonthly.toFixed(0)}<br><br>
 
-<b>Overage:</b> $${overage.toFixed(0)}<br>
-<b>${status}</b>
+Overage: $${overage.toFixed(0)}<br>
+<b>🔥 IT'S A DEAL!</b><br><br>
 
-<hr>
-
-<i>
 Cash = quick assignment<br>
-Seller = small down, profit spread<br>
-Finance = long-term cashflow play
-</i>
+Seller = small down<br>
+Finance = long-term cashflow
 `;
-
 }
 
+function arvInput(id){
+return document.getElementById(id).value || 0;
+}
 
+// ================= REPAIRS =================
 function calcRepairs(){
 
-let r1 = Number(document.getElementById("r1").value) || 0;
-let r2 = Number(document.getElementById("r2").value) || 0;
-let r3 = Number(document.getElementById("r3").value) || 0;
-let r4 = Number(document.getElementById("r4").value) || 0;
-
-let total = r1 + r2 + r3 + r4;
+let total =
+Number(r1.value||0) +
+Number(r2.value||0) +
+Number(r3.value||0) +
+Number(r4.value||0);
 
 document.getElementById("repairsOut").innerHTML =
 "Total Rehab: $" + total.toFixed(0);
-
 }
 
+// ================= COGO =================
 const cogoItems = [
-"Roofing","Electrical Rough","Electrical Finish","Plumbing Rough","Plumbing Finish",
-"HVAC","Kitchen","Bathroom","Flooring","Framing","Foundation","Windows","Doors",
-"Drywall","Painting","Demolition","Garage","Driveway","Landscaping",
-"Insulation","Tile","Siding","Concrete","Trash Out","Permit Fees","Plans"
+"Roofing","Electrical","Plumbing","HVAC","Kitchen","Bathroom",
+"Flooring","Foundation","Windows","Doors","Drywall","Painting"
 ];
 
 function loadCogo(){
 let select = document.getElementById("cogoItem");
-select.innerHTML = "";
 
-cogoItems.forEach(item=>{
+cogoItems.forEach(i=>{
 let opt = document.createElement("option");
-opt.value = item;
-opt.text = item;
+opt.value = i;
+opt.text = i;
 select.appendChild(opt);
 });
 }
 
 function addCogo(){
 
-let item = document.getElementById("cogoItem").value;
-let price = Number(document.getElementById("cogoPrice").value) || 0;
+let item = cogoItem.value;
+let price = Number(cogoPrice.value||0);
+
+cogoTotal += price;
 
 let div = document.createElement("div");
 div.innerHTML = `${item}: $${price}`;
 
-document.getElementById("cogoList").appendChild(div);
+cogoList.appendChild(div);
 
+cogoTotalDisplay();
+}
+
+function cogoTotalDisplay(){
+document.getElementById("cogoTotal").innerHTML =
+"<b>Total: $" + cogoTotal.toFixed(0) + "</b>";
+}
+
+// ================= SIGNATURE =================
+let canvas, ctx, drawing=false;
+
+function initSignature(){
+
+canvas = document.getElementById("sigPad");
+ctx = canvas.getContext("2d");
+
+canvas.width = canvas.offsetWidth;
+canvas.height = 150;
+
+ctx.lineWidth = 3;
+ctx.lineCap = "round";
+ctx.strokeStyle = "black";
+
+// TOUCH FIX (IMPORTANT)
+canvas.addEventListener("touchstart", start);
+canvas.addEventListener("touchend", stop);
+canvas.addEventListener("touchmove", draw);
+
+canvas.addEventListener("mousedown", start);
+canvas.addEventListener("mouseup", stop);
+canvas.addEventListener("mousemove", draw);
+}
+
+function start(e){
+drawing = true;
+ctx.beginPath();
+}
+
+function stop(){
+drawing = false;
+}
+
+function draw(e){
+
+if(!drawing) return;
+
+let rect = canvas.getBoundingClientRect();
+
+let x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+let y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+ctx.lineTo(x,y);
+ctx.stroke();
+}
+
+function clearSig(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+// ================= PDF =================
+function downloadPDF(){
+
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+
+doc.text("Deal Report",20,20);
+doc.text(document.getElementById("results").innerText,20,40);
+
+doc.save("Deal.pdf");
+}
+
+// ================= CONTRACT =================
+function generateContract(){
+
+let price = document.getElementById("price").value;
+
+let text = `
+PURCHASE AGREEMENT
+
+Buyer: Root Of Lyfe Holdings LLC
+
+Purchase Price: $${price}
+
+Assignable Contract
+Inspection Period Included
+Exit Clause Protected
+Marketing Rights Included
+Double Close Allowed
+
+`;
+
+let blob = new Blob([text], {type:"text/plain"});
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+link.download = "Contract.txt";
+link.click();
+}
+
+// ================= LINKS =================
+function openZillow(){
+let addr = document.getElementById("address").value;
+window.open("https://www.zillow.com/homes/" + encodeURIComponent(addr));
+}
+
+function openRedfin(){
+window.open("https://www.redfin.com/");
   }
