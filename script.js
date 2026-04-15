@@ -11,6 +11,11 @@ let arv = +document.getElementById("arv").value;
 let price = +document.getElementById("price").value;
 let address = document.getElementById("address").value;
 
+if(!arv || !price){
+alert("Enter ARV and Price");
+return;
+}
+
 let cash = arv * 0.5;
 let seller = arv * 0.65;
 let finance = arv * 0.75;
@@ -36,8 +41,11 @@ Monthly: $${monthly2.toFixed(0)}<br><br>
 
 Overage: $${overage.toFixed(0)}<br>
 
-<b>🔥 IT'S A DEAL!</b>
+<b style="color:#22c55e;">🔥 IT'S A DEAL!</b>
 `;
+
+// SHOW NEXT STEP (FUNNEL FLOW)
+document.getElementById("nextStep").style.display = "block";
 }
 
 // =======================
@@ -54,10 +62,19 @@ document.getElementById("repairOut").innerHTML =
 }
 
 // =======================
-// COGO INSPECTION
+// FULL COGO LIST (YOUR LENDER LIST)
 // =======================
 const cogoListData = [
-"Roofing","Electrical","Plumbing","HVAC","Kitchen","Bathroom","Foundation"
+"Architect","Asphalt & Paving","Basement","Bathroom Tile","Bathroom Vanity",
+"Carpentry Rough","Ceiling Work","Closet / Shelves","Concrete",
+"Demolition","Drywall","Electrical Finish","Electrical Rough",
+"Exterior Painting","Fencing","Flooring","Foundation",
+"Framing","Garage","HVAC","Insulation","Interior Painting",
+"Kitchen","Kitchen Cabinets","Kitchen Countertops",
+"Landscaping","Laundry Room","Light Fixtures",
+"Masonry","Misc","Permit Fees","Plumbing",
+"Roofing","Sewer","Siding","Stairs","Structural",
+"Tile","Trash Out","Water Heater","Windows"
 ];
 
 window.onload = () => {
@@ -73,11 +90,18 @@ select.appendChild(opt);
 initSignature();
 };
 
-// ADD ITEM
+// =======================
+// ADD COGO ITEM
+// =======================
 function addCogo(){
 
 let item = document.getElementById("cogoItem").value;
 let cost = +document.getElementById("cogoCost").value || 0;
+
+if(!cost){
+alert("Enter cost");
+return;
+}
 
 cogoItems.push({item,cost});
 
@@ -95,7 +119,7 @@ document.getElementById("cogoList").innerHTML = html;
 }
 
 // =======================
-// SIGNATURE (FIXED MOBILE)
+// SIGNATURE (FIXED)
 // =======================
 function initSignature(){
 
@@ -105,7 +129,6 @@ ctx = canvas.getContext("2d");
 canvas.width = 300;
 canvas.height = 150;
 
-// STOP SCROLL WHILE SIGNING
 canvas.addEventListener("touchstart", e=>{
 drawing = true;
 e.preventDefault();
@@ -129,15 +152,8 @@ ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
 ctx.stroke();
 });
 
-// MOUSE
-canvas.addEventListener("mousedown", ()=>{
-drawing = true;
-});
-
-canvas.addEventListener("mouseup", ()=>{
-drawing = false;
-ctx.beginPath();
-});
+canvas.addEventListener("mousedown", ()=>drawing=true);
+canvas.addEventListener("mouseup", ()=>{drawing=false;ctx.beginPath();});
 
 canvas.addEventListener("mousemove", e=>{
 if(!drawing) return;
@@ -155,130 +171,121 @@ ctx.clearRect(0,0,300,150);
 }
 
 // =======================
-// PDF EXPORT
-// =======================
-function exportPDF(){
-
-const { jsPDF } = window.jspdf;
-let doc = new jsPDF();
-
-doc.text("DEAL REPORT", 20, 20);
-
-let content = document.getElementById("results").innerText;
-
-doc.text(content, 20, 40);
-
-// SIGNATURE
-let sig = document.getElementById("sig").toDataURL();
-doc.addImage(sig, "PNG", 20, 120, 100, 40);
-
-doc.save("DealForge-Report.pdf");
-}
-
-// =======================
 // PURCHASE AGREEMENT
 // =======================
 function generateContract(){
 
+if(!dealData.address){
+alert("Run deal first");
+return;
+}
+
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
 let sig = document.getElementById("sig").toDataURL();
 
-let contract = `
+let text = `
 PURCHASE AGREEMENT
 
 Buyer: Root Of Lyfe Holdings LLC
 Address: ${dealData.address}
 
-Purchase Price: $${dealData.price}
+Price: $${dealData.price}
 ARV: $${dealData.arv}
 
-TERMS:
-- Assignable contract
-- 14-day inspection contingency
-- Buyer may cancel without penalty
-- Marketing rights granted
-- Double closing allowed
-- Seller agrees not to circumvent
-
-EXIT:
-Wholesale / Refinance / Flip
+CLAUSES:
+✔ Assignable
+✔ Inspection contingency
+✔ Cancel anytime during inspection
+✔ Marketing rights
+✔ Double close allowed
+✔ Non-circumvention
 
 Buyer:
 Richardson L.
 `;
 
-doc.text(contract, 10, 10);
-doc.addImage(sig, "PNG", 20, 180, 80, 30);
+doc.text(text,10,10);
+doc.addImage(sig,"PNG",20,180,80,30);
 
 doc.save("Purchase-Agreement.pdf");
+
+alert("Purchase Agreement Generated ✅");
 }
 
 // =======================
-// BROKER AGREEMENT
+// BROKER AGREEMENT (FIXED)
 // =======================
 function brokerAgreement(){
 
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-let text = `
-CLIENT BROKER FEE AGREEMENT
+doc.text(`
+CLIENT BROKER AGREEMENT
 
 Broker: Root Of Lyfe Holdings LLC
 Fee: 3%
 
-Client agrees to pay 3% upon funding.
+Client agrees to pay broker upon funding.
 
-Non-Circumvention enforced.
+Non-circumvention enforced.
 
 Richardson L.
 richman@rootoflyfe.com
-`;
+`,10,10);
 
-doc.text(text, 10, 10);
 doc.save("Broker-Agreement.pdf");
+
+alert("Broker Agreement Ready ✅");
 }
 
 // =======================
-// PRE APPLICATION
+// PRE APP (WITH CONFIRM)
 // =======================
 function preApp(){
+
+if(!dealData.address){
+alert("Run deal first");
+return;
+}
 
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-let text = `
+doc.text(`
 PRE-LOAN APPLICATION
+
+Property: ${dealData.address}
+
+Price: $${dealData.price}
+ARV: $${dealData.arv}
+Profit: $${dealData.overage}
 
 Broker:
 Root Of Lyfe Holdings LLC
+richman@rootoflyfe.com
+`,10,10);
 
-Property:
-${dealData.address}
-
-Purchase:
-$${dealData.price}
-
-ARV:
-$${dealData.arv}
-
-Profit:
-$${dealData.overage}
-`;
-
-doc.text(text, 10, 10);
 doc.save("PreApp.pdf");
+
+alert("Pre Application Ready ✅");
 }
 
 // =======================
-// SEND TEXT
+// TEXT OFFER
 // =======================
 function sendText(){
 
+if(!dealData.address){
+alert("Run deal first");
+return;
+}
+
 let msg = encodeURIComponent(
 `New Deal:
+
 ${dealData.address}
 
 ARV: $${dealData.arv}
@@ -305,4 +312,4 @@ window.open("https://www.redfin.com/search?q="+encodeURIComponent(a));
 
 function openRural(){
 window.open("https://eligibility.sc.egov.usda.gov/");
-                   }
+           }
