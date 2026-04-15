@@ -62,3 +62,49 @@ Finance = long-term cashflow play
 `;
 
 }
+
+
+function calcRepairs(){
+
+let r1 = Number(document.getElementById("r1").value) || 0;
+let r2 = Number(document.getElementById("r2").value) || 0;
+let r3 = Number(document.getElementById("r3").value) || 0;
+let r4 = Number(document.getElementById("r4").value) || 0;
+
+let total = r1 + r2 + r3 + r4;
+
+document.getElementById("repairsOut").innerHTML =
+"Total Rehab: $" + total.toFixed(0);
+
+}
+
+const cogoItems = [
+"Roofing","Electrical Rough","Electrical Finish","Plumbing Rough","Plumbing Finish",
+"HVAC","Kitchen","Bathroom","Flooring","Framing","Foundation","Windows","Doors",
+"Drywall","Painting","Demolition","Garage","Driveway","Landscaping",
+"Insulation","Tile","Siding","Concrete","Trash Out","Permit Fees","Plans"
+];
+
+function loadCogo(){
+let select = document.getElementById("cogoItem");
+select.innerHTML = "";
+
+cogoItems.forEach(item=>{
+let opt = document.createElement("option");
+opt.value = item;
+opt.text = item;
+select.appendChild(opt);
+});
+}
+
+function addCogo(){
+
+let item = document.getElementById("cogoItem").value;
+let price = Number(document.getElementById("cogoPrice").value) || 0;
+
+let div = document.createElement("div");
+div.innerHTML = `${item}: $${price}`;
+
+document.getElementById("cogoList").appendChild(div);
+
+  }
