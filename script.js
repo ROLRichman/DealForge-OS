@@ -1,39 +1,51 @@
 let dealData = {};
-let cogoTotal = 0;
 
-// ================= ANALYZE =================
+// LINKS
+function openZillow(){
+let addr = document.getElementById("address").value;
+window.open("https://www.zillow.com/homes/" + encodeURIComponent(addr));
+}
+
+function openRedfin(){
+let addr = document.getElementById("address").value;
+window.open("https://www.redfin.com/search?q=" + encodeURIComponent(addr));
+}
+
+function openRural(){
+window.open("https://eligibility.sc.egov.usda.gov/");
+}
+
+// ANALYZE DEAL (FIXED)
 function analyzeDeal(){
 
-let arv = +arvInput();
-let price = +priceInput();
+let arv = +document.getElementById("arv").value;
+let price = +document.getElementById("price").value;
 
-if(!arv || !price){ alert("Enter numbers"); return; }
+if(!arv || !price){
+alert("Enter numbers");
+return;
+}
 
-let cash = arv * 0.5;
-let seller = arv * 0.65;
-let finance = arv * 0.75;
 let overage = arv - price;
-let profit = cash - price;
+let profit = (arv * 0.7) - price;
 
-dealData = {arv, price, overage};
+let label = profit > 50000 ? "🔥 SOLID DEAL" : "⚠️ CHECK NUMBERS";
 
-let label = profit > 20000 ? "🔥 SOLID DEAL" : "⚠️ CHECK NUMBERS";
+dealData = {arv, price, overage, profit};
 
-results.innerHTML = `
-<h3>💰 3 Tier</h3>
-Cash: $${cash.toFixed(0)}<br>
-Seller: $${seller.toFixed(0)}<br>
-Finance: $${finance.toFixed(0)}<br><br>
-
-(ADD PROFIT RESALE): $${profit.toFixed(0)}<br>
-Overage: $${overage.toFixed(0)}<br><br>
+document.getElementById("dealResult").innerHTML = `
+<h3>💰 Deal Analysis</h3>
+ARV: $${arv}<br>
+Price: $${price}<br>
+Overage: $${overage}<br>
+Profit Spread: $${profit}<br><br>
 
 <b>${label}</b>
 `;
 }
 
-// ================= 3 TIER ENGINE =================
-function runTier(){
+// 3 TIER ENGINE
+function run3Tier(){
 
 let arv = +document.getElementById("tierArv").value;
 
@@ -41,62 +53,76 @@ let cash = arv * 0.5;
 let seller = arv * 0.65;
 let finance = arv * 0.75;
 
-tierResults.innerHTML = `
+document.getElementById("tierResults").innerHTML = `
 Cash: $${cash.toFixed(0)}<br>
 Seller Carry: $${seller.toFixed(0)}<br>
 Seller Finance: $${finance.toFixed(0)}
 `;
 }
 
-// ================= COGO FULL LIST =================
+// REPAIRS
+function calcRepairs(){
+let total =
+(+r1.value||0)+(+r2.value||0)+(+r3.value||0)+(+r4.value||0);
+
+repairOut.innerHTML = "Total Rehab: $" + total;
+}
+
+// FULL COGO LIST
 let cogoItems = [
 "Roofing","Electrical","Plumbing","HVAC","Kitchen","Bathroom",
-"Flooring","Windows","Foundation","Framing","Painting","Drywall",
-"Demolition","Landscaping","Garage","Laundry Room","Basement",
-"Siding","Insulation","Driveway","Deck","Porch","Gutters"
+"Flooring","Windows","Foundation","Framing","Drywall","Paint",
+"Demolition","Landscaping","Driveway","Garage","Laundry Room"
 ];
 
-window.onload = ()=>{
+let cogoTotal = 0;
+
+window.onload = function(){
+let select = document.getElementById("cogoItem");
 cogoItems.forEach(i=>{
 let opt = document.createElement("option");
 opt.text = i;
-cogoItem.add(opt);
+select.add(opt);
 });
-initSig();
-};
+initSignature();
+}
 
-// ================= COGO ADD =================
 function addCogo(){
+let item = cogoItem.value;
 let cost = +cogoCost.value || 0;
+
 cogoTotal += cost;
 
 cogoList.innerHTML =
-`<b>Total: $${cogoTotal}</b><br>` +
-cogoItem.value + ": $" + cost + "<br>" +
+"<b>Total: $" + cogoTotal + "</b><br>" +
+item + ": $" + cost + "<br>" +
 cogoList.innerHTML;
 }
 
-// ================= SIGNATURE (FIXED) =================
-function initSig(){
+// SIGNATURE FIXED
+function initSignature(){
+let canvas = document.getElementById("sig");
+let ctx = canvas.getContext("2d");
 
-let c = sig;
-let ctx = c.getContext("2d");
+canvas.width = canvas.offsetWidth;
+canvas.height = 150;
 
 let drawing = false;
 
-c.addEventListener("touchstart", ()=> drawing = true);
-c.addEventListener("touchend", ()=> drawing = false);
+canvas.addEventListener("touchstart", ()=> drawing = true);
+canvas.addEventListener("touchend", ()=> drawing = false);
 
-c.addEventListener("touchmove", e=>{
+canvas.addEventListener("touchmove", e=>{
 e.preventDefault();
 if(!drawing) return;
 
-let rect = c.getBoundingClientRect();
+let rect = canvas.getBoundingClientRect();
 let t = e.touches[0];
 
-ctx.lineTo(t.clientX - rect.left, t.clientY - rect.top);
+ctx.lineTo(t.clientX-rect.left, t.clientY-rect.top);
 ctx.stroke();
 ctx.beginPath();
+ctx.moveTo(t.clientX-rect.left, t.clientY-rect.top);
 });
 }
 
@@ -104,41 +130,36 @@ function clearSig(){
 sig.getContext("2d").clearRect(0,0,sig.width,sig.height);
 }
 
-// ================= PDF =================
-function generateContract(){
+// PDF
+function generatePDF(){
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-doc.text("RO'LYFE DEAL",10,10);
-doc.text("Address: "+address.value,10,20);
-doc.text("ARV: $"+dealData.arv,10,30);
+doc.text("DEAL SUMMARY",10,10);
+doc.text("ARV: $" + dealData.arv,10,20);
+doc.text("Price: $" + dealData.price,10,30);
+doc.text("Overage: $" + dealData.overage,10,40);
 
-doc.save("deal.pdf");
+doc.save("Deal.pdf");
 }
 
-// ================= EMAIL =================
+// EMAIL
 function sendEmail(){
-window.open(`mailto:?subject=Deal&body=${address.value}`);
+let subject = "New Deal";
+let body = `Deal:\n${dealData.arv} ARV\n${dealData.price} Price`;
+
+window.open(`mailto:?subject=${subject}&body=${body}`);
 }
 
-// ================= SMS =================
+// SMS
 function sendText(){
-window.open("sms:?body="+address.value);
+window.open("sms:?body=New Deal Ready - Call Richardson");
 }
 
-// ================= ONE CLICK =================
+// ONE CLICK CLOSE
 function oneClickClose(){
-generateContract();
+generatePDF();
 sendEmail();
 sendText();
-alert("🚀 Deal Sent");
-}
-
-// HELPERS
-function arvInput(){ return document.getElementById("arv").value; }
-function priceInput(){ return document.getElementById("price").value; }
-
-// LINKS
-function openZillow(){ window.open("https://zillow.com"); }
-function openRedfin(){ window.open("https://redfin.com"); }
-function openRural(){ window.open("https://eligibility.sc.egov.usda.gov/"); }
+alert("Deal Sent 🚀");
+  }
