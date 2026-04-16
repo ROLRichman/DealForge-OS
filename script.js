@@ -1,91 +1,96 @@
 let dealData = {};
+let cogoTotal = 0;
 
 // LINKS
 function openZillow(){
-let addr = document.getElementById("address").value;
-window.open("https://www.zillow.com/homes/" + encodeURIComponent(addr));
+window.open("https://www.zillow.com/homes/" + encodeURIComponent(address.value));
 }
-
 function openRedfin(){
-let addr = document.getElementById("address").value;
-window.open("https://www.redfin.com/search?q=" + encodeURIComponent(addr));
+window.open("https://www.redfin.com/search?q=" + encodeURIComponent(address.value));
 }
-
 function openRural(){
 window.open("https://eligibility.sc.egov.usda.gov/");
 }
 
-// ANALYZE DEAL (FIXED)
-function analyzeDeal(){
+// RESET
+function resetDeal(){
+address.value = "";
+arv.value = "";
+price.value = "";
+closingDate.value = "";
 
-let arv = +document.getElementById("arv").value;
-let price = +document.getElementById("price").value;
+dealResult.innerHTML = "";
+tierResults.innerHTML = "";
+repairOut.innerHTML = "";
+cogoList.innerHTML = "";
 
-if(!arv || !price){
-alert("Enter numbers");
-return;
+dealData = {};
+cogoTotal = 0;
+
+clearSig();
 }
 
-let overage = arv - price;
-let profit = (arv * 0.7) - price;
+// ANALYZE DEAL
+function analyzeDeal(){
+let a = +arv.value;
+let p = +price.value;
 
-let label = profit > 50000 ? "🔥 SOLID DEAL" : "⚠️ CHECK NUMBERS";
+if(!a || !p) return alert("Enter numbers");
 
-dealData = {arv, price, overage, profit};
+let overage = a - p;
+let profit = (a * 0.7) - p;
 
-document.getElementById("dealResult").innerHTML = `
+let label = profit > 50000 ? "🔥 SOLID DEAL" : "⚠️ CHECK DEAL";
+
+dealData = {arv:a, price:p, overage, profit};
+
+dealResult.innerHTML = `
 <h3>💰 Deal Analysis</h3>
-ARV: $${arv}<br>
-Price: $${price}<br>
-Overage: $${overage}<br>
-Profit Spread: $${profit}<br><br>
-
+ARV: $${a.toLocaleString()}<br><br>
+Price: $${p.toLocaleString()}<br><br>
+Overage: $${overage.toLocaleString()}<br>
+Profit: $${profit.toLocaleString()}<br><br>
 <b>${label}</b>
 `;
 }
 
-// 3 TIER ENGINE
+// 3 TIER
 function run3Tier(){
+let a = +tierArv.value;
 
-let arv = +document.getElementById("tierArv").value;
+let cash = a * 0.5;
+let seller = a * 0.65;
+let finance = a * 0.75;
 
-let cash = arv * 0.5;
-let seller = arv * 0.65;
-let finance = arv * 0.75;
-
-document.getElementById("tierResults").innerHTML = `
-Cash: $${cash.toFixed(0)}<br>
-Seller Carry: $${seller.toFixed(0)}<br>
-Seller Finance: $${finance.toFixed(0)}
+tierResults.innerHTML = `
+<br>
+Cash Offer: $${cash.toLocaleString()}<br><br>
+Seller Carry: $${seller.toLocaleString()}<br><br>
+Seller Finance: $${finance.toLocaleString()}
 `;
 }
 
 // REPAIRS
 function calcRepairs(){
-let total =
-(+r1.value||0)+(+r2.value||0)+(+r3.value||0)+(+r4.value||0);
-
-repairOut.innerHTML = "Total Rehab: $" + total;
+let total = (+r1.value||0)+(+r2.value||0)+(+r3.value||0)+(+r4.value||0);
+repairOut.innerHTML = "Total Rehab: $" + total.toLocaleString();
 }
 
-// FULL COGO LIST
+// COGO LIST
 let cogoItems = [
 "Roofing","Electrical","Plumbing","HVAC","Kitchen","Bathroom",
 "Flooring","Windows","Foundation","Framing","Drywall","Paint",
 "Demolition","Landscaping","Driveway","Garage","Laundry Room"
 ];
 
-let cogoTotal = 0;
-
 window.onload = function(){
-let select = document.getElementById("cogoItem");
 cogoItems.forEach(i=>{
 let opt = document.createElement("option");
 opt.text = i;
-select.add(opt);
+cogoItem.add(opt);
 });
 initSignature();
-}
+};
 
 function addCogo(){
 let item = cogoItem.value;
@@ -94,12 +99,12 @@ let cost = +cogoCost.value || 0;
 cogoTotal += cost;
 
 cogoList.innerHTML =
-"<b>Total: $" + cogoTotal + "</b><br>" +
+"<b>Total: $" + cogoTotal.toLocaleString() + "</b><br>" +
 item + ": $" + cost + "<br>" +
 cogoList.innerHTML;
 }
 
-// SIGNATURE FIXED
+// SIGNATURE
 function initSignature(){
 let canvas = document.getElementById("sig");
 let ctx = canvas.getContext("2d");
@@ -130,30 +135,55 @@ function clearSig(){
 sig.getContext("2d").clearRect(0,0,sig.width,sig.height);
 }
 
-// PDF
+// PDF (WITH CLAUSES)
 function generatePDF(){
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-doc.text("DEAL SUMMARY",10,10);
-doc.text("ARV: $" + dealData.arv,10,20);
-doc.text("Price: $" + dealData.price,10,30);
-doc.text("Overage: $" + dealData.overage,10,40);
+let y = 10;
+
+doc.text("RO’Lyfe Holdings LLC - Deal Summary",10,y); y+=10;
+doc.text("Property: " + address.value,10,y); y+=6;
+doc.text("ARV: $" + dealData.arv,10,y); y+=6;
+doc.text("Price: $" + dealData.price,10,y); y+=6;
+doc.text("Overage: $" + dealData.overage,10,y); y+=6;
+doc.text("Closing: " + closingDate.value,10,y); y+=10;
+
+doc.text("TERMS:",10,y); y+=6;
+doc.text("- AS-IS Sale",10,y); y+=5;
+doc.text("- Assignable Contract",10,y); y+=5;
+doc.text("- 14 Day Inspection",10,y); y+=5;
+doc.text("- Non-Circumvention",10,y); y+=10;
+
+doc.text("Buyer:",10,y); y+=6;
+doc.text("Richardson L.",10,y); y+=6;
 
 doc.save("Deal.pdf");
 }
 
 // EMAIL
 function sendEmail(){
-let subject = "New Deal";
-let body = `Deal:\n${dealData.arv} ARV\n${dealData.price} Price`;
+let subject = encodeURIComponent("🔥 Deal Ready");
+
+let body = encodeURIComponent(`
+Property: ${address.value}
+
+ARV: $${dealData.arv}
+Price: $${dealData.price}
+Overage: $${dealData.overage}
+
+Richardson L.
+267-808-5844
+richman@rootoflyfe.com
+`);
 
 window.open(`mailto:?subject=${subject}&body=${body}`);
 }
 
 // SMS
 function sendText(){
-window.open("sms:?body=New Deal Ready - Call Richardson");
+let msg = encodeURIComponent(`🔥 DEAL\n${address.value}\nCall 267-808-5844`);
+window.open("sms:?body=" + msg);
 }
 
 // ONE CLICK CLOSE
@@ -161,5 +191,5 @@ function oneClickClose(){
 generatePDF();
 sendEmail();
 sendText();
-alert("Deal Sent 🚀");
-}
+alert("🚀 Deal Sent");
+  }
