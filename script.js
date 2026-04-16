@@ -1,5 +1,4 @@
 let dealData = {};
-let cogoTotal = 0;
 
 // LINKS
 function openZillow(){
@@ -16,12 +15,16 @@ function openRural(){
 window.open("https://eligibility.sc.egov.usda.gov/");
 }
 
-// DEAL ANALYSIS
+// ANALYZE DEAL (FIXED)
 function analyzeDeal(){
 
-let arv = +document.getElementById("arv").value || 0;
-let price = +document.getElementById("price").value || 0;
-let address = document.getElementById("address").value;
+let arv = +document.getElementById("arv").value;
+let price = +document.getElementById("price").value;
+
+if(!arv || !price){
+alert("Enter ARV & Price");
+return;
+}
 
 let cash = arv * 0.5;
 let seller = arv * 0.65;
@@ -33,11 +36,10 @@ let monthly2 = finance * 0.005;
 
 let overage = arv - price;
 
-dealData = {arv, price, address, cash, seller, finance, down, monthly, monthly2, overage};
+dealData = {arv, price, cash, seller, finance, down, monthly, monthly2, overage};
 
 document.getElementById("results").innerHTML = `
 <h3>💰 3 Tier Offers</h3>
-
 Cash: $${cash.toFixed(0)}<br>
 Seller Carry: $${seller.toFixed(0)}<br>
 Down: $${down.toFixed(0)}<br>
@@ -49,7 +51,6 @@ Monthly: $${monthly2.toFixed(0)}<br><br>
 Overage: $${overage.toFixed(0)}<br>
 <b>🔥 IT'S A DEAL!</b>
 `;
-
 }
 
 // REPAIRS
@@ -61,11 +62,18 @@ let r4 = +document.getElementById("r4").value || 0;
 
 let total = r1 + r2 + r3 + r4;
 
-document.getElementById("repairOut").innerHTML = "Total Rehab: $" + total;
+document.getElementById("repairOut").innerHTML =
+"Total Rehab: $" + total;
 }
 
-// COGO
-let cogoItems = ["Roofing","Electrical","Foundation","HVAC","Kitchen","Bathroom","Laundry Room"];
+// FULL COGO LIST
+let cogoItems = [
+"Roofing","Electrical","Plumbing","HVAC","Kitchen","Bathroom",
+"Flooring","Windows","Foundation","Framing","Painting",
+"Drywall","Demolition","Landscaping","Garage","Laundry Room"
+];
+
+let cogoTotal = 0;
 
 window.onload = function(){
 let select = document.getElementById("cogoItem");
@@ -77,19 +85,23 @@ select.add(opt);
 });
 
 initSignature();
-};
+}
 
+// ADD COGO
 function addCogo(){
 let item = document.getElementById("cogoItem").value;
 let cost = +document.getElementById("cogoCost").value || 0;
 
 cogoTotal += cost;
 
-document.getElementById("cogoList").innerHTML += item + ": $" + cost + "<br>";
-document.getElementById("cogoList").innerHTML += "<b>Total: $" + cogoTotal + "</b><br>";
+document.getElementById("cogoList").innerHTML +=
+item + ": $" + cost + "<br>";
+
+document.getElementById("cogoList").innerHTML =
+"<b>Total: $" + cogoTotal + "</b><br>" + document.getElementById("cogoList").innerHTML;
 }
 
-// SIGNATURE FIXED
+// SIGNATURE
 function initSignature(){
 let canvas = document.getElementById("sig");
 let ctx = canvas.getContext("2d");
@@ -97,24 +109,23 @@ let ctx = canvas.getContext("2d");
 canvas.width = 300;
 canvas.height = 150;
 
-ctx.lineWidth = 4;
+ctx.lineWidth = 3;
 ctx.lineCap = "round";
 
 let drawing = false;
 
-canvas.addEventListener("touchstart", e=>{ drawing = true; });
-canvas.addEventListener("touchend", e=>{ drawing = false; });
+canvas.addEventListener("touchstart", ()=> drawing = true);
+canvas.addEventListener("touchend", ()=> drawing = false);
 
 canvas.addEventListener("touchmove", e=>{
 e.preventDefault();
-
 if(!drawing) return;
 
 let rect = canvas.getBoundingClientRect();
-let touch = e.touches[0];
+let t = e.touches[0];
 
-let x = touch.clientX - rect.left;
-let y = touch.clientY - rect.top;
+let x = t.clientX - rect.left;
+let y = t.clientY - rect.top;
 
 ctx.lineTo(x,y);
 ctx.stroke();
@@ -123,73 +134,50 @@ ctx.moveTo(x,y);
 });
 }
 
-// CLEAR
 function clearSig(){
 let canvas = document.getElementById("sig");
-let ctx = canvas.getContext("2d");
-ctx.clearRect(0,0,canvas.width,canvas.height);
+canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
 }
 
-// CONTRACT PDF
+// PDF FUNCTIONS
 function generateContract(){
-
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-let sig = document.getElementById("sig").toDataURL();
-
-doc.text("PURCHASE AGREEMENT",10,10);
-doc.text("Address: " + dealData.address,10,20);
-doc.text("Price: $" + dealData.price,10,30);
-
-doc.addImage(sig,"PNG",20,200,80,30);
+doc.text("PURCHASE AGREEMENT - RO'LYFE", 10, 10);
+doc.text("Price: $" + dealData.price, 10, 20);
+doc.text("ARV: $" + dealData.arv, 10, 30);
+doc.text("Overage: $" + dealData.overage, 10, 40);
 
 doc.save("Purchase.pdf");
 }
 
-// BROKER
 function brokerAgreement(){
-
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-doc.text("BROKER AGREEMENT",10,10);
-doc.text("Fee: 3%",10,20);
+doc.text("BROKER AGREEMENT - 3% FEE", 10, 10);
+doc.text("Broker: Richardson L.", 10, 20);
 
 doc.save("Broker.pdf");
 }
 
-// PREAPP
 function preApp(){
-
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-doc.text("PRE-LOAN APPLICATION",10,10);
-doc.text("Address: " + dealData.address,10,20);
+doc.text("PRE LOAN APPLICATION", 10, 10);
+doc.text("Property: " + document.getElementById("address").value, 10, 20);
 
 doc.save("PreApp.pdf");
 }
 
 // ONE CLICK CLOSE
 function oneClickClose(){
-
-if(!dealData.address){
-alert("Run deal first.");
-return;
-}
-
 generateContract();
-setTimeout(()=>{ brokerAgreement(); },500);
-setTimeout(()=>{ preApp(); },1000);
+brokerAgreement();
+preApp();
 
-let msg = encodeURIComponent(
-"New Deal Ready\n" +
-dealData.address +
-"\nCall Richardson 267-808-5844"
-);
-
+let msg = encodeURIComponent("Deal Ready - Call Richardson 267-808-5844");
 window.open("sms:?body=" + msg);
-
-alert("🔥 Deal Sent");
 }
