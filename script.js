@@ -1,11 +1,27 @@
-let deal = {};
+let dealData = {};
 let cogoTotal = 0;
 
-// ===== ANALYZE DEAL =====
+// LINKS
+function openZillow(){
+let addr = document.getElementById("address").value;
+window.open("https://www.zillow.com/homes/" + encodeURIComponent(addr));
+}
+
+function openRedfin(){
+let addr = document.getElementById("address").value;
+window.open("https://www.redfin.com/search?q=" + encodeURIComponent(addr));
+}
+
+function openRural(){
+window.open("https://eligibility.sc.egov.usda.gov/");
+}
+
+// DEAL ANALYSIS
 function analyzeDeal(){
 
 let arv = +document.getElementById("arv").value || 0;
 let price = +document.getElementById("price").value || 0;
+let address = document.getElementById("address").value;
 
 let cash = arv * 0.5;
 let seller = arv * 0.65;
@@ -17,13 +33,12 @@ let monthly2 = finance * 0.005;
 
 let overage = arv - price;
 
-deal = {arv, price, cash, seller, finance, down, monthly, monthly2, overage};
+dealData = {arv, price, address, cash, seller, finance, down, monthly, monthly2, overage};
 
 document.getElementById("results").innerHTML = `
 <h3>💰 3 Tier Offers</h3>
 
 Cash: $${cash.toFixed(0)}<br>
-
 Seller Carry: $${seller.toFixed(0)}<br>
 Down: $${down.toFixed(0)}<br>
 Monthly: $${monthly.toFixed(0)}<br><br>
@@ -32,50 +47,50 @@ Seller Finance: $${finance.toFixed(0)}<br>
 Monthly: $${monthly2.toFixed(0)}<br><br>
 
 Overage: $${overage.toFixed(0)}<br>
-
-<b style="color:#22c55e;">🔥 IT'S A DEAL</b>
+<b>🔥 IT'S A DEAL!</b>
 `;
+
 }
 
-// ===== REPAIRS =====
+// REPAIRS
 function calcRepairs(){
+let r1 = +document.getElementById("r1").value || 0;
+let r2 = +document.getElementById("r2").value || 0;
+let r3 = +document.getElementById("r3").value || 0;
+let r4 = +document.getElementById("r4").value || 0;
 
-let total =
-(+r1.value||0)+(+r2.value||0)+(+r3.value||0)+(+r4.value||0);
+let total = r1 + r2 + r3 + r4;
 
-repairOut.innerHTML = "Total Rehab: $" + total;
+document.getElementById("repairOut").innerHTML = "Total Rehab: $" + total;
 }
 
-// ===== COGO =====
-let cogoItems = [
-"Roofing","Electrical","Foundation","HVAC","Kitchen","Bathroom",
-"Flooring","Painting","Plumbing","Windows","Laundry Room"
-];
+// COGO
+let cogoItems = ["Roofing","Electrical","Foundation","HVAC","Kitchen","Bathroom","Laundry Room"];
 
 window.onload = function(){
 let select = document.getElementById("cogoItem");
-cogoItems.forEach(i=>{
-let o = document.createElement("option");
-o.text = i;
-select.add(o);
+
+cogoItems.forEach(item=>{
+let opt = document.createElement("option");
+opt.text = item;
+select.add(opt);
 });
+
 initSignature();
 };
 
 function addCogo(){
-
-let item = cogoItem.value;
-let cost = +cogoCost.value || 0;
+let item = document.getElementById("cogoItem").value;
+let cost = +document.getElementById("cogoCost").value || 0;
 
 cogoTotal += cost;
 
-cogoList.innerHTML += item + ": $" + cost + "<br>";
-cogoList.innerHTML += "<b>Total: $" + cogoTotal + "</b><br>";
+document.getElementById("cogoList").innerHTML += item + ": $" + cost + "<br>";
+document.getElementById("cogoList").innerHTML += "<b>Total: $" + cogoTotal + "</b><br>";
 }
 
-// ===== SIGNATURE =====
+// SIGNATURE FIXED
 function initSignature(){
-
 let canvas = document.getElementById("sig");
 let ctx = canvas.getContext("2d");
 
@@ -83,130 +98,98 @@ canvas.width = 300;
 canvas.height = 150;
 
 ctx.lineWidth = 4;
+ctx.lineCap = "round";
 
 let drawing = false;
 
-canvas.addEventListener("touchstart", ()=> drawing=true);
-canvas.addEventListener("touchend", ()=> drawing=false);
+canvas.addEventListener("touchstart", e=>{ drawing = true; });
+canvas.addEventListener("touchend", e=>{ drawing = false; });
 
 canvas.addEventListener("touchmove", e=>{
 e.preventDefault();
+
 if(!drawing) return;
 
-let r = canvas.getBoundingClientRect();
-let t = e.touches[0];
+let rect = canvas.getBoundingClientRect();
+let touch = e.touches[0];
 
-ctx.lineTo(t.clientX-r.left, t.clientY-r.top);
+let x = touch.clientX - rect.left;
+let y = touch.clientY - rect.top;
+
+ctx.lineTo(x,y);
 ctx.stroke();
 ctx.beginPath();
-ctx.moveTo(t.clientX-r.left, t.clientY-r.top);
+ctx.moveTo(x,y);
 });
 }
 
+// CLEAR
 function clearSig(){
-sig.getContext("2d").clearRect(0,0,300,150);
+let canvas = document.getElementById("sig");
+let ctx = canvas.getContext("2d");
+ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-// ===== PDF EXPORT =====
-function exportPDF(){
-
-const { jsPDF } = window.jspdf;
-let doc = new jsPDF();
-
-doc.text("Deal Report",10,10);
-doc.text(`ARV: $${deal.arv}`,10,20);
-doc.text(`Price: $${deal.price}`,10,30);
-doc.text(`Profit: $${deal.overage}`,10,40);
-
-doc.save("Deal-Report.pdf");
-}
-
-// ===== PURCHASE AGREEMENT =====
+// CONTRACT PDF
 function generateContract(){
 
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-let sigImg = sig.toDataURL();
+let sig = document.getElementById("sig").toDataURL();
 
-doc.text(`PURCHASE AGREEMENT
+doc.text("PURCHASE AGREEMENT",10,10);
+doc.text("Address: " + dealData.address,10,20);
+doc.text("Price: $" + dealData.price,10,30);
 
-Buyer: Root Of Lyfe Holdings LLC
-Price: $${deal.price}
-ARV: $${deal.arv}
-
-TERMS:
-- Assignable
-- 14 day inspection
-- Buyer may cancel
-- Marketing allowed
-- Double close allowed
-
-Richardson L
-`,10,10);
-
-doc.addImage(sigImg,"PNG",20,200,80,30);
+doc.addImage(sig,"PNG",20,200,80,30);
 
 doc.save("Purchase.pdf");
 }
 
-// ===== BROKER AGREEMENT =====
+// BROKER
 function brokerAgreement(){
 
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-doc.text(`BROKER AGREEMENT
-
-Broker: Root Of Lyfe Holdings LLC
-Fee: 3%
-
-Client agrees to pay 3% at closing.
-`,10,10);
+doc.text("BROKER AGREEMENT",10,10);
+doc.text("Fee: 3%",10,20);
 
 doc.save("Broker.pdf");
 }
 
-// ===== PRE APP =====
+// PREAPP
 function preApp(){
 
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-doc.text(`PRE APPLICATION
-
-Price: $${deal.price}
-ARV: $${deal.arv}
-
-Profit: $${deal.overage}
-
-Broker: Richardson L
-richman@rootoflyfe.com
-`,10,10);
+doc.text("PRE-LOAN APPLICATION",10,10);
+doc.text("Address: " + dealData.address,10,20);
 
 doc.save("PreApp.pdf");
 }
 
-// ===== ONE CLICK CLOSE =====
+// ONE CLICK CLOSE
 function oneClickClose(){
 
-exportPDF();
+if(!dealData.address){
+alert("Run deal first.");
+return;
+}
+
 generateContract();
-brokerAgreement();
-preApp();
+setTimeout(()=>{ brokerAgreement(); },500);
+setTimeout(()=>{ preApp(); },1000);
 
-alert("🔥 DEAL CLOSED SYSTEM FIRED");
+let msg = encodeURIComponent(
+"New Deal Ready\n" +
+dealData.address +
+"\nCall Richardson 267-808-5844"
+);
+
+window.open("sms:?body=" + msg);
+
+alert("🔥 Deal Sent");
 }
-
-// ===== LINKS =====
-function openZillow(){
-window.open("https://www.zillow.com/homes/" + encodeURIComponent(address.value));
-}
-
-function openRedfin(){
-window.open("https://www.redfin.com/search?q=" + encodeURIComponent(address.value));
-}
-
-function openRural(){
-window.open("https://eligibility.sc.egov.usda.gov/");
-                        }
