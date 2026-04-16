@@ -16,13 +16,14 @@
 <h1>🏡 DealForge OS</h1>
 <p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
+<!-- PROPERTY -->
 <div class="card">
 <input id="address" placeholder="Property Address">
 
 <div class="links-row">
-<button onclick="openZillow()">🔎 Zillow</button>
-<button onclick="openRedfin()">🔎 Redfin</button>
-<button onclick="openRural()">🌾 Rural</button>
+<button onclick="openZillow()">Zillow</button>
+<button onclick="openRedfin()">Redfin</button>
+<button onclick="openRural()">USDA</button>
 </div>
 
 <input id="arv" placeholder="ARV">
@@ -32,8 +33,10 @@
 <button onclick="analyzeDeal()">Analyze Deal</button>
 </div>
 
+<!-- RESULTS -->
 <div class="card" id="results"></div>
 
+<!-- REPAIRS -->
 <div class="card">
 <h3>🏗️ Quick Repairs</h3>
 
@@ -46,33 +49,43 @@
 <div id="repairOut"></div>
 </div>
 
+<!-- COGO -->
 <div class="card">
 <h3>🧠 COGO Inspection</h3>
 
-<select id="cogoItem"></select>
-<input id="cogoCost" placeholder="Cost">
+<select id="cogoItem">
+<option>Roofing</option>
+<option>Electrical</option>
+<option>Plumbing</option>
+<option>HVAC</option>
+<option>Kitchen</option>
+<option>Bathroom</option>
+<option>Flooring</option>
+<option>Laundry Room</option>
+</select>
 
+<input id="cogoCost" placeholder="Cost">
 <button onclick="addCogo()">Add Item</button>
+
 <div id="cogoList"></div>
 </div>
 
+<!-- SIGN -->
 <div class="card">
 <h3>✍️ Signature</h3>
 <canvas id="sig"></canvas>
 <button onclick="clearSig()">Clear</button>
 </div>
 
+<!-- ACTIONS -->
 <div class="card actions">
-<button onclick="generateContract()">🧾 Purchase Agreement</button>
-<button onclick="brokerAgreement()">📑 Broker Agreement</button>
-<button onclick="preApp()">🏦 Pre Application</button>
-<button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
-</div>
+<button onclick="generateContract()">🧾 Generate PDF</button>
 <button onclick="sendEmail()">📧 Email Deal</button>
 <button onclick="sendText()">📲 Text Deal</button>
+<button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
+</div>
 
-<div class="card links">
-
+<!-- CONTRACT HUB -->
 <div class="card">
 <h3>🧾 Contracts (Zoho)</h3>
 
@@ -80,23 +93,30 @@
 
 <a href="https://workdrive.zohopublic.com/writer/open/fyrri3c23f1670f1d414097c5b25b69dda0df" target="_blank">Assignment Agreement</a>
 
-<a href="https://workdrive.zohopublic.com/writer/open/fyrriec767d07079245a89aa82700dc3a7716" target="_blank">Broker Agreement (3%)</a>
+<a href="https://workdrive.zohopublic.com/writer/open/fyrriec767d07079245a89aa82700dc3a7716" target="_blank">Broker Agreement</a>
 
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri128659b62a8b48fd8df8f6446694a2bb" target="_blank">Pre Loan Application</a>
+<a href="https://workdrive.zohopublic.com/writer/open/fyrri128659b62a8b48fd8df8f6446694a2bb" target="_blank">Pre Loan App</a>
 
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri9e256390ea704770ba02f1add8d58885" target="_blank">Realtor Offer Sheet</a>
+<a href="https://workdrive.zohopublic.com/writer/open/fyrri9e256390ea704770ba02f1add8d58885" target="_blank">Realtor Offer</a>
 
-<a href="https://workdrive.zohopublic.com/writer/open/fyrrie51b06a70b43457db8a652da3fed3e58" target="_blank">Disclosure & Authorization</a>
+<a href="https://workdrive.zohopublic.com/writer/open/fyrrie51b06a70b43457db8a652da3fed3e58" target="_blank">Disclosure</a>
 
 </div>
-  
+
+<!-- LINKS -->
+<div class="card links">
 <h3>🔗 Funding & Tools</h3>
 
-<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures</a>
-<a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit</a>
+<a href="https://privatemoneyexchange.com/aff-page/richman/" target="_blank">Private Money</a>
+<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7 Figures</a>
+<a href="https://go.mypartner.io/business-financing/?ref=001Qk00000MkqgTIAR" target="_blank">Business Financing</a>
 <a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">Funding Experts</a>
-<a href="https://eligibility.sc.egov.usda.gov/" target="_blank">USDA Rural</a>
-<a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Your Intake</a>
+
+<a href="https://form.jotform.com/253154859148062" target="_blank">Upload Docs</a>
+<a href="https://form.jotform.com/252063354378055" target="_blank">Application</a>
+
+<a href="https://sendfuse.com/login" target="_blank">SendFuse</a>
+<a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Zoho Intake</a>
 
 </div>
 
@@ -104,4 +124,4 @@
 
 <script src="script.js"></script>
 </body>
-  </html>
+</html>
