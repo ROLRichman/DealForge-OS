@@ -181,3 +181,86 @@ preApp();
 let msg = encodeURIComponent("Deal Ready - Call Richardson 267-808-5844");
 window.open("sms:?body=" + msg);
 }
+
+// EMAIL DEAL
+function sendEmail(){
+
+let subject = encodeURIComponent("New Deal - " + document.getElementById("address").value);
+
+let body = encodeURIComponent(`
+Deal Summary:
+
+Address: ${document.getElementById("address").value}
+
+ARV: $${dealData.arv}
+Price: $${dealData.price}
+Overage: $${dealData.overage}
+
+Contact:
+Richardson L.
+267-808-5844
+richman@rootoflyfe.com
+`);
+
+window.open(`mailto:?subject=${subject}&body=${body}`);
+}
+
+
+// SMS DEAL (UPGRADED)
+function sendText(){
+
+let msg = encodeURIComponent(
+`🔥 NEW DEAL
+
+${document.getElementById("address").value}
+
+ARV: $${dealData.arv}
+Price: $${dealData.price}
+
+Call/Text:
+Richardson L.
+267-808-5844`
+);
+
+window.open("sms:?body=" + msg);
+}
+
+function advanced3Tier(){
+
+let arv = +document.getElementById("arv").value;
+
+let cash = arv * 0.5;
+let seller = arv * 0.65;
+let finance = arv * 0.75;
+
+// Seller carry
+let down = seller * 0.05;
+let loan = seller - down;
+let rate = 0.05 / 12;
+let n = 360;
+
+let monthly = loan * rate / (1 - Math.pow(1 + rate, -n));
+
+// Balloon
+let balloon = loan * Math.pow(1 + rate, 48);
+
+// Seller finance
+let rate2 = 0.06 / 12;
+let monthly2 = finance * rate2 / (1 - Math.pow(1 + rate2, -360));
+let balloon2 = finance * Math.pow(1 + rate2, 60);
+
+document.getElementById("results").innerHTML += `
+
+<hr>
+<h3>📊 Advanced Terms</h3>
+
+Seller Carry:
+Down: $${down.toFixed(0)}<br>
+Monthly: $${monthly.toFixed(0)}<br>
+Balloon (4yr): $${balloon.toFixed(0)}<br><br>
+
+Seller Finance:
+Monthly: $${monthly2.toFixed(0)}<br>
+Balloon (5yr): $${balloon2.toFixed(0)}
+`;
+}
