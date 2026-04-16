@@ -7,8 +7,8 @@
 
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </head>
+
 <body>
 
 <div class="app">
@@ -16,9 +16,7 @@
 <h1>🏡 DealForge OS</h1>
 <p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
-<!-- PROPERTY -->
 <div class="card">
-
 <input id="address" placeholder="Property Address">
 
 <div class="links-row">
@@ -29,31 +27,25 @@
 
 <input id="arv" placeholder="ARV">
 <input id="price" placeholder="Purchase Price">
-
-<label>📅 Closing Date</label>
 <input type="date" id="closingDate">
 
 <button onclick="analyzeDeal()">Analyze Deal</button>
-
 </div>
 
-<!-- RESULTS -->
 <div class="card" id="results"></div>
 
-<!-- REPAIRS -->
 <div class="card">
 <h3>🏗️ Quick Repairs</h3>
 
-<input id="r1" placeholder="Plumbing">
-<input id="r2" placeholder="Flooring">
-<input id="r3" placeholder="Roofing">
-<input id="r4" placeholder="Electrical">
+<input id="r1" placeholder="Roof (Heavy)">
+<input id="r2" placeholder="Electrical (Medium)">
+<input id="r3" placeholder="Plumbing (Medium)">
+<input id="r4" placeholder="Interior (Light)">
 
 <button onclick="calcRepairs()">Calculate</button>
 <div id="repairOut"></div>
 </div>
 
-<!-- COGO -->
 <div class="card">
 <h3>🧠 COGO Inspection</h3>
 
@@ -64,46 +56,26 @@
 <div id="cogoList"></div>
 </div>
 
-<!-- CONTACTS -->
-<div class="card">
-<h3>📇 Deal Contacts</h3>
-
-<input id="contractor" value="RJ Construction">
-<input id="lender" value="Cogo Capital">
-<input id="email" value="richman@rootoflyfe.com">
-
-</div>
-
-<!-- SIGN -->
 <div class="card">
 <h3>✍️ Signature</h3>
 <canvas id="sig"></canvas>
 <button onclick="clearSig()">Clear</button>
 </div>
 
-<!-- ACTIONS -->
 <div class="card actions">
-
 <button onclick="generateContract()">🧾 Purchase Agreement</button>
 <button onclick="brokerAgreement()">📑 Broker Agreement</button>
 <button onclick="preApp()">🏦 Pre Application</button>
-
 <button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
-
 </div>
 
-<!-- LINKS -->
 <div class="card links">
-
 <h3>🔗 Funding & Tools</h3>
 
 <a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures</a>
 <a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit</a>
 <a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">Funding Experts</a>
-<a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
-<a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
-<a href="https://form.jotform.com/2530967310210469" target="_blank">Funding App</a>
-<a href="https://form.jotform.com/253154859148062" target="_blank">Upload Docs</a>
+<a href="https://eligibility.sc.egov.usda.gov/" target="_blank">USDA Rural</a>
 <a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Your Intake</a>
 
 </div>
@@ -112,4 +84,4 @@
 
 <script src="script.js"></script>
 </body>
-</html>
+  </html>
