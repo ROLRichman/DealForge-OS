@@ -1,6 +1,6 @@
 let dealData = {};
 
-// LINKS
+// ================= LINKS =================
 function openZillow(){
 let addr = document.getElementById("address").value;
 window.open("https://www.zillow.com/homes/" + encodeURIComponent(addr));
@@ -15,7 +15,7 @@ function openRural(){
 window.open("https://eligibility.sc.egov.usda.gov/");
 }
 
-// ANALYZE DEAL (FIXED)
+// ================= ANALYZE DEAL =================
 function analyzeDeal(){
 
 let arv = +document.getElementById("arv").value;
@@ -26,6 +26,7 @@ alert("Enter ARV & Price");
 return;
 }
 
+// CORE CALCS
 let cash = arv * 0.5;
 let seller = arv * 0.65;
 let finance = arv * 0.75;
@@ -36,160 +37,69 @@ let monthly2 = finance * 0.005;
 
 let overage = arv - price;
 
+// SAVE GLOBAL
 dealData = {arv, price, cash, seller, finance, down, monthly, monthly2, overage};
 
+// DISPLAY
 document.getElementById("results").innerHTML = `
 <h3>💰 3 Tier Offers</h3>
-Cash: $${cash.toFixed(0)}<br>
-Seller Carry: $${seller.toFixed(0)}<br>
+
+<b>Cash Offer:</b> $${cash.toFixed(0)}<br>
+<b>Seller Carry:</b> $${seller.toFixed(0)}<br>
 Down: $${down.toFixed(0)}<br>
 Monthly: $${monthly.toFixed(0)}<br><br>
 
-Seller Finance: $${finance.toFixed(0)}<br>
+<b>Seller Finance:</b> $${finance.toFixed(0)}<br>
 Monthly: $${monthly2.toFixed(0)}<br><br>
 
-Overage: $${overage.toFixed(0)}<br>
-<b>🔥 IT'S A DEAL!</b>
+<b>Overage:</b> $${overage.toFixed(0)}<br>
+🔥 DEAL STATUS: LIVE
+`;
+
+advanced3Tier();
+}
+
+// ================= ADVANCED TERMS =================
+function advanced3Tier(){
+
+let {seller, finance} = dealData;
+
+// SELLER CARRY
+let loan = seller * 0.95;
+let rate = 0.05/12;
+let monthly = loan * rate / (1 - Math.pow(1+rate,-360));
+let balloon = loan * Math.pow(1+rate,48);
+
+// SELLER FINANCE
+let rate2 = 0.06/12;
+let monthly2 = finance * rate2 / (1 - Math.pow(1+rate2,-360));
+let balloon2 = finance * Math.pow(1+rate2,60);
+
+document.getElementById("results").innerHTML += `
+<hr>
+<h3>📊 Advanced Terms</h3>
+
+Seller Carry:<br>
+Monthly: $${monthly.toFixed(0)}<br>
+Balloon (4yr): $${balloon.toFixed(0)}<br><br>
+
+Seller Finance:<br>
+Monthly: $${monthly2.toFixed(0)}<br>
+Balloon (5yr): $${balloon2.toFixed(0)}
 `;
 }
 
-// REPAIRS
-function calcRepairs(){
-let r1 = +document.getElementById("r1").value || 0;
-let r2 = +document.getElementById("r2").value || 0;
-let r3 = +document.getElementById("r3").value || 0;
-let r4 = +document.getElementById("r4").value || 0;
-
-let total = r1 + r2 + r3 + r4;
-
-document.getElementById("repairOut").innerHTML =
-"Total Rehab: $" + total;
-}
-
-// FULL COGO LIST
-let cogoItems = [
-"Roofing","Electrical","Plumbing","HVAC","Kitchen","Bathroom",
-"Flooring","Windows","Foundation","Framing","Painting",
-"Drywall","Demolition","Landscaping","Garage","Laundry Room"
-];
-
-let cogoTotal = 0;
-
-window.onload = function(){
-let select = document.getElementById("cogoItem");
-
-cogoItems.forEach(item=>{
-let opt = document.createElement("option");
-opt.text = item;
-select.add(opt);
-});
-
-initSignature();
-}
-
-// ADD COGO
-function addCogo(){
-let item = document.getElementById("cogoItem").value;
-let cost = +document.getElementById("cogoCost").value || 0;
-
-cogoTotal += cost;
-
-document.getElementById("cogoList").innerHTML +=
-item + ": $" + cost + "<br>";
-
-document.getElementById("cogoList").innerHTML =
-"<b>Total: $" + cogoTotal + "</b><br>" + document.getElementById("cogoList").innerHTML;
-}
-
-// SIGNATURE
-function initSignature(){
-let canvas = document.getElementById("sig");
-let ctx = canvas.getContext("2d");
-
-canvas.width = 300;
-canvas.height = 150;
-
-ctx.lineWidth = 3;
-ctx.lineCap = "round";
-
-let drawing = false;
-
-canvas.addEventListener("touchstart", ()=> drawing = true);
-canvas.addEventListener("touchend", ()=> drawing = false);
-
-canvas.addEventListener("touchmove", e=>{
-e.preventDefault();
-if(!drawing) return;
-
-let rect = canvas.getBoundingClientRect();
-let t = e.touches[0];
-
-let x = t.clientX - rect.left;
-let y = t.clientY - rect.top;
-
-ctx.lineTo(x,y);
-ctx.stroke();
-ctx.beginPath();
-ctx.moveTo(x,y);
-});
-}
-
-function clearSig(){
-let canvas = document.getElementById("sig");
-canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
-}
-
-// PDF FUNCTIONS
-function generateContract(){
-const { jsPDF } = window.jspdf;
-let doc = new jsPDF();
-
-doc.text("PURCHASE AGREEMENT - RO'LYFE", 10, 10);
-doc.text("Price: $" + dealData.price, 10, 20);
-doc.text("ARV: $" + dealData.arv, 10, 30);
-doc.text("Overage: $" + dealData.overage, 10, 40);
-
-doc.save("Purchase.pdf");
-}
-
-function brokerAgreement(){
-const { jsPDF } = window.jspdf;
-let doc = new jsPDF();
-
-doc.text("BROKER AGREEMENT - 3% FEE", 10, 10);
-doc.text("Broker: Richardson L.", 10, 20);
-
-doc.save("Broker.pdf");
-}
-
-function preApp(){
-const { jsPDF } = window.jspdf;
-let doc = new jsPDF();
-
-doc.text("PRE LOAN APPLICATION", 10, 10);
-doc.text("Property: " + document.getElementById("address").value, 10, 20);
-
-doc.save("PreApp.pdf");
-}
-
-// ONE CLICK CLOSE
-function oneClickClose(){
-generateContract();
-brokerAgreement();
-preApp();
-
-let msg = encodeURIComponent("Deal Ready - Call Richardson 267-808-5844");
-window.open("sms:?body=" + msg);
-}
-
-// EMAIL DEAL
+// ================= EMAIL =================
 function sendEmail(){
+
+if(!dealData.arv){
+alert("Run deal first");
+return;
+}
 
 let subject = encodeURIComponent("New Deal - " + document.getElementById("address").value);
 
 let body = encodeURIComponent(`
-Deal Summary:
-
 Address: ${document.getElementById("address").value}
 
 ARV: $${dealData.arv}
@@ -205,62 +115,71 @@ richman@rootoflyfe.com
 window.open(`mailto:?subject=${subject}&body=${body}`);
 }
 
-
-// SMS DEAL (UPGRADED)
+// ================= SMS =================
 function sendText(){
 
-let msg = encodeURIComponent(
-`🔥 NEW DEAL
+if(!dealData.arv){
+alert("Run deal first");
+return;
+}
+
+let msg = encodeURIComponent(`
+🔥 NEW DEAL
 
 ${document.getElementById("address").value}
 
 ARV: $${dealData.arv}
 Price: $${dealData.price}
 
-Call/Text:
-Richardson L.
-267-808-5844`
-);
+📞 267-808-5844
+`);
 
 window.open("sms:?body=" + msg);
 }
 
-function advanced3Tier(){
+// ================= REPAIRS =================
+function calcRepairs(){
 
-let arv = +document.getElementById("arv").value;
+let total =
+(+r1.value||0)+(+r2.value||0)+(+r3.value||0)+(+r4.value||0);
 
-let cash = arv * 0.5;
-let seller = arv * 0.65;
-let finance = arv * 0.75;
+repairOut.innerHTML = "Total Rehab: $" + total;
+}
 
-// Seller carry
-let down = seller * 0.05;
-let loan = seller - down;
-let rate = 0.05 / 12;
-let n = 360;
+// ================= COGO =================
+let cogoTotal = 0;
 
-let monthly = loan * rate / (1 - Math.pow(1 + rate, -n));
+function addCogo(){
 
-// Balloon
-let balloon = loan * Math.pow(1 + rate, 48);
+let item = cogoItem.value;
+let cost = +cogoCost.value || 0;
 
-// Seller finance
-let rate2 = 0.06 / 12;
-let monthly2 = finance * rate2 / (1 - Math.pow(1 + rate2, -360));
-let balloon2 = finance * Math.pow(1 + rate2, 60);
+cogoTotal += cost;
 
-document.getElementById("results").innerHTML += `
+cogoList.innerHTML =
+`<b>Total: $${cogoTotal}</b><br>` +
+item + ": $" + cost + "<br>" +
+cogoList.innerHTML;
+}
 
-<hr>
-<h3>📊 Advanced Terms</h3>
+// ================= PDF =================
+function generateContract(){
+const { jsPDF } = window.jspdf;
+let doc = new jsPDF();
 
-Seller Carry:
-Down: $${down.toFixed(0)}<br>
-Monthly: $${monthly.toFixed(0)}<br>
-Balloon (4yr): $${balloon.toFixed(0)}<br><br>
+doc.text("RO'LYFE PURCHASE AGREEMENT",10,10);
+doc.text("Price: $" + dealData.price,10,20);
+doc.text("ARV: $" + dealData.arv,10,30);
 
-Seller Finance:
-Monthly: $${monthly2.toFixed(0)}<br>
-Balloon (5yr): $${balloon2.toFixed(0)}
-`;
+doc.save("deal.pdf");
+}
+
+// ================= ONE CLICK =================
+function oneClickClose(){
+
+generateContract();
+sendEmail();
+sendText();
+
+alert("🚀 Deal Sent + Contract Generated");
 }
