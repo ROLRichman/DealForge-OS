@@ -162,4 +162,4 @@ generatePDF();
 sendEmail();
 sendText();
 alert("Deal Sent 🚀");
-  }
+}
