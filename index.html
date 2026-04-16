@@ -31,12 +31,13 @@
 <input type="date" id="closingDate">
 
 <button onclick="analyzeDeal()">Analyze Deal</button>
+<button onclick="resetDeal()">♻️ Reset Deal</button>
 </div>
 
 <!-- DEAL RESULT -->
 <div class="card" id="dealResult"></div>
 
-<!-- 3 TIER SECTION -->
+<!-- 3 TIER ENGINE (SEPARATE LIKE YOU WANTED) -->
 <div class="card">
 <h3>📊 3 Tier Deal Engine</h3>
 
@@ -51,10 +52,10 @@
 <div class="card">
 <h3>🏗️ Quick Repairs</h3>
 
-<input id="r1" placeholder="Roof (Heavy)">
-<input id="r2" placeholder="Electrical (Medium)">
-<input id="r3" placeholder="Plumbing (Medium)">
-<input id="r4" placeholder="Interior (Light)">
+<input id="r1" placeholder="Roof">
+<input id="r2" placeholder="Electrical">
+<input id="r3" placeholder="Plumbing">
+<input id="r4" placeholder="Interior">
 
 <button onclick="calcRepairs()">Calculate</button>
 <div id="repairOut"></div>
