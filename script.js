@@ -23,6 +23,7 @@ dealResult.innerHTML = "";
 tierResults.innerHTML = "";
 repairOut.innerHTML = "";
 cogoList.innerHTML = "";
+cogoTotal.innerHTML = "";
 
 dealData = {};
 cogoTotal = 0;
@@ -30,8 +31,9 @@ cogoTotal = 0;
 clearSig();
 }
 
-// ANALYZE DEAL
+// ANALYZE
 function analyzeDeal(){
+
 let a = +arv.value;
 let p = +price.value;
 
@@ -46,16 +48,22 @@ dealData = {arv:a, price:p, overage, profit};
 
 dealResult.innerHTML = `
 <h3>💰 Deal Analysis</h3>
+
 ARV: $${a.toLocaleString()}<br><br>
+
 Price: $${p.toLocaleString()}<br><br>
+
 Overage: $${overage.toLocaleString()}<br>
+
 Profit: $${profit.toLocaleString()}<br><br>
+
 <b>${label}</b>
 `;
 }
 
 // 3 TIER
 function run3Tier(){
+
 let a = +tierArv.value;
 
 let cash = a * 0.5;
@@ -65,7 +73,9 @@ let finance = a * 0.75;
 tierResults.innerHTML = `
 <br>
 Cash Offer: $${cash.toLocaleString()}<br><br>
+
 Seller Carry: $${seller.toLocaleString()}<br><br>
+
 Seller Finance: $${finance.toLocaleString()}
 `;
 }
@@ -93,15 +103,19 @@ initSignature();
 };
 
 function addCogo(){
+
 let item = cogoItem.value;
 let cost = +cogoCost.value || 0;
 
 cogoTotal += cost;
 
-cogoList.innerHTML =
-"<b>Total: $" + cogoTotal.toLocaleString() + "</b><br>" +
-item + ": $" + cost + "<br>" +
-cogoList.innerHTML;
+let entry = document.createElement("div");
+entry.innerHTML = item + ": $" + cost.toLocaleString();
+
+cogoList.appendChild(entry);
+
+document.getElementById("cogoTotal").innerHTML =
+"<b>Total: $" + cogoTotal.toLocaleString() + "</b>";
 }
 
 // SIGNATURE
@@ -135,8 +149,9 @@ function clearSig(){
 sig.getContext("2d").clearRect(0,0,sig.width,sig.height);
 }
 
-// PDF (WITH CLAUSES)
+// PDF
 function generatePDF(){
+
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
@@ -192,4 +207,4 @@ generatePDF();
 sendEmail();
 sendText();
 alert("🚀 Deal Sent");
-  }
+}
