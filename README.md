@@ -59,7 +59,39 @@ This system is based on:
 
 ---
 
-## 📬 Contact
+# 🏡 DealForge OS
 
+Mobile-first real estate deal system.
+
+## 🚀 Features
+- Deal Analyzer (ARV + Offers)
+- 3-Tier Offer Engine
+- Rehab Calculator
+- COGO Tracker
+- PDF Generator
+- Email + SMS Deal Sender
+- Zoho Contract Hub
+
+## ⚙️ Workflow
+1. Enter property
+2. Analyze deal
+3. Review offers
+4. Generate PDF
+5. Send via SMS/Email
+6. Open contracts
+7. Close deal
+
+## 🔗 Integrations
+- Zoho Writer (contracts)
+- Jotform (intake)
+- SendFuse (SMS)
+- Funding platforms
+
+## 🧠 Strategy
+- 50% Cash
+- 65% Seller Carry
+- 75% Finance
+
+## 📬 Contact
 Root Of Lyfe Holdings LLC  
 richman@rootoflyfe.com
