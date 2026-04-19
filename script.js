@@ -1,37 +1,82 @@
+let dealData = {};
+let cogoRunningTotal = 0;
+
+let cogoItems = [
+"Roofing",
+"Electrical",
+"Plumbing",
+"HVAC",
+"Kitchen",
+"Bathroom",
+"Flooring",
+"Windows",
+"Foundation",
+"Framing",
+"Drywall",
+"Paint",
+"Demolition",
+"Landscaping",
+"Driveway",
+"Garage",
+"Laundry Room"
+];
+
+window.onload = function(){
+const select = document.getElementById("cogoItem");
+if(select){
+cogoItems.forEach(item => {
+let opt = document.createElement("option");
+opt.text = item;
+select.add(opt);
+});
+}
+initSignature();
+};
+
 function openZillow(){
-  const address = document.getElementById("address").value;
-  window.open("https://www.zillow.com/homes/" + encodeURIComponent(address));
+window.open("https://www.zillow.com/homes/" + encodeURIComponent(address.value));
 }
 
 function openRedfin(){
-  const address = document.getElementById("address").value;
-  window.open("https://www.redfin.com/search?q=" + encodeURIComponent(address));
+window.open("https://www.redfin.com/search?q=" + encodeURIComponent(address.value));
 }
 
 function openRural(){
-  window.open("https://eligibility.sc.egov.usda.gov/");
+window.open("https://eligibility.sc.egov.usda.gov/");
 }
 
 function analyzeDeal(){
-  const arv = Number(document.getElementById("arv").value || 0);
-  const price = Number(document.getElementById("price").value || 0);
+let a = +arv.value;
+let p = +price.value;
 
-  const overage = arv - price;
-  const profit = (arv * 0.7) - price;
+let overage = a - p;
+let profit = (a * 0.7) - p;
 
-  document.getElementById("dealResult").innerHTML = `
-    <h3>💰 Deal Analysis</h3>
-    <p><b>ARV:</b> $${arv.toLocaleString()}</p>
-    <p><b>Price:</b> $${price.toLocaleString()}</p>
-    <p><b>Overage:</b> $${overage.toLocaleString()}</p>
-    <p><b>Profit:</b> $${profit.toLocaleString()}</p>
-  `;
+dealData = { a, p, overage, profit };
 }
 
-function resetDeal(){
-  document.getElementById("address").value = "";
-  document.getElementById("arv").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("closingDate").value = "";
-  document.getElementById("dealResult").innerHTML = "";
+function calcRepairs(){
+let total = (+r1.value||0)+(+r2.value||0)+(+r3.value||0)+(+r4.value||0);
+repairOut.innerHTML = "Total Rehab: $" + total.toLocaleString();
+}
+
+function addCogo(){
+let item = cogoItem.value;
+let cost = +cogoCost.value || 0;
+
+cogoRunningTotal += cost;
+
+let row = document.createElement("div");
+row.innerHTML = `${item}: $${cost.toLocaleString()}`;
+cogoList.appendChild(row);
+
+cogoTotal.innerHTML = `<b>Total: $${cogoRunningTotal.toLocaleString()}</b>`;
+}
+
+function generatePDF(){
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+doc.text("RO'Lyfe Holdings LLC", 10, 10);
+doc.text("Deal Summary", 10, 20);
+doc.save("Deal.pdf");
 }
