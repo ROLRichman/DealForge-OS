@@ -1,143 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>DealForge OS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
-<body>
+let dealData = {};
+let cogoRunningTotal = 0;
 
-<div class="app">
+function analyzeDeal(){
+  let a = +document.getElementById("arv").value || 0;
+  let p = +document.getElementById("price").value || 0;
 
-<h1>🏡 DealForge OS</h1>
-<p class="sub">Analyze → Lock → Sign → Send → Close</p>
+  if(!a || !p){
+    document.getElementById("dealResult").innerHTML = "<b>Enter ARV and Purchase Price</b>";
+    return;
+  }
 
-<!-- DEAL INPUT -->
-<div class="card">
-  <input id="address" placeholder="Property Address">
+  let overage = a - p;
+  let profit = (a * 0.7) - p;
+  let label = profit > 50000 ? "🔥 SOLID DEAL" : "⚠️ CHECK DEAL";
 
-  <div class="links-row">
-    <button onclick="openZillow()">Zillow</button>
-    <button onclick="openRedfin()">Redfin</button>
-    <button onclick="openRural()">USDA</button>
-  </div>
+  dealData = { a, p, overage, profit };
 
-  <input id="arv" placeholder="ARV">
-  <input id="price" placeholder="Purchase Price">
-  <input type="date" id="closingDate">
+  document.getElementById("dealResult").innerHTML = `
+  <h3>💰 Deal Analysis</h3>
+  ARV: $${a.toLocaleString()}<br><br>
+  Purchase Price: $${p.toLocaleString()}<br><br>
+  Overage: $${overage.toLocaleString()}<br><br>
+  Estimated Profit: $${profit.toLocaleString()}<br><br>
+  <b>${label}</b>`;
+}
 
-  <button onclick="analyzeDeal()">Analyze Deal</button>
-  <button onclick="resetDeal()">♻️ Reset Deal</button>
-</div>
+function calcRepairs(){
+  let total = (+r1.value||0)+(+r2.value||0)+(+r3.value||0)+(+r4.value||0);
+  repairOut.innerHTML = "Total Rehab: $" + total.toLocaleString();
+}
 
-<!-- DEAL RESULT -->
-<div class="card" id="dealResult"></div>
+function clearSig(){
+  const canvas = document.getElementById("sig");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
 
-<!-- 3 TIER ENGINE -->
-<div class="card">
-  <h3>📊 3 Tier Deal Engine</h3>
-  <input id="tierArv" placeholder="Enter ARV">
-  <button onclick="run3Tier()">Run 3 Tier</button>
-  <div id="tierResults"></div>
-</div>
+function generatePDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-<!-- QUICK REPAIRS -->
-<div class="card">
-  <h3>🏗️ Quick Repairs</h3>
-  <input id="r1" placeholder="Roof">
-  <input id="r2" placeholder="Electrical">
-  <input id="r3" placeholder="Plumbing">
-  <input id="r4" placeholder="Interior">
-  <button onclick="calcRepairs()">Calculate</button>
-  <div id="repairOut"></div>
-</div>
+  let y = 15;
+  doc.text("RO'Lyfe Holdings LLC - Purchase Offer",10,y); y+=10;
+  doc.text(`Property: ${document.getElementById("address").value}`,10,y); y+=8;
+  doc.text(`ARV: $${dealData.a?.toLocaleString() || 0}`,10,y); y+=8;
+  doc.text(`Purchase Price: $${dealData.p?.toLocaleString() || 0}`,10,y); y+=8;
+  doc.text(`Overage: $${dealData.overage?.toLocaleString() || 0}`,10,y); y+=8;
 
-<!-- COGO -->
-<div class="card">
-  <h3>🧠 COGO Inspection</h3>
-  <select id="cogoItem"></select>
-  <input id="cogoCost" placeholder="Cost">
-  <button onclick="addCogo()">Add Item</button>
-  <div id="cogoTotal"></div>
-  <div id="cogoList"></div>
-</div>
+  doc.text("- AS-IS Sale",10,y+=10);
+  doc.text("- 14 Day Inspection",10,y+=8);
+  doc.text("- Assignable Contract",10,y+=8);
+  doc.text("- Contractor Assignment Allowed",10,y+=8);
+  doc.text("- Seller Finance / Refinance Option Welcome",10,y+=8);
 
-<!-- SIGNATURE -->
-<div class="card">
-  <h3>✍️ Signature</h3>
-  <canvas id="sig"></canvas>
-  <button onclick="clearSig()">Clear</button>
-</div>
-
-<!-- ACTIONS -->
-<div class="card actions">
-  <button onclick="generatePDF()">🧾 Generate PDF</button>
-  <button onclick="sendEmail()">📧 Email Deal</button>
-  <button onclick="sendText()">📲 Text Deal</button>
-  <button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
-</div>
-
-<!-- CONTRACTS -->
-<div class="card">
-  <h3>🧾 Contracts (Zoho)</h3>
-  <div class="btn-grid">
-    <a href="https://workdrive.zohopublic.com/writer/open/fyrribde87c7f276547e2a24006e30176378b" target="_blank">Purchase</a>
-    <a href="https://workdrive.zohopublic.com/writer/open/fyrri3c23f1670f1d414097c5b25b69dda0df" target="_blank">Assignment</a>
-    <a href="https://workdrive.zohopublic.com/writer/open/fyrriec767d07079245a89aa82700dc3a7716" target="_blank">Broker</a>
-    <a href="https://workdrive.zohopublic.com/writer/open/fyrri128659b62a8b48fd8df8f6446694a2bb" target="_blank">Pre-App</a>
-    <a href="https://workdrive.zohopublic.com/writer/open/fyrri9e256390ea704770ba02f1add8d58885" target="_blank">Realtor</a>
-    <a href="https://workdrive.zohopublic.com/writer/open/fyrrie51b06a70b43457db8a652da3fed3e58" target="_blank">Disclosure</a>
-  </div>
-</div>
-
-<!-- FULL ORIGINAL SYSTEM + ALL ADDED MODULES KEPT -->
-<!-- Deal Input -->
-<!-- Repairs -->
-<!-- COGO -->
-<!-- Signature -->
-<!-- PDF -->
-<!-- Zoho -->
-<!-- Funding -->
-<!-- Property Lookup -->
-<!-- Dropdown Hub -->
-<!-- Credit -->
-<!-- Jotform Embedded Intake -->
-
-<!-- EMBEDDED DROPBOX -->
-<div class="card">
-<h3>🧾 Dropbox Quick Intake</h3>
-<iframe
-src="https://form.jotform.com/253154859148062"
-width="100%"
-height="600"
-frameborder="0"
-allowfullscreen>
-</iframe>
-</div>
-
-<!-- EMBEDDED MAIN INTAKE -->
-<div class="card">
-<h3>📋 Main Intake Form</h3>
-<iframe
-src="https://form.jotform.com/252063354378055"
-width="100%"
-height="600"
-frameborder="0"
-allowfullscreen>
-</iframe>
-</div>
-
-<!-- OPEN AI AGENT -->
-<div class="card actions">
-<button onclick="window.open('https://agent.jotform.com/019481997fbe793382f010b5f7f063eea634','_blank')">
-🤖 Open AI Agent
-</button>
-</div>
-
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
+  doc.save("Deal_Offer.pdf");
+}
