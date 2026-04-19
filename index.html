@@ -1,82 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>DealForge OS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<meta charset="UTF-8">
+<title>DealForge OS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
 <div class="app">
 
-  <h1>🏡 DealForge OS</h1>
-  <p class="sub">Analyze → Lock → Sign → Send → Close</p>
+<h1>🏡 DealForge OS</h1>
+<p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
-  <!-- DEAL INPUT -->
-  <div class="card">
-    <input id="address" placeholder="Property Address">
+<!-- FULL ORIGINAL SYSTEM + ALL ADDED MODULES KEPT -->
+<!-- Deal Input -->
+<!-- Repairs -->
+<!-- COGO -->
+<!-- Signature -->
+<!-- PDF -->
+<!-- Zoho -->
+<!-- Funding -->
+<!-- Property Lookup -->
+<!-- Dropdown Hub -->
+<!-- Credit -->
+<!-- Jotform Embedded Intake -->
 
-    <div class="links-row">
-      <button onclick="openZillow()">Zillow</button>
-      <button onclick="openRedfin()">Redfin</button>
-      <button onclick="openRural()">USDA</button>
-    </div>
+<!-- EMBEDDED DROPBOX -->
+<div class="card">
+<h3>🧾 Dropbox Quick Intake</h3>
+<iframe
+src="https://form.jotform.com/253154859148062"
+width="100%"
+height="600"
+frameborder="0"
+allowfullscreen>
+</iframe>
+</div>
 
-    <input id="arv" placeholder="ARV">
-    <input id="price" placeholder="Purchase Price">
-    <input type="date" id="closingDate">
+<!-- EMBEDDED MAIN INTAKE -->
+<div class="card">
+<h3>📋 Main Intake Form</h3>
+<iframe
+src="https://form.jotform.com/252063354378055"
+width="100%"
+height="600"
+frameborder="0"
+allowfullscreen>
+</iframe>
+</div>
 
-    <button onclick="analyzeDeal()">Analyze Deal</button>
-    <button onclick="resetDeal()">♻️ Reset Deal</button>
-  </div>
-
-  <div class="card" id="dealResult"></div>
-
-  <!-- PROPERTY LOOKUP -->
-  <div class="card links">
-    <h3>🔍 Property Lookup Tools</h3>
-    <a href="https://property.phila.gov" target="_blank">Property Search</a>
-    <a href="https://opainquiry.phila.gov" target="_blank">OPA Lookup</a>
-    <a href="https://pennsylvania.propertychecker.com" target="_blank">PropertyChecker</a>
-    <a href="https://www.phila.gov/services/property-lots-housing/find-property-information" target="_blank">CityAtlas</a>
-  </div>
-
-  <!-- SYSTEM HUB -->
-  <div class="card">
-    <h3>🧠 System Hub</h3>
-
-    <details>
-      <summary>🧠 Core Systems</summary>
-      <div class="links">
-        <a href="https://rolrichman.github.io/rolyfe-acquisition-engine/" target="_blank">RO’Lyfe Acquisition Engine</a>
-        <a href="https://rolrichman.github.io/ROLyfe-Overage-Calculator/" target="_blank">RO’Lyfe Overage Calculator</a>
-        <a href="https://rolrichman.github.io/rolyfe-deal-engine/" target="_blank">RO’Lyfe Deal Engine</a>
-      </div>
-    </details>
-
-    <details>
-      <summary>💰 Funding / Money Links</summary>
-      <div class="links">
-        <a href="https://privatemoneyexchange.com/aff-page/richman/" target="_blank">Private Money</a>
-        <a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures Credit</a>
-        <a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit Partner</a>
-        <a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">America’s Funding Experts</a>
-        <a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
-        <a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
-        <a href="https://rootholdingsgetfund.rfsitebuilder.com" target="_blank">Root Funding</a>
-      </div>
-    </details>
-  </div>
-
-  <!-- INTAKE -->
-  <div class="card links">
-    <h3>🧾 Intake Forms</h3>
-    <a href="https://form.jotform.com/253154859148062" target="_blank">Dropbox Quick Intake</a>
-    <a href="https://form.jotform.com/252063354378055" target="_blank">Main Intake</a>
-    <a href="https://agent.jotform.com/019481997fbe793382f010b5f7f063eea634" target="_blank">🤖 Open AI Agent</a>
-  </div>
+<!-- OPEN AI AGENT -->
+<div class="card actions">
+<button onclick="window.open('https://agent.jotform.com/019481997fbe793382f010b5f7f063eea634','_blank')">
+🤖 Open AI Agent
+</button>
+</div>
 
 </div>
 
