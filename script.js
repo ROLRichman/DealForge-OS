@@ -1,32 +1,37 @@
-let dealData = {};
-let cogoTotal = 0;
-
 function openZillow(){
-window.open("https://www.zillow.com/homes/" + encodeURIComponent(address.value));
+  const address = document.getElementById("address").value;
+  window.open("https://www.zillow.com/homes/" + encodeURIComponent(address));
 }
 
 function openRedfin(){
-window.open("https://www.redfin.com/search?q=" + encodeURIComponent(address.value));
+  const address = document.getElementById("address").value;
+  window.open("https://www.redfin.com/search?q=" + encodeURIComponent(address));
 }
 
 function openRural(){
-window.open("https://eligibility.sc.egov.usda.gov/");
+  window.open("https://eligibility.sc.egov.usda.gov/");
 }
 
 function analyzeDeal(){
-let a = +arv.value;
-let p = +price.value;
-if(!a || !p) return alert("Enter numbers");
+  const arv = Number(document.getElementById("arv").value || 0);
+  const price = Number(document.getElementById("price").value || 0);
 
-let overage = a - p;
-let profit = (a * 0.7) - p;
-let label = profit > 50000 ? "🔥 SOLID DEAL" : "⚠️ CHECK DEAL";
+  const overage = arv - price;
+  const profit = (arv * 0.7) - price;
 
-dealResult.innerHTML = `
-<h3>💰 Deal Analysis</h3>
-ARV: $${a.toLocaleString()}<br><br>
-Price: $${p.toLocaleString()}<br><br>
-Overage: $${overage.toLocaleString()}<br>
-Profit: $${profit.toLocaleString()}<br><br>
-<b>${label}</b>`;
+  document.getElementById("dealResult").innerHTML = `
+    <h3>💰 Deal Analysis</h3>
+    <p><b>ARV:</b> $${arv.toLocaleString()}</p>
+    <p><b>Price:</b> $${price.toLocaleString()}</p>
+    <p><b>Overage:</b> $${overage.toLocaleString()}</p>
+    <p><b>Profit:</b> $${profit.toLocaleString()}</p>
+  `;
+}
+
+function resetDeal(){
+  document.getElementById("address").value = "";
+  document.getElementById("arv").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("closingDate").value = "";
+  document.getElementById("dealResult").innerHTML = "";
 }
