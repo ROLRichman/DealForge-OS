@@ -1,94 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>DealForge OS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <title>DealForge OS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
 <div class="app">
-<h1>🏡 DealForge OS</h1>
-<p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
-<div class="card">
-<input id="address" placeholder="Property Address">
+  <h1>🏡 DealForge OS</h1>
+  <p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
-<div class="links-row">
-<button onclick="openZillow()">Zillow</button>
-<button onclick="openRedfin()">Redfin</button>
-<button onclick="openRural()">USDA</button>
-</div>
+  <!-- DEAL INPUT -->
+  <div class="card">
+    <input id="address" placeholder="Property Address">
 
-<input id="arv" placeholder="ARV">
-<input id="price" placeholder="Purchase Price">
-<input type="date" id="closingDate">
+    <div class="links-row">
+      <button onclick="openZillow()">Zillow</button>
+      <button onclick="openRedfin()">Redfin</button>
+      <button onclick="openRural()">USDA</button>
+    </div>
 
-<button onclick="analyzeDeal()">Analyze Deal</button>
-<button onclick="resetDeal()">♻️ Reset Deal</button>
-</div>
+    <input id="arv" placeholder="ARV">
+    <input id="price" placeholder="Purchase Price">
+    <input type="date" id="closingDate">
 
-<div class="card" id="dealResult"></div>
+    <button onclick="analyzeDeal()">Analyze Deal</button>
+    <button onclick="resetDeal()">♻️ Reset Deal</button>
+  </div>
 
-<div class="card">
-<h3>📊 3 Tier Deal Engine</h3>
-<input id="tierArv" placeholder="Enter ARV">
-<button onclick="run3Tier()">Run 3 Tier</button>
-<div id="tierResults"></div>
-</div>
+  <div class="card" id="dealResult"></div>
 
-<div class="card">
-<h3>🏗️ Quick Repairs</h3>
-<input id="r1" placeholder="Roof">
-<input id="r2" placeholder="Electrical">
-<input id="r3" placeholder="Plumbing">
-<input id="r4" placeholder="Interior">
-<button onclick="calcRepairs()">Calculate</button>
-<div id="repairOut"></div>
-</div>
+  <!-- PROPERTY LOOKUP -->
+  <div class="card links">
+    <h3>🔍 Property Lookup Tools</h3>
+    <a href="https://property.phila.gov" target="_blank">Property Search</a>
+    <a href="https://opainquiry.phila.gov" target="_blank">OPA Lookup</a>
+    <a href="https://pennsylvania.propertychecker.com" target="_blank">PropertyChecker</a>
+    <a href="https://www.phila.gov/services/property-lots-housing/find-property-information" target="_blank">CityAtlas</a>
+  </div>
 
-<div class="card">
-<h3>🧠 COGO Inspection</h3>
-<select id="cogoItem"></select>
-<input id="cogoCost" placeholder="Cost">
-<button onclick="addCogo()">Add Item</button>
-<div id="cogoTotal"></div>
-<div id="cogoList"></div>
-</div>
+  <!-- SYSTEM HUB -->
+  <div class="card">
+    <h3>🧠 System Hub</h3>
 
-<div class="card">
-<h3>✍️ Signature</h3>
-<canvas id="sig"></canvas>
-<button onclick="clearSig()">Clear</button>
-</div>
+    <details>
+      <summary>🧠 Core Systems</summary>
+      <div class="links">
+        <a href="https://rolrichman.github.io/rolyfe-acquisition-engine/" target="_blank">RO’Lyfe Acquisition Engine</a>
+        <a href="https://rolrichman.github.io/ROLyfe-Overage-Calculator/" target="_blank">RO’Lyfe Overage Calculator</a>
+        <a href="https://rolrichman.github.io/rolyfe-deal-engine/" target="_blank">RO’Lyfe Deal Engine</a>
+      </div>
+    </details>
 
-<div class="card actions">
-<button onclick="generatePDF()">🧾 Generate PDF</button>
-<button onclick="sendEmail()">📧 Email Deal</button>
-<button onclick="sendText()">📲 Text Deal</button>
-<button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
-</div>
+    <details>
+      <summary>💰 Funding / Money Links</summary>
+      <div class="links">
+        <a href="https://privatemoneyexchange.com/aff-page/richman/" target="_blank">Private Money</a>
+        <a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7Figures Credit</a>
+        <a href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR" target="_blank">Corporate Credit Partner</a>
+        <a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">America’s Funding Experts</a>
+        <a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
+        <a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
+        <a href="https://rootholdingsgetfund.rfsitebuilder.com" target="_blank">Root Funding</a>
+      </div>
+    </details>
+  </div>
 
-<div class="card">
-<h3>🧾 Contracts (Zoho)</h3>
-<div class="btn-grid">
-<a href="#" target="_blank">Purchase</a>
-<a href="#" target="_blank">Assignment</a>
-<a href="#" target="_blank">Broker</a>
-<a href="#" target="_blank">Pre-App</a>
-<a href="#" target="_blank">Realtor</a>
-<a href="#" target="_blank">Disclosure</a>
-</div>
-</div>
-
-<div class="card links">
-<h3>🔗 Funding & Tools</h3>
-<a href="#" target="_blank">Private Money</a>
-<a href="#" target="_blank">SendFuse</a>
-<a href="#" target="_blank">Zoho Intake</a>
-</div>
+  <!-- INTAKE -->
+  <div class="card links">
+    <h3>🧾 Intake Forms</h3>
+    <a href="https://form.jotform.com/253154859148062" target="_blank">Dropbox Quick Intake</a>
+    <a href="https://form.jotform.com/252063354378055" target="_blank">Main Intake</a>
+    <a href="https://agent.jotform.com/019481997fbe793382f010b5f7f063eea634" target="_blank">🤖 Open AI Agent</a>
+  </div>
 
 </div>
 
