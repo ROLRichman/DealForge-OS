@@ -1,4 +1,4 @@
-let dealData = {};
+}let dealData = {};
 let cogoRunningTotal = 0;
 
 let cogoItems = [
