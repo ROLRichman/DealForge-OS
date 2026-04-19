@@ -4,26 +4,22 @@
 <meta charset="UTF-8">
 <title>DealForge OS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-
 <body>
 
 <div class="app">
-
 <h1>🏡 DealForge OS</h1>
 <p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
-<!-- DEAL INPUT -->
 <div class="card">
 <input id="address" placeholder="Property Address">
 
 <div class="links-row">
-  <button onclick="openZillow()">Zillow</button>
-  <button onclick="openRedfin()">Redfin</button>
-  <button onclick="openRural()">USDA</button>
+<button onclick="openZillow()">Zillow</button>
+<button onclick="openRedfin()">Redfin</button>
+<button onclick="openRural()">USDA</button>
 </div>
 
 <input id="arv" placeholder="ARV">
@@ -34,54 +30,40 @@
 <button onclick="resetDeal()">♻️ Reset Deal</button>
 </div>
 
-<!-- DEAL RESULT -->
 <div class="card" id="dealResult"></div>
 
-<!-- 3 TIER ENGINE -->
 <div class="card">
 <h3>📊 3 Tier Deal Engine</h3>
-
 <input id="tierArv" placeholder="Enter ARV">
-
 <button onclick="run3Tier()">Run 3 Tier</button>
-
 <div id="tierResults"></div>
 </div>
 
-<!-- REPAIRS -->
 <div class="card">
 <h3>🏗️ Quick Repairs</h3>
-
 <input id="r1" placeholder="Roof">
 <input id="r2" placeholder="Electrical">
 <input id="r3" placeholder="Plumbing">
 <input id="r4" placeholder="Interior">
-
 <button onclick="calcRepairs()">Calculate</button>
 <div id="repairOut"></div>
 </div>
 
-<!-- COGO -->
 <div class="card">
 <h3>🧠 COGO Inspection</h3>
-
 <select id="cogoItem"></select>
 <input id="cogoCost" placeholder="Cost">
-
 <button onclick="addCogo()">Add Item</button>
-
 <div id="cogoTotal"></div>
 <div id="cogoList"></div>
 </div>
 
-<!-- SIGNATURE -->
 <div class="card">
 <h3>✍️ Signature</h3>
 <canvas id="sig"></canvas>
 <button onclick="clearSig()">Clear</button>
 </div>
 
-<!-- ACTIONS -->
 <div class="card actions">
 <button onclick="generatePDF()">🧾 Generate PDF</button>
 <button onclick="sendEmail()">📧 Email Deal</button>
@@ -89,38 +71,27 @@
 <button onclick="oneClickClose()">🚀 ONE CLICK CLOSE</button>
 </div>
 
-<!-- CONTRACT HUB -->
 <div class="card">
 <h3>🧾 Contracts (Zoho)</h3>
-
 <div class="btn-grid">
-<a href="https://workdrive.zohopublic.com/writer/open/fyrribde87c7f276547e2a24006e30176378b" target="_blank">Purchase</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri3c23f1670f1d414097c5b25b69dda0df" target="_blank">Assignment</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrriec767d07079245a89aa82700dc3a7716" target="_blank">Broker</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri128659b62a8b48fd8df8f6446694a2bb" target="_blank">Pre-App</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri9e256390ea704770ba02f1add8d58885" target="_blank">Realtor</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrrie51b06a70b43457db8a652da3fed3e58" target="_blank">Disclosure</a>
+<a href="#" target="_blank">Purchase</a>
+<a href="#" target="_blank">Assignment</a>
+<a href="#" target="_blank">Broker</a>
+<a href="#" target="_blank">Pre-App</a>
+<a href="#" target="_blank">Realtor</a>
+<a href="#" target="_blank">Disclosure</a>
+</div>
 </div>
 
-</div>
-
-<!-- LINKS -->
 <div class="card links">
 <h3>🔗 Funding & Tools</h3>
-
-<a href="https://privatemoneyexchange.com/aff-page/richman/" target="_blank">Private Money</a>
-<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7 Figures</a>
-<a href="https://go.mypartner.io/business-financing/?ref=001Qk00000MkqgTIAR" target="_blank">Business Financing</a>
-<a href="https://my.americasfundingexperts.com/?id=1820217000190862001" target="_blank">Funding Experts</a>
-<a href="https://form.jotform.com/253154859148062" target="_blank">Upload Docs</a>
-<a href="https://form.jotform.com/252063354378055" target="_blank">Application</a>
-<a href="https://sendfuse.com/login" target="_blank">SendFuse</a>
-<a href="https://rootoflyfe.blnsoftware.com/" target="_blank">Zoho Intake</a>
-
+<a href="#" target="_blank">Private Money</a>
+<a href="#" target="_blank">SendFuse</a>
+<a href="#" target="_blank">Zoho Intake</a>
 </div>
 
 </div>
 
 <script src="script.js"></script>
 </body>
-  </html>
+</html>
