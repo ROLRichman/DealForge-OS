@@ -1,3 +1,5 @@
+<!-- INDEX.HTML (FULL UPGRADE) -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>DealForge OS</title>
 
-<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="styles.css" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-
 <body>
 
 <div class="app">
@@ -17,18 +18,20 @@
 <h1>🏡 DealForge OS</h1>
 <p class="sub">Analyze → Lock → Sign → Send → Close</p>
 
-<!-- 🎥 VIDEOS -->
+<!-- 🎥 TRAINING HUB -->
 <div class="card">
 <h3>🎥 Training Hub</h3>
 
-<iframe src="https://www.youtube.com/embed/IvhD3ewyzD4"></iframe>
-<iframe src="https://www.youtube.com/embed/932IrrdJ88c"></iframe>
-<iframe src="https://www.youtube.com/embed/iAlUx755K2s"></iframe>
+<iframe src="https://www.youtube.com/embed/IvhD3ewyzD4" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/932IrrdJ88c" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/iAlUx755K2s" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/0NYJ_9FIHZA" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/NujY1GikOz0" allowfullscreen></iframe>
 </div>
 
-<!-- DEAL INPUT -->
+<!-- PROPERTY -->
 <div class="card">
-<input id="address" placeholder="Property Address"/>
+<input id="address" placeholder="Property Address" />
 
 <div class="links-row">
 <button onclick="openZillow()">Zillow</button>
@@ -36,39 +39,61 @@
 <button onclick="openRural()">USDA</button>
 </div>
 
-<input id="arv" placeholder="ARV"/>
-<input id="price" placeholder="Purchase Price"/>
-<input type="date" id="closingDate"/>
+<input id="arv" placeholder="ARV" />
+<input id="price" placeholder="Purchase Price" />
+<input type="date" id="closingDate" />
 
 <button onclick="analyzeDeal()">Analyze Deal</button>
 <button onclick="resetDeal()">♻️ Reset Deal</button>
 </div>
 
-<!-- RESULT -->
-<div class="card" id="dealResult"></div>
+<!-- DEAL RESULT -->
+<div class="card" id="dealResult">
+<h3>💰 Deal Analysis</h3>
+Ready for your next monster deal.
+</div>
 
 <!-- 3 TIER -->
 <div class="card">
-<h3>📊 3 Tier Engine</h3>
-<input id="tierArv" placeholder="Enter ARV"/>
-<button onclick="run3Tier()">Run</button>
+<h3>📊 3 Tier Deal Engine</h3>
+
+<input id="tierArv" placeholder="Enter ARV" />
+<button onclick="run3Tier()">Run 3 Tier</button>
+
 <div id="tierResults"></div>
 </div>
 
-<!-- REPAIRS -->
+<!-- QUICK REPAIRS -->
 <div class="card">
-<h3>🏗️ Repairs</h3>
-<input id="r1" placeholder="Roof"/>
-<input id="r2" placeholder="Electrical"/>
-<input id="r3" placeholder="Plumbing"/>
-<input id="r4" placeholder="Interior"/>
+<h3>🏗️ Quick Repairs</h3>
+
+<input id="r1" placeholder="Roof" />
+<input id="r2" placeholder="Electrical" />
+<input id="r3" placeholder="Plumbing" />
+<input id="r4" placeholder="Interior" />
+
 <button onclick="calcRepairs()">Calculate</button>
+
 <div id="repairOut"></div>
 </div>
 
-<!-- SIGNATURE FIX -->
+<!-- COGO -->
 <div class="card">
-<h3>✍️ Signature (FIXED TOUCH)</h3>
+<h3>🧠 COGO Repairs Dropdown</h3>
+
+<select id="cogoItem"></select>
+<input id="cogoCost" placeholder="Cost" />
+
+<button onclick="addCogo()">Add Item</button>
+
+<div id="cogoTotal"></div>
+<div id="cogoList"></div>
+</div>
+
+<!-- SIGNATURE -->
+<div class="card">
+<h3>✍️ Signature (LOCKED SCREEN FIX)</h3>
+
 <canvas id="sig"></canvas>
 
 <div class="links-row">
@@ -81,34 +106,69 @@
 <h3>🚀 Close Actions</h3>
 
 <button onclick="generatePDF()">🧾 Generate PDF</button>
-<button onclick="sendEmail()">📧 Email</button>
-<button onclick="sendText()">📲 Text</button>
+<button onclick="sendEmail()">📧 Email Deal</button>
+<button onclick="sendText()">📲 Text Deal</button>
 <button onclick="oneClickClose()">⚡ ONE CLICK CLOSE</button>
 </div>
 
-<!-- CONTRACTS DROPDOWN -->
+<!-- CONTRACTS -->
 <div class="card">
-<h3>🧾 Contracts</h3>
+<h3>🧾 Contracts (Zoho)</h3>
 
 <div class="btn-grid">
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri3c23f1670f1d414097c5b25b69dda0df" target="_blank">Assignment</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrribde87c7f276547e2a24006e30176378b" target="_blank">Purchase</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrriec767d07079245a89aa82700dc3a7716" target="_blank">Broker</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri128659b62a8b48fd8df8f6446694a2bb" target="_blank">Pre-App</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrri9e256390ea704770ba02f1add8d58885" target="_blank">Realtor</a>
-<a href="https://workdrive.zohopublic.com/writer/open/fyrrie51b06a70b43457db8a652da3fed3e58" target="_blank">Disclosure</a>
+<a target="_blank" href="https://workdrive.zohopublic.com/writer/open/fyrri3c23f1670f1d414097c5b25b69dda0df">Assignment</a>
+
+<a target="_blank" href="https://workdrive.zohopublic.com/writer/open/fyrrifc51028eab4e486d960b7d6a0a1d0f2f">Purchase & Sale</a>
+
+<a target="_blank" href="https://workdrive.zohopublic.com/writer/open/fyrriec767d07079245a89aa82700dc3a7716">Broker</a>
+
+<a target="_blank" href="https://workdrive.zohopublic.com/writer/open/fyrri128659b62a8b48fd8df8f6446694a2bb">Pre-App</a>
+
+<a target="_blank" href="https://workdrive.zohoexternal.com/file/g6vcbdaba9ad8d815404a873a060254fe1bfc">Pre-App PDF</a>
+
+<a target="_blank" href="https://workdrive.zohopublic.com/writer/open/fyrri9e256390ea704770ba02f1add8d58885">Realtor</a>
+
+<a target="_blank" href="https://workdrive.zohopublic.com/writer/open/fyrrie51b06a70b43457db8a652da3fed3e58">Disclosure</a>
 </div>
 </div>
 
-<!-- FUNDING LINKS -->
+<!-- CORE SYSTEMS -->
+<div class="card">
+<h3>🧠 Core Systems</h3>
+
+<div class="btn-grid">
+<a target="_blank" href="https://rolrichman.github.io/rolyfe-acquisition-engine/">Acquisition Engine</a>
+
+<a target="_blank" href="https://rolrichman.github.io/ROLyfe-Overage-Calculator/">Overage Calculator</a>
+
+<a target="_blank" href="https://privatemoneyexchange.com/aff-page/richman/">Private Money</a>
+</div>
+</div>
+
+<!-- FUNDING -->
 <div class="card">
 <h3>💰 Funding Links</h3>
 
-<div class="links">
-<a href="https://www.7figurescredit.com/?a_aid=ROLFunding" target="_blank">7 Figures Credit</a>
-<a href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP1</a>
-<a href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi" target="_blank">Loan LP2</a>
-<a href="https://privatemoneyexchange.com/aff-page/richman/" target="_blank">Private Money</a>
+<div class="btn-grid">
+
+<a target="_blank" href="https://www.7figurescredit.com/?a_aid=ROLFunding">7 Figures Credit</a>
+
+<a target="_blank" href="https://go.mypartner.io/referral-partner/?ref=001Qk00000MkqgTIAR">Corporate Credit</a>
+
+<a target="_blank" href="https://my.americasfundingexperts.com/?id=1820217000190862001">America Funding</a>
+
+<a target="_blank" href="https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi">Loan LP1</a>
+
+<a target="_blank" href="https://getyourbizloan.io/lp2?pu=recqKxJNkvD70xMqi">Loan LP2</a>
+
+<a target="_blank" href="https://form.jotform.com/2530967310210469">Funding App</a>
+
+<a target="_blank" href="https://form.jotform.com/253154859148062">Quick Upload</a>
+
+<a target="_blank" href="https://rootoflyfe.blnsoftware.com/">Other Intake</a>
+
+<a target="_blank" href="https://eligibility.sc.egov.usda.gov/eligibility/welcomeAction.do?pageAction=sfp">USDA Eligibility</a>
+
 </div>
 </div>
 
@@ -122,7 +182,7 @@
 
 <!-- AI -->
 <div class="card">
-<button onclick="window.open('https://agent.jotform.com/019481997fbe793382f010b5f7f063eea634')">
+<button onclick="window.open('https://agent.jotform.com/019481997fbe793382f010b5f7f063eea634','_blank')">
 🤖 Open AI Agent
 </button>
 </div>
