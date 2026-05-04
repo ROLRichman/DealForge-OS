@@ -1,65 +1,171 @@
-body{
-margin:0;
-background:#020617;
-color:white;
-font-family:Arial;
+/* =========================
+GLOBAL
+========================= */
+
+body {
+  margin: 0;
+  background: #020617;
+  color: white;
+  font-family: Arial, sans-serif;
 }
 
-.app{max-width:450px;margin:auto;padding:16px}
-
-.card{
-background:#111827;
-padding:16px;
-border-radius:18px;
-margin-bottom:16px;
+.app {
+  max-width: 480px;
+  margin: auto;
+  padding: 16px;
 }
 
-input,button,iframe{
-width:100%;
-margin-top:10px;
-border-radius:10px;
+/* =========================
+HEADINGS
+========================= */
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 14px;
+  text-align: center;
 }
 
-input{
-padding:12px;
-border:none;
+h3 {
+  margin-bottom: 10px;
 }
 
-button{
-padding:14px;
-background:#22c55e;
-border:none;
-color:white;
-font-weight:bold;
+/* =========================
+CARDS
+========================= */
+
+.card {
+  background: #0f172a;
+  padding: 16px;
+  border-radius: 18px;
+  margin-bottom: 16px;
+  border: 1px solid #1e293b;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-.links-row{display:flex;gap:8px}
+/* =========================
+INPUTS
+========================= */
 
-.btn-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #020617;
+  color: white;
+  border: 1px solid #334155;
 }
 
-a{
-display:block;
-text-align:center;
-background:#22c55e;
-color:white;
-padding:10px;
-border-radius:10px;
-text-decoration:none;
+/* =========================
+BUTTONS
+========================= */
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  transition: 0.2s;
 }
 
-canvas{
-width:100%;
-height:180px;
-background:white;
-border-radius:10px;
-touch-action:none;
+button:hover {
+  transform: scale(1.02);
+  opacity: 0.95;
 }
 
-iframe{
-height:300px;
-border:none;
+/* =========================
+LINK BUTTON GRID
+========================= */
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+a {
+  display: block;
+  text-align: center;
+  background: #22c55e;
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* =========================
+ROW BUTTONS
+========================= */
+
+.links-row {
+  display: flex;
+  gap: 8px;
+}
+
+.links-row button {
+  flex: 1;
+  background: #1f2937;
+}
+
+/* =========================
+RESULT BOX
+========================= */
+
+#dealResult {
+  margin-top: 12px;
+  background: #020617;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  font-size: 14px;
+}
+
+/* =========================
+PIPELINE
+========================= */
+
+.deal {
+  background: #020617;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border-left: 4px solid #22c55e;
+  font-size: 13px;
+}
+
+/* =========================
+IFRAME (JAMAL)
+========================= */
+
+iframe {
+  width: 100%;
+  height: 350px;
+  border: none;
+  border-radius: 10px;
+}
+
+/* =========================
+MOBILE TIGHTEN
+========================= */
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  button {
+    padding: 13px;
+  }
 }
