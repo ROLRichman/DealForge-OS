@@ -1,44 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RO’Lyfe Deal OS</title>
-<link rel="stylesheet" href="styles.css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#020617;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+.app{
+  max-width:760px;
+  margin:auto;
+  padding:18px;
+}
+h1{text-align:center;font-size:32px}
+h2{font-size:30px;margin-bottom:18px}
+.card{
+  background:#111827;
+  padding:28px;
+  border-radius:28px;
+  margin-bottom:28px;
+  border:1px solid rgba(148,163,184,.22);
+}
+input,select,button{
+  width:100%;
+  margin-top:12px;
+  padding:18px;
+  border-radius:18px;
+  border:1px solid #334155;
+  font-size:20px;
+}
+input,select{
+  background:#020617;
+  color:white;
+}
+button,.btn{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:white;
+  font-weight:bold;
+  border:none;
+  cursor:pointer;
+  text-align:center;
+  text-decoration:none;
+  display:block;
+}
+.btn-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.result,.pipeline-item{
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:22px;
+  padding:22px;
+  margin-top:18px;
+}
+.pipeline-item{
+  border-left:8px solid #22c55e;
+}
+.sig-wrap{
+  background:white;
+  border-radius:18px;
+  padding:10px;
+  box-shadow:0 0 0 2px rgba(34,197,94,.5);
+  margin-top:12px;
+}
+#sig{
+  width:100%;
+  height:190px;
+  background:white;
+  border-radius:12px;
+  display:block;
+  touch-action:none;
+}
+.sig-note{
+  text-align:center;
+  opacity:.7;
+  font-size:14px;
+}
+iframe{
+  width:100%;
+  min-height:520px;
+  border:none;
+  border-radius:20px;
+  background:white;
+}
+</style>
 </head>
 
 <body>
 <div class="app">
 
 <h1>🔥 RO’Lyfe Deal OS</h1>
-<p class="sub">Analyze → Score → Save → Send → Close</p>
 
 <section class="card">
 <h2>🏡 Property</h2>
 
 <input id="address" placeholder="Property Address">
 <input id="arv" placeholder="ARV">
-<input id="price" placeholder="Purchase / Ask Price">
-<input id="repairs" placeholder="Repairs / Rehab Budget">
+<input id="price" placeholder="Purchase Price">
+<input id="repairs" placeholder="Repairs">
 <input id="assignment" placeholder="Assignment Fee">
-<input id="closingDate" type="date">
 
 <div class="btn-grid">
 <button onclick="openZillow()">Zillow</button>
 <button onclick="openRedfin()">Redfin</button>
-<button onclick="openRural()">Rural / USDA</button>
-<button onclick="analyzeDeal()">Analyze Deal</button>
 </div>
 
-<div id="dealResult"></div>
+<button onclick="analyzeDeal()">Analyze Deal</button>
+
+<div id="dealResult" class="result"></div>
 </section>
 
 <section class="card">
 <h2>📊 3 Tier Offers</h2>
-<input id="tierArv" placeholder="ARV for 3 Tier Offers">
+<input id="tierArv" placeholder="Enter ARV for 3 Tier Offers">
 <button onclick="run3Tier()">Run Offers</button>
-<div id="tierResults"></div>
+<div id="tierResults" class="result"></div>
 </section>
 
 <section class="card">
@@ -49,36 +135,40 @@
 
 <section class="card">
 <h2>🚀 Close Deal</h2>
-
 <div class="btn-grid">
-<a href="https://rolrichman.github.io/DealForge-OS/" target="_blank">🏗️ DealForge</a>
-<a href="https://rolrichman.github.io/rolyfe-contract-documents-hub/" target="_blank">📄 Contracts</a>
-<a href="https://workdrive.zohoexternal.com/file/g6vcbdaba9ad8d815404a873a060254fe1bfc" target="_blank">🏦 View Pre-Loan PDF</a>
-<a href="https://rolrichman.github.io/RO-Lyfe-Buyer-Network-OS/" target="_blank">👥 Buyers</a>
+<a class="btn" href="https://rolrichman.github.io/DealForge-OS/" target="_blank">🏗️ DealForge</a>
+<a class="btn" href="https://rolrichman.github.io/rolyfe-contract-documents-hub/" target="_blank">📄 Contracts</a>
+<a class="btn" href="https://workdrive.zohoexternal.com/file/g6vcbdaba9ad8d815404a873a060254fe1bfc" target="_blank">🏦 View Pre-Loan PDF</a>
+<a class="btn" href="https://rolrichman.github.io/RO-Lyfe-Buyer-Network-OS/" target="_blank">👥 Buyers</a>
 </div>
-
 <button onclick="oneClickClose()">🔥 One Click Close</button>
 </section>
 
 <section class="card">
 <h2>🤖 Jamal AI</h2>
 <p>Open Jamal in a new tab for deal analysis, contracts, and funding guidance.</p>
-
-<a href="https://agent.jotform.com/019bdd1fe57172838101dccf3612b1e9e787" target="_blank">
-🤖 Open Jamal AI
-</a>
+<a class="btn" href="https://agent.jotform.com/019bdd1fe57172838101dccf3612b1e9e787" target="_blank">🤖 Open Jamal AI</a>
 </section>
 
 <section class="card">
 <h2>📲 Buyer Blast</h2>
-<p>Copy a clean buyer alert message from the current deal numbers.</p>
-<button onclick="buyerBlast()">Copy Buyer Blast</button>
+<p>Copy a clean buyer alert message from current deal numbers.</p>
+<button onclick="copyBuyerBlast()">Copy Buyer Blast</button>
 </section>
 
 <section class="card">
 <h2>✍️ Signature</h2>
+
+<div class="sig-wrap">
 <canvas id="sig"></canvas>
+</div>
+
+<div class="btn-grid">
 <button onclick="clearSig()">Clear Signature</button>
+<button onclick="downloadSignature()">Download Signature</button>
+</div>
+
+<p class="sig-note">Use finger or mouse to sign above.</p>
 </section>
 
 <section class="card">
@@ -90,6 +180,335 @@
 
 </div>
 
-<script src="script.js"></script>
+<script>
+let dealData = {};
+let pipeline = JSON.parse(localStorage.getItem("rolyfeDeals")) || [];
+
+function num(id){
+  return Number((document.getElementById(id).value || "0").replace(/,/g,""));
+}
+
+function money(n){
+  return Number(n || 0).toLocaleString("en-US",{maximumFractionDigits:0});
+}
+
+function openZillow(){
+  const a=document.getElementById("address").value;
+  window.open("https://www.zillow.com/homes/" + encodeURIComponent(a),"_blank");
+}
+
+function openRedfin(){
+  const a=document.getElementById("address").value;
+  window.open("https://www.redfin.com/search?q=" + encodeURIComponent(a),"_blank");
+}
+
+function analyzeDeal(){
+  const address=document.getElementById("address").value;
+  const arv=num("arv");
+  const price=num("price");
+  const repairs=num("repairs");
+  const assignment=num("assignment");
+
+  if(!arv || !price){
+    alert("Enter ARV and Purchase Price");
+    return;
+  }
+
+  const mao=(arv*.70)-repairs-assignment;
+  const profit=mao-price;
+  const totalProject=price+repairs+assignment;
+  const equitySpread=arv-totalProject;
+
+  let label="⚠️ CHECK DEAL";
+  if(profit>=50000) label="🔥 SOLID DEAL";
+  if(profit<0) label="❌ PASS";
+
+  let score=Math.round(
+    Math.max(0, Math.min(100,
+      40 + (profit/arv)*100 + (equitySpread/arv)*40
+    ))
+  );
+
+  let sniper="⚪ NEUTRAL";
+  if(score>=75) sniper="🟢 SNIPER";
+  else if(score>=56) sniper="🟡 BUILD";
+  else if(score<=30) sniper="🔴 SHORT";
+
+  dealData={address,arv,price,repairs,assignment,mao,profit,totalProject,equitySpread,label,score,sniper};
+
+  document.getElementById("dealResult").innerHTML=`
+    <h2>💰 Deal Analysis</h2>
+    <p><b>Property:</b> ${address}</p>
+    <p><b>ARV:</b> $${money(arv)}</p>
+    <p><b>Purchase:</b> $${money(price)}</p>
+    <p><b>Repairs:</b> $${money(repairs)}</p>
+    <p><b>Assignment Fee:</b> $${money(assignment)}</p>
+    <p><b>MAO:</b> $${money(mao)}</p>
+    <p><b>Profit vs MAO:</b> $${money(profit)}</p>
+    <p><b>Total Project Cost:</b> $${money(totalProject)}</p>
+    <p><b>Equity Spread:</b> $${money(equitySpread)}</p>
+    <p><b>Sniper Score:</b> ${score}/100 — ${sniper}</p>
+    <h3>${label}</h3>
+    <hr>
+    <p><b>Next Move:</b><br>Structure offer, open contract hub, or send to funding.</p>
+  `;
+}
+
+function run3Tier(){
+  const arv=num("tierArv");
+  if(!arv){alert("Enter ARV");return;}
+
+  const cash=arv*.50;
+  const carry=arv*.65;
+  const carryDown=carry*.05;
+  const carryBalance=carry-carryDown;
+  const carryMonthly=payment(carryBalance,.05,30);
+  const carryBalloon=balloon(carryBalance,.05,30,4);
+
+  const finance=arv*.75;
+  const financeMonthly=payment(finance,.06,30);
+  const financeBalloon=balloon(finance,.06,30,5);
+
+  document.getElementById("tierResults").innerHTML=`
+    <h3>All Cash Offer</h3>
+    <p>$${money(cash)}</p>
+
+    <h3>Seller Carry</h3>
+    <p>Purchase Price: $${money(carry)}</p>
+    <p>Down Payment: $${money(carryDown)}</p>
+    <p>Seller Carry Balance: $${money(carryBalance)}</p>
+    <p>Monthly Payment: $${money(carryMonthly)}</p>
+    <p>4-Year Balloon: $${money(carryBalloon)}</p>
+
+    <h3>Seller Financing</h3>
+    <p>Purchase Price: $${money(finance)}</p>
+    <p>Down Payment: $0</p>
+    <p>Monthly Payment: $${money(financeMonthly)}</p>
+    <p>5-Year Balloon: $${money(financeBalloon)}</p>
+  `;
+}
+
+function payment(principal,rate,years){
+  const r=rate/12;
+  const n=years*12;
+  return principal*r/(1-Math.pow(1+r,-n));
+}
+
+function balloon(principal,rate,years,balloonYears){
+  const pmt=payment(principal,rate,years);
+  const r=rate/12;
+  const paid=balloonYears*12;
+  return principal*Math.pow(1+r,paid)-pmt*((Math.pow(1+r,paid)-1)/r);
+}
+
+function saveDeal(){
+  if(!dealData.address){
+    alert("Analyze a deal first");
+    return;
+  }
+  pipeline.unshift(dealData);
+  localStorage.setItem("rolyfeDeals",JSON.stringify(pipeline));
+  renderPipeline();
+}
+
+function renderPipeline(){
+  const box=document.getElementById("pipeline");
+  box.innerHTML="";
+  pipeline.forEach((d,i)=>{
+    box.innerHTML+=`
+      <div class="pipeline-item">
+        <h3>${d.address}</h3>
+        <p>${d.label}</p>
+        <p>Score: ${d.score}/100 — ${d.sniper}</p>
+        <p>ARV: $${money(d.arv)} | Price: $${money(d.price)}</p>
+        <p>MAO: $${money(d.mao)} | Profit: $${money(d.profit)}</p>
+        <button onclick="loadDeal(${i})">Load Deal</button>
+        <button onclick="deleteDeal(${i})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+function loadDeal(i){
+  const d=pipeline[i];
+  document.getElementById("address").value=d.address;
+  document.getElementById("arv").value=d.arv;
+  document.getElementById("price").value=d.price;
+  document.getElementById("repairs").value=d.repairs;
+  document.getElementById("assignment").value=d.assignment;
+  analyzeDeal();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function deleteDeal(i){
+  pipeline.splice(i,1);
+  localStorage.setItem("rolyfeDeals",JSON.stringify(pipeline));
+  renderPipeline();
+}
+
+function copyBuyerBlast(){
+  if(!dealData.address){
+    alert("Analyze a deal first");
+    return;
+  }
+  const msg=`🔥 New RO’Lyfe Deal Ready
+
+Property: ${dealData.address}
+ARV: $${money(dealData.arv)}
+Price: $${money(dealData.price)}
+Repairs: $${money(dealData.repairs)}
+Assignment Fee: $${money(dealData.assignment)}
+MAO: $${money(dealData.mao)}
+Score: ${dealData.score}/100 — ${dealData.sniper}
+
+Reply interested for details.`;
+
+  navigator.clipboard.writeText(msg);
+  alert("Buyer blast copied");
+}
+
+function initSignature(){
+  const canvas=document.getElementById("sig");
+  const ctx=canvas.getContext("2d");
+
+  function resizeCanvas(){
+    canvas.width=canvas.offsetWidth;
+    canvas.height=190;
+    ctx.lineWidth=3;
+    ctx.strokeStyle="#111";
+    ctx.lineCap="round";
+  }
+
+  resizeCanvas();
+  window.addEventListener("resize",resizeCanvas);
+
+  let drawing=false;
+
+  function getPos(e){
+    const rect=canvas.getBoundingClientRect();
+    if(e.touches){
+      return {
+        x:e.touches[0].clientX-rect.left,
+        y:e.touches[0].clientY-rect.top
+      };
+    }
+    return {
+      x:e.clientX-rect.left,
+      y:e.clientY-rect.top
+    };
+  }
+
+  function start(e){
+    e.preventDefault();
+    drawing=true;
+    const p=getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+  }
+
+  function draw(e){
+    if(!drawing)return;
+    e.preventDefault();
+    const p=getPos(e);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+  }
+
+  function stop(){
+    drawing=false;
+    ctx.beginPath();
+  }
+
+  canvas.addEventListener("mousedown",start);
+  canvas.addEventListener("mousemove",draw);
+  canvas.addEventListener("mouseup",stop);
+  canvas.addEventListener("mouseleave",stop);
+  canvas.addEventListener("touchstart",start,{passive:false});
+  canvas.addEventListener("touchmove",draw,{passive:false});
+  canvas.addEventListener("touchend",stop);
+}
+
+function clearSig(){
+  const canvas=document.getElementById("sig");
+  const ctx=canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+function downloadSignature(){
+  const canvas=document.getElementById("sig");
+  const a=document.createElement("a");
+  a.href=canvas.toDataURL("image/png");
+  a.download="rolyfe-signature.png";
+  a.click();
+}
+
+function generatePDF(){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF();
+  const sig=document.getElementById("sig").toDataURL("image/png");
+
+  doc.setFontSize(14);
+  doc.text("RO’Lyfe Deal Package",10,15);
+  doc.setFontSize(11);
+
+  let y=30;
+  const lines=[
+    `Property: ${dealData.address || ""}`,
+    `ARV: $${money(dealData.arv)}`,
+    `Purchase Price: $${money(dealData.price)}`,
+    `Repairs: $${money(dealData.repairs)}`,
+    `Assignment Fee: $${money(dealData.assignment)}`,
+    `MAO: $${money(dealData.mao)}`,
+    `Profit vs MAO: $${money(dealData.profit)}`,
+    `Total Project Cost: $${money(dealData.totalProject)}`,
+    `Equity Spread: $${money(dealData.equitySpread)}`,
+    `Sniper Score: ${dealData.score || 0}/100 — ${dealData.sniper || ""}`,
+    `Deal Label: ${dealData.label || ""}`
+  ];
+
+  lines.forEach(line=>{
+    doc.text(line,10,y);
+    y+=8;
+  });
+
+  doc.text("Signature:",10,y+10);
+  doc.addImage(sig,"PNG",10,y+15,80,30);
+
+  doc.save("RO-Lyfe-Deal-Package.pdf");
+}
+
+function sendEmail(){
+  const subject="RO’Lyfe Deal Ready";
+  const body=`Deal package ready for review.
+
+Property: ${dealData.address || ""}
+ARV: $${money(dealData.arv)}
+Price: $${money(dealData.price)}
+Repairs: $${money(dealData.repairs)}
+MAO: $${money(dealData.mao)}
+Profit: $${money(dealData.profit)}
+
+Review next steps.`;
+
+  window.open(`mailto:richman@rootoflyfe.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,"_blank");
+}
+
+function sendText(){
+  const body=`🔥 RO’Lyfe Deal Ready: ${dealData.address || ""} | ARV $${money(dealData.arv)} | Price $${money(dealData.price)} | MAO $${money(dealData.mao)}`;
+  window.open(`sms:?body=${encodeURIComponent(body)}`,"_blank");
+}
+
+function oneClickClose(){
+  generatePDF();
+  sendEmail();
+  sendText();
+  alert("🚀 Deal package generated + email/text opened");
+}
+
+window.onload=function(){
+  renderPipeline();
+  initSignature();
+};
+</script>
 </body>
-</html>
+  </html>
