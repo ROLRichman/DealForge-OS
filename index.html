@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>RO’Lyfe Deal OS</title>
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -12,60 +12,81 @@
 <div class="app">
 
 <h1>🔥 RO’Lyfe Deal OS</h1>
+<p class="sub">Analyze → Score → Save → Send → Close</p>
 
-<!-- PROPERTY -->
-<div class="card">
-<h3>🏡 Property</h3>
-<input id="address" placeholder="Address">
+<section class="card">
+<h2>🏡 Property</h2>
+
+<input id="address" placeholder="Property Address">
 <input id="arv" placeholder="ARV">
-<input id="price" placeholder="Purchase Price">
-<input id="repairs" placeholder="Repairs">
+<input id="price" placeholder="Purchase / Ask Price">
+<input id="repairs" placeholder="Repairs / Rehab Budget">
 <input id="assignment" placeholder="Assignment Fee">
+<input id="closingDate" type="date">
 
-<div class="links-row">
+<div class="btn-grid">
 <button onclick="openZillow()">Zillow</button>
 <button onclick="openRedfin()">Redfin</button>
-</div>
-
+<button onclick="openRural()">Rural / USDA</button>
 <button onclick="analyzeDeal()">Analyze Deal</button>
-<div id="dealResult"></div>
 </div>
 
-<!-- 3 TIER -->
-<div class="card">
-<h3>📊 3 Tier Offers</h3>
-<input id="tierArv" placeholder="ARV">
+<div id="dealResult"></div>
+</section>
+
+<section class="card">
+<h2>📊 3 Tier Offers</h2>
+<input id="tierArv" placeholder="ARV for 3 Tier Offers">
 <button onclick="run3Tier()">Run Offers</button>
 <div id="tierResults"></div>
-</div>
+</section>
 
-<!-- PIPELINE -->
-<div class="card">
-<h3>📂 Deal Pipeline</h3>
+<section class="card">
+<h2>📂 Deal Pipeline</h2>
 <button onclick="saveDeal()">Save Deal</button>
 <div id="pipeline"></div>
-</div>
+</section>
 
-<!-- CLOSE SYSTEM -->
-<div class="card">
-<h3>🚀 Close Deal</h3>
+<section class="card">
+<h2>🚀 Close Deal</h2>
 
 <div class="btn-grid">
 <a href="https://rolrichman.github.io/DealForge-OS/" target="_blank">🏗️ DealForge</a>
 <a href="https://rolrichman.github.io/rolyfe-contract-documents-hub/" target="_blank">📄 Contracts</a>
-<a href="https://workdrive.zohoexternal.com/file/g6vcbdaba9ad8d815404a873a060254fe1bfc" target="_blank">🏦 Funding</a>
+<a href="https://workdrive.zohoexternal.com/file/g6vcbdaba9ad8d815404a873a060254fe1bfc" target="_blank">🏦 View Pre-Loan PDF</a>
 <a href="https://rolrichman.github.io/RO-Lyfe-Buyer-Network-OS/" target="_blank">👥 Buyers</a>
 </div>
 
 <button onclick="oneClickClose()">🔥 One Click Close</button>
+</section>
 
-</div>
+<section class="card">
+<h2>🤖 Jamal AI</h2>
+<p>Open Jamal in a new tab for deal analysis, contracts, and funding guidance.</p>
 
-<!-- JAMAL -->
-<div class="card">
-<h3>🤖 Jamal AI</h3>
-<iframe src="https://www.jotform.com/agent"></iframe>
-</div>
+<a href="https://agent.jotform.com/019bdd1fe57172838101dccf3612b1e9e787" target="_blank">
+🤖 Open Jamal AI
+</a>
+</section>
+
+<section class="card">
+<h2>📲 Buyer Blast</h2>
+<p>Copy a clean buyer alert message from the current deal numbers.</p>
+<button onclick="buyerBlast()">Copy Buyer Blast</button>
+</section>
+
+<section class="card">
+<h2>✍️ Signature</h2>
+<canvas id="sig"></canvas>
+<button onclick="clearSig()">Clear Signature</button>
+</section>
+
+<section class="card">
+<h2>📄 Deal Package</h2>
+<button onclick="generatePDF()">Generate Deal PDF</button>
+<button onclick="sendEmail()">Email Deal</button>
+<button onclick="sendText()">Text Deal</button>
+</section>
 
 </div>
 
