@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RO’Lyfe Closers OS</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <button class="jamal-float pulse" onclick="openJamal()">🤖</button>
 
+  <main class="app">
+    <header class="hero">
+      <h1>🏡 RO’Lyfe Closers OS</h1>
+      <p>Analyze → Lock → Sign → Send → Close</p>
+      <img src="rolyfe-documents-cover.png" alt="RO’Lyfe Deal Forge Machine" class="hero-img" onerror="this.style.display='none'">
+    </header>
+
+    <section class="card glow">
+      <h2>🧠 How This Works</h2>
+      <p>This system turns deals into decisions.</p>
+      <p>Enter numbers → structure offer → lock the deal → generate a protected RO’Lyfe package → send → close.</p>
+      <strong>Use this before every offer. No guesswork. No emotion.</strong>
+    </section>
+
+    <section class="card">
+      <h2>🏠 Property Analyzer</h2>
+      <input id="address" placeholder="Property Address" value="1047 Cooper St Deptford, NJ 08096">
+      <div class="btn-grid three">
+        <button onclick="openZillow()">Zillow</button>
+        <button onclick="openRedfin()">Redfin</button>
+        <button onclick="openUSDA()">USDA</button>
+      </div>
+      <input id="arv" placeholder="ARV" value="460000">
+      <input id="price" placeholder="Purchase / Offer Price" value="225000">
+      <input id="repairs" placeholder="Rehab Budget" value="95000">
+      <input id="assignment" placeholder="Assignment Fee" value="15000">
+      <input id="closingDate" type="date" value="2026-04-29">
+      <button class="pulse" onclick="analyzeDeal()">Analyze Deal</button>
+      <button onclick="resetDeal()">Reset</button>
+    </section>
+
+    <section class="card" id="dealResult">
+      <h2>💰 Deal Analysis</h2>
+      <p>Run the analyzer to see MAO, overage, profit spread, lender view, and Sniper Score.</p>
+    </section>
+
+    <section class="card">
+      <h2>📊 3 Tier Engine</h2>
+      <input id="tierArv" placeholder="ARV for 3-tier offers" value="450000">
+      <button onclick="run3Tier()">Run 3 Tier</button>
+      <div id="tierResults"></div>
+    </section>
+
+    <section class="card">
+      <h2>📄 Deal Structure Questions</h2>
+
+      <details open>
+        <summary>🏠 Property + Buyer Info</summary>
+        <input id="propertyType" placeholder="Property Type">
+        <input id="bedsBaths" placeholder="Beds / Baths">
+        <input id="sqft" placeholder="Sq Ft">
+        <input id="garageYard" placeholder="Garage / Yard">
+        <input id="agentName" placeholder="Agent / Realtor Name" value="Dr. Tanya Glenn-Butler">
+        <input id="buyerName" placeholder="Buyer / Contractor Name">
+        <input id="buyerCompany" placeholder="Buyer Company">
+        <input id="buyerPhone" placeholder="Buyer Phone">
+        <input id="buyerEmail" placeholder="Buyer Email">
+      </details>
+
+      <details open>
+        <summary>🏦 Loan + Exit Strategy</summary>
+        <select id="loanType">
+          <option>Purchase & Rehab</option><option>Fix & Flip</option><option>Bridge Loan</option>
+          <option>DSCR Rental Loan</option><option>Refinance</option><option>Cash-Out Refinance</option>
+          <option>Private Capital</option><option>Seller Carry / Creative Financing</option>
+        </select>
+        <input id="loanAmount" placeholder="Estimated Loan Amount">
+        <input id="interestRate" placeholder="Estimated Interest Rate %">
+        <input id="points" placeholder="Estimated Points">
+        <input id="cashToClose" placeholder="Estimated Cash to Close">
+        <select id="exitStrategy">
+          <option>Assignment</option><option>Double Close</option><option>Fix & Flip</option>
+          <option>Buy & Hold</option><option>Refinance</option><option>DSCR Rental</option>
+          <option>Seller Finance Exit</option>
+        </select>
+      </details>
+
+      <details open>
+        <summary>🏗️ Rehab / COGO Summary</summary>
+        <div class="check-grid">
+          <label><input type="checkbox" value="Roof"> Roof</label>
+          <label><input type="checkbox" value="Electrical"> Electrical</label>
+          <label><input type="checkbox" value="Plumbing"> Plumbing</label>
+          <label><input type="checkbox" value="HVAC"> HVAC</label>
+          <label><input type="checkbox" value="Kitchen"> Kitchen</label>
+          <label><input type="checkbox" value="Bathroom"> Bathroom</label>
+          <label><input type="checkbox" value="Flooring"> Flooring</label>
+          <label><input type="checkbox" value="Windows"> Windows</label>
+          <label><input type="checkbox" value="Foundation"> Foundation</label>
+          <label><input type="checkbox" value="Garage"> Garage</label>
+        </div>
+        <textarea id="contractorNotes" placeholder="Contractor Notes"></textarea>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>✍️ Signature</h2>
+      <p>Sign inside the white box.</p>
+      <div class="sig-wrap">
+        <canvas id="sig"></canvas>
+      </div>
+      <button onclick="clearSig()">Clear</button>
+      <p class="sig-note">Use finger or mouse to sign above.</p>
+    </section>
+
+    <section class="card">
+      <h2>🚀 Close Mode</h2>
+      <div class="btn-grid">
+        <button onclick="generatePDF()">🧾 Generate PDF</button>
+        <button onclick="copyDeal()">📋 Copy Deal</button>
+        <button onclick="emailDeal()">📧 Email Deal</button>
+        <button onclick="textDeal()">📲 Text Deal</button>
+      </div>
+      <button class="pulse" onclick="oneClickClose()">🔥 ONE CLICK CLOSE</button>
+    </section>
+
+    <section class="card">
+      <h2>📂 Deal Pipeline</h2>
+      <button onclick="saveDeal()">Save Deal</button>
+      <div id="pipeline"></div>
+    </section>
+
+    <section class="card">
+      <h2>✨ RO’Lyfe Backup Links / AI / Agreements</h2>
+      <div class="link-grid">
+        <a class="gold" href="https://workdrive.zohoexternal.com/file/g6vcbdaba9ad8d815404a873a060254fe1bfc" target="_blank">📄 Zoho Pre-App PDF</a>
+        <a href="https://form.jotform.com/253154859148062" target="_blank">📝 Quick Docs Upload</a>
+        <a class="blue" href="https://agent.jotform.com/019bdd1fe57172838101dccf3612b1e9e787" target="_blank">🤖 Jamal AI Guide</a>
+        <a href="https://workdrive.zohopublic.com/writer/open/fyrri3c23f1670f1d414097c5b25b69dda0df" target="_blank">Assignment</a>
+        <a href="https://workdrive.zohopublic.com/writer/open/fyrrifc51028eab4e486d960b7d6a0a1d0f2f" target="_blank">Purchase & Sale</a>
+        <a href="https://workdrive.zohopublic.com/writer/open/fyrriec767d07079245a89aa82700dc3a7716" target="_blank">Broker Agreement</a>
+        <a href="https://workdrive.zohopublic.com/writer/open/fyrrie51b06a70b43457db8a652da3fed3e58" target="_blank">Disclosure</a>
+        <a href="https://rolrichman.github.io/rolyfe-acquisition-engine/" target="_blank">Acquisition Engine</a>
+        <a href="https://rolrichman.github.io/ROLyfe-Overage-Calculator/" target="_blank">Overage Calculator</a>
+        <a href="https://privatemoneyexchange.com/aff-page/richman/" target="_blank">Private Money</a>
+        <a href="https://property.phila.gov/" target="_blank">Phila Property</a>
+        <a href="https://opainquiry.phila.gov/" target="_blank">OPA</a>
+        <a href="https://pennsylvania.propertychecker.com/" target="_blank">PropertyChecker</a>
+        <a href="https://eligibility.sc.egov.usda.gov/eligibility/welcomeAction.do?pageAction=sfp" target="_blank">USDA</a>
+        <a href="https://rootoflyfe.blnsoftware.com/" target="_blank">BLN Portal</a>
+        <a href="https://rolrichman.github.io/DealForge-OS/" target="_blank">🏗️ DealForge</a>
+        <a href="https://rolrichman.github.io/RO-Lyfe-Buyer-Network-OS/" target="_blank">👥 Buyer Network</a>
+        <a href="https://rolrichman.github.io/rolyfe-contract-documents-hub/" target="_blank">📄 Contract Hub</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🤖 Jamal AI Embedded</h2>
+      <p>Use Jamal for deal explanation, offer structure, contracts, and funding direction.</p>
+      <button class="blue" onclick="openJamal()">Open Jamal Popup</button>
+      <iframe id="JotFormIFrame-019bdd1fe57172838101dccf3612b1e9e787" title="Jamal"
+        allowtransparency="true" allow="geolocation; microphone; camera; fullscreen"
+        src="https://agent.jotform.com/019bdd1fe57172838101dccf3612b1e9e787?embedMode=iframe&autofocus=0&background=1&shadow=1"
+        frameborder="0" scrolling="no"></iframe>
+    </section>
+
+    <section class="card">
+      <h2>🧾 Intake Form</h2>
+      <iframe class="form-frame" src="https://form.jotform.com/253154859148062"></iframe>
+    </section>
+  </main>
+
+  <script src="https://cdn.jotfor.ms/s/umd/7c2e87858b6/for-form-embed-handler.js"></script>
+  <script>
+    if(window.jotformEmbedHandler){
+      window.jotformEmbedHandler("iframe[id='JotFormIFrame-019bdd1fe57172838101dccf3612b1e9e787']", "https://www.jotform.com");
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
