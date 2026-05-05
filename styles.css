@@ -43,8 +43,29 @@ summary{font-weight:900;cursor:pointer}
 .sig-note{font-size:14px;text-align:center;color:var(--muted)}
 .pipeline-item{background:#030712;border-left:8px solid var(--green);padding:16px;border-radius:18px;margin:14px 0}
 .pipeline-item h3{margin:0 0 8px;font-size:24px}
-.jamal-float{position:fixed;right:22px;bottom:24px;width:78px;height:78px;border-radius:50%;z-index:99;background:linear-gradient(135deg,#2563eb,#38bdf8);font-size:36px;padding:0}
-iframe{width:100%;border:none;border-radius:18px;background:white}
-#JotFormIFrame-019bdd1fe57172838101dccf3612b1e9e787{height:688px}
-.form-frame{height:650px}
+.<!-- JAMAL AI COMPACT SECTION -->
+<section class="card jamal-card">
+  <h2>🤖 Jamal AI</h2>
+  <p>Open Jamal when you need deal analysis, contract direction, or funding guidance.</p>
+
+  <details class="jamal-box">
+    <summary>🎯 Open Jamal AI</summary>
+
+    <iframe
+      id="JotFormIFrame-019bdd1fe57172838101dccf3612b1e9e787"
+      title="Jamal"
+      allowtransparency="true"
+      allow="geolocation; microphone; camera; fullscreen"
+      src="https://agent.jotform.com/019bdd1fe57172838101dccf3612b1e9e787?embedMode=iframe&autofocus=0&background=1&shadow=1"
+      frameborder="0"
+      scrolling="no">
+    </iframe>
+  </details>
+
+  <a class="pulse-btn" href="https://agent.jotform.com/019bdd1fe57172838101dccf3612b1e9e787" target="_blank">
+    🚀 Open Jamal Fullscreen
+  </a>
+</section>
+
+
 @media(max-width:560px){.app{padding:12px}.btn-grid,.btn-grid.three{grid-template-columns:1fr}.check-grid{grid-template-columns:1fr}.card{padding:18px;border-radius:20px}.jamal-float{width:68px;height:68px}}
