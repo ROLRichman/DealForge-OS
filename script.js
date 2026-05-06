@@ -14,7 +14,11 @@ function v(id){return document.getElementById(id)?.value || ""}
 function money(x){return Number(x||0).toLocaleString("en-US",{maximumFractionDigits:0})}
 
 function openJamal(){
-  window.open(LINKS.jamal + "?embedMode=popup&parentURL=" + encodeURIComponent(window.location.href), "Jamal", "scrollbars=yes,toolbar=no,width=760,height=620");
+  window.open(
+    LINKS.jamal + "?embedMode=popup&parentURL=" + encodeURIComponent(window.location.href),
+    "Jamal",
+    "scrollbars=yes,toolbar=no,width=760,height=620"
+  );
 }
 
 function openZillow(){window.open("https://www.zillow.com/homes/" + encodeURIComponent(v("address")),"_blank")}
@@ -164,10 +168,20 @@ function oneClickClose(){
 function line(doc, text, x, y, max=520){
   const split = doc.splitTextToSize(String(text || ""), max);
   split.forEach(t=>{
+    if(y > 740){doc.addPage(); y=44;}
     doc.text(t,x,y);
     y += 16;
   });
   return y;
+}
+
+function heading(doc, text, y){
+  if(y > 700){doc.addPage(); y=44;}
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(14);
+  doc.text(text,40,y);
+  doc.line(40,y+8,555,y+8);
+  return y+28;
 }
 
 function generatePDF(){
@@ -176,65 +190,131 @@ function generatePDF(){
   const d=dealData.address ? dealData : (analyzeDeal(), dealData);
 
   let y=44;
+
   doc.setFont("helvetica","bold");
   doc.setFontSize(18);
   doc.text("RO’Lyfe Deal Structure & Funding Preview",40,y);
   y+=28;
 
   doc.setFont("helvetica","normal");
-  doc.setFontSize(11);
+  doc.setFontSize(10);
+  y=line(doc,"Prepared By: Richardson L.",40,y);
+  y=line(doc,"Root Of Lyfe Holdings LLC | Private Capital Broker",40,y);
+  y=line(doc,"richman@rootoflyfe.com",40,y);
 
+  y=heading(doc,"PROPERTY",y+10);
   [
-    "Prepared By: Richardson L.",
-    "Root Of Lyfe Holdings LLC | Private Capital Broker",
-    "richman@rootoflyfe.com",
-    "",
-    "PROPERTY",
     `Property: ${d.address}`,
-    `ARV: $${money(d.arv)}`,
-    `Purchase / Offer: $${money(d.price)}`,
-    `Repairs: $${money(d.repairs)}`,
+    `Property Type: ${v("propertyType") || "TBD"}`,
+    `Beds / Baths: ${v("bedsBaths") || "TBD"}`,
+    `Sq Ft: ${v("sqft") || "TBD"}`,
+    `Garage / Yard: ${v("garageYard") || "TBD"}`,
+    `Agent / Source: ${v("agentName") || "TBD"}`
+  ].forEach(t=>y=line(doc,t,40,y));
+
+  y=heading(doc,"BUYER / CONTRACTOR",y+8);
+  [
+    `Name: ${v("buyerName") || "TBD"}`,
+    `Company: ${v("buyerCompany") || "TBD"}`,
+    `Phone: ${v("buyerPhone") || "TBD"}`,
+    `Email: ${v("buyerEmail") || "TBD"}`
+  ].forEach(t=>y=line(doc,t,40,y));
+
+  y=heading(doc,"PROPERTY NUMBERS",y+8);
+  [
+    `Estimated ARV: $${money(d.arv)}`,
+    `Asking / Offer Price: $${money(d.price)}`,
+    `Estimated Rehab: $${money(d.repairs)}`,
     `Assignment Fee: $${money(d.assignment)}`,
     `MAO: $${money(d.mao)}`,
     `Total Project Cost: $${money(d.totalProjectCost)}`,
     `Equity Spread: $${money(d.equitySpread)}`,
     `Sniper Score: ${d.score}/100 ${d.scoreLabel}`,
-    `Deal Label: ${d.status}`,
+    `Deal Label: ${d.status}`
+  ].forEach(t=>y=line(doc,t,40,y));
+
+  const cash=d.arv*.50;
+  const carry=d.arv*.65;
+  const finance=d.arv*.75;
+  const carryDown=carry*.05;
+  const carryBal=carry-carryDown;
+  const carryPay=pmt(.05,30,carryBal);
+  const carryBalloon=balloon(carryBal,.05,30,4,carryPay);
+  const finPay=pmt(.06,30,finance);
+  const finBalloon=balloon(finance,.06,30,5,finPay);
+
+  y=heading(doc,"THREE-TIER OFFER STRUCTURE",y+8);
+  [
+    `All Cash Offer: $${money(cash)}`,
+    `Seller Carry Purchase Price: $${money(carry)}`,
+    `Buyer Down Payment: $${money(carryDown)}`,
+    `Seller Carry Balance: $${money(carryBal)}`,
+    `Monthly Payment: $${money(carryPay)}`,
+    `4-Year Balloon: $${money(carryBalloon)}`,
     "",
-    "LOAN / EXIT STRATEGY",
-    `Closing Date: ${v("closingDate")}`,
-    `Loan Type: ${v("loanType")}`,
-    `Loan Amount: ${v("loanAmount")}`,
-    `Interest Rate: ${v("interestRate")}`,
-    `Points: ${v("points")}`,
-    `Cash to Close: ${v("cashToClose")}`,
-    `Exit Strategy: ${v("exitStrategy")}`,
-    "",
-    "REHAB / COGO",
-    `Repair Items: ${getCheckedRepairs() || "TBD"}`,
-    `Contractor Notes: ${v("contractorNotes") || "N/A"}`
-  ].forEach(t=>{
-    if(y > 720){doc.addPage(); y=44;}
-    y = line(doc,t,40,y);
-  });
+    `Seller Financing Purchase Price: $${money(finance)}`,
+    `Buyer Down Payment: $0`,
+    `Seller Financing Balance: $${money(finance)}`,
+    `Monthly Payment: $${money(finPay)}`,
+    `5-Year Balloon: $${money(finBalloon)}`
+  ].forEach(t=>y=line(doc,t,40,y));
 
-  if(y > 620){doc.addPage(); y=44;}
+  y=heading(doc,"PRIVATE / HARD MONEY LOAN PREVIEW",y+8);
+  [
+    `Loan Type: ${v("loanType") || "TBD"}`,
+    `Estimated Loan Amount: ${v("loanAmount") || "TBD"}`,
+    `Estimated Interest Rate: ${v("interestRate") || "TBD"}`,
+    `Estimated Points: ${v("points") || "TBD"}`,
+    `Estimated Cash to Close: ${v("cashToClose") || "TBD"}`
+  ].forEach(t=>y=line(doc,t,40,y));
 
-  doc.setFont("helvetica","bold");
-  y = line(doc,"PROTECTED CLAUSES",40,y);
-  doc.setFont("helvetica","normal");
+  y=heading(doc,"REHAB / COGO SUMMARY",y+8);
+  y=line(doc,`Major Repair Items: ${getCheckedRepairs() || "TBD"}`,40,y);
+  y=line(doc,`Contractor Notes: ${v("contractorNotes") || "N/A"}`,40,y);
 
-  y = line(doc,"AS-IS purchase. 14-day inspection period. Buyer may assign contract. Buyer may coordinate with funding partners, contractors, affiliates, inspectors, and closing partners. Submission does not guarantee funding, approval, or closing. Final documents should be reviewed by the appropriate professionals.",40,y);
+  y=heading(doc,"EXIT STRATEGY",y+8);
+  y=line(doc,`Primary Exit: ${v("exitStrategy") || "TBD"}`,40,y);
+  y=line(doc,"Backup Exit: Assignment, Double Close, Lender-Funded Flip, or Walk Away During Inspection",40,y);
 
-  y+=10;
-  y = line(doc,"SIGNATURE",40,y);
+  y=heading(doc,"PROTECTED CLAUSES",y+8);
+  [
+    "Buyer may assign this agreement to Richardson L. and/or Assigns, partners, affiliates, buyer entities, contractors, lenders, or funding partners.",
+    "Property is evaluated AS-IS, WHERE-IS, subject to inspection, contractor validation, title review, and final due diligence.",
+    "Buyer reserves the right to market, package, review, and share the deal with contractors, buyers, lenders, affiliates, and capital partners for transaction execution.",
+    "Seller and parties agree not to circumvent buyer, buyer’s partners, funding partners, contractors, assignees, or affiliates introduced through this transaction.",
+    "Final terms are subject to inspection period, funding review, title, liens, taxes, insurance, appraisal, and lender underwriting."
+  ].forEach(t=>y=line(doc,t,40,y));
+
+  y=heading(doc,"RO’LYFE EXECUTION PLAN",y+8);
+  [
+    "1. Request full property address and access details",
+    "2. Schedule walkthrough with contractor present",
+    "3. Confirm rehab scope and max buy price",
+    "4. Submit offer under Richardson L. and/or Assigns",
+    "5. Lock contract with inspection period and assignability",
+    "6. Execute through assignment or double close",
+    "7. Send full deal package to lender",
+    "8. Close and collect profit"
+  ].forEach(t=>y=line(doc,t,40,y));
+
+  y=heading(doc,"DISCLOSURE",y+8);
+  y=line(doc,"This document is for internal deal review, buyer review, and funding discussion purposes only. It does not represent a loan commitment, guarantee of financing, appraisal, legal advice, tax advice, or financial advice. Final terms are subject to contract, inspection, title review, underwriting, lender approval, buyer due diligence, and professional review.",40,y);
+
+  y=heading(doc,"SIGNATURES",y+8);
+  y=line(doc,"Prepared By: Richardson L. | Root Of Lyfe Holdings LLC",40,y);
+  y=line(doc,"Broker / Buyer Signature: Richardson L.",40,y);
 
   const canvas=document.getElementById("sig");
   if(canvas){
-    try{doc.addImage(canvas.toDataURL("image/png"),"PNG",40,y,180,60)}catch(e){}
+    try{doc.addImage(canvas.toDataURL("image/png"),"PNG",40,y+10,190,70)}catch(e){}
   }
 
-  doc.save("RO-Lyfe-Deal-Package.pdf");
+  y+=100;
+  y=line(doc,"Seller Signature: ________________________________",40,y);
+  y=line(doc,"Buyer / Contractor Signature: ________________________________",40,y);
+  y=line(doc,"Date: ______________________",40,y);
+
+  doc.save("RO-Lyfe-Deal-Structure-Funding-Preview.pdf");
 }
 
 function generateOfferPDF(){
@@ -324,15 +404,19 @@ function initSignature(){
   const ctx=canvas.getContext("2d");
 
   function resizeCanvas(){
+    const old = canvas.toDataURL();
     canvas.width=canvas.offsetWidth;
     canvas.height=220;
     ctx.lineWidth=3;
     ctx.strokeStyle="#111";
     ctx.lineCap="round";
+
+    const img = new Image();
+    img.onload = ()=>ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    img.src = old;
   }
 
   resizeCanvas();
-  window.addEventListener("resize",resizeCanvas);
 
   let drawing=false;
 
