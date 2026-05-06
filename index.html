@@ -28,17 +28,21 @@
 
 <section class="card">
 <h2>🏠 Property Analyzer</h2>
+
 <input id="address" placeholder="Property Address" value="1047 Cooper St Deptford, NJ 08096">
+
 <div class="btn-grid three">
 <button onclick="openZillow()">Zillow</button>
 <button onclick="openRedfin()">Redfin</button>
 <button onclick="openUSDA()">USDA</button>
 </div>
+
 <input id="arv" placeholder="ARV" value="460000">
 <input id="price" placeholder="Purchase / Offer Price" value="225000">
 <input id="repairs" placeholder="Rehab Budget" value="95000">
 <input id="assignment" placeholder="Assignment Fee" value="15000">
 <input id="closingDate" type="date" value="2026-04-29">
+
 <button class="pulse" onclick="analyzeDeal()">Analyze Deal</button>
 <button onclick="resetDeal()">Reset</button>
 </section>
@@ -83,10 +87,12 @@
 <option>Private Capital</option>
 <option>Seller Carry / Creative Financing</option>
 </select>
+
 <input id="loanAmount" placeholder="Estimated Loan Amount">
 <input id="interestRate" placeholder="Estimated Interest Rate %">
 <input id="points" placeholder="Estimated Points">
 <input id="cashToClose" placeholder="Estimated Cash to Close">
+
 <select id="exitStrategy">
 <option>Assignment</option>
 <option>Double Close</option>
@@ -112,6 +118,7 @@
 <label><input type="checkbox" value="Foundation"> Foundation</label>
 <label><input type="checkbox" value="Garage"> Garage</label>
 </div>
+
 <textarea id="contractorNotes" placeholder="Contractor Notes"></textarea>
 </details>
 </section>
@@ -119,15 +126,18 @@
 <section class="card">
 <h2>✍️ Signature</h2>
 <p>Sign inside the white box.</p>
+
 <div class="sig-wrap">
 <canvas id="sig"></canvas>
 </div>
+
 <button onclick="clearSig()">Clear</button>
 <p class="sig-note">Use finger or mouse to sign above.</p>
 </section>
 
 <section class="card">
 <h2>🚀 Close Mode</h2>
+
 <div class="btn-grid">
 <button onclick="generatePDF()">🧾 Generate Full PDF</button>
 <button onclick="generateOfferPDF()">📊 Offer PDF</button>
@@ -136,6 +146,7 @@
 <button onclick="textDeal()">📲 Text Deal</button>
 <button onclick="saveDeal()">💾 Save Deal</button>
 </div>
+
 <button class="pulse gold" onclick="oneClickClose()">🔥 ONE CLICK CLOSE</button>
 </section>
 
@@ -146,6 +157,7 @@
 
 <section class="card">
 <h2>✨ RO’Lyfe Backup Links / AI / Agreements</h2>
+
 <div class="link-grid">
 <a class="gold" href="https://workdrive.zohoexternal.com/file/g6vcbdaba9ad8d815404a873a060254fe1bfc" target="_blank">📄 Zoho Pre-App PDF</a>
 <a href="https://form.jotform.com/253154859148062" target="_blank">📝 Quick Docs Upload</a>
@@ -174,6 +186,7 @@
 
 <details class="jamal-box">
 <summary>🎯 Open Jamal AI</summary>
+
 <iframe
 id="JotFormIFrame-019bdd1fe57172838101dccf3612b1e9e787"
 title="Jamal"
@@ -198,7 +211,7 @@ scrolling="no">
 <section class="card">
 <h2>⚠️ Disclosure / Disclaimer</h2>
 <p class="small">
-This system is for internal deal review, buyer review, and funding discussion purposes only. It does not represent a loan commitment, guarantee of financing, appraisal, legal advice, tax advice, or financial advice. Final terms are subject to contract, inspection, title review, underwriting, lender approval, buyer due diligence, and professional review.
+This system is for internal deal review, buyer review, seller review, contractor review, and funding discussion purposes only. It does not represent a loan commitment, guarantee of financing, appraisal, legal advice, tax advice, or financial advice. Final terms are subject to contract, inspection, title review, underwriting, lender approval, buyer due diligence, and professional review.
 </p>
 </section>
 
@@ -207,9 +220,13 @@ This system is for internal deal review, buyer review, and funding discussion pu
 <script src="https://cdn.jotfor.ms/s/umd/7c2e87858b6/for-form-embed-handler.js"></script>
 <script>
 if(window.jotformEmbedHandler){
-window.jotformEmbedHandler("iframe[id='JotFormIFrame-019bdd1fe57172838101dccf3612b1e9e787']", "https://www.jotform.com");
+window.jotformEmbedHandler(
+"iframe[id='JotFormIFrame-019bdd1fe57172838101dccf3612b1e9e787']",
+"https://www.jotform.com"
+);
 }
 </script>
+
 <script src="script.js"></script>
 </body>
   </html>
