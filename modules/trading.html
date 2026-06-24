@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RO'Lyfe Trading Desk v2</title>
+  <title>RO'Lyfe Trading Desk</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    body {
+      background: #0b0f1a;
+      color: white;
+      font-family: Arial;
+    }
+
+    .panel {
+      background: #141c2f;
+      margin: 12px;
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    select, input, button {
+      padding: 10px;
+      margin-top: 8px;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background: #00ffcc;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
 
 <h1>📊 RO'Lyfe Trading Desk</h1>
 
-<!-- MARKET STATUS -->
 <div class="panel">
   <h2>⏱ Market Session</h2>
   <p id="session"></p>
 </div>
 
-<!-- LIVE PRICE PANEL -->
 <div class="panel">
   <h2>📈 Market Watch</h2>
 
@@ -31,13 +60,11 @@
   <p>Trend: <span id="trend">--</span></p>
 </div>
 
-<!-- CHART -->
 <div class="panel">
-  <h2>📊 Chart Engine</h2>
+  <h2>📊 Chart</h2>
   <canvas id="chart"></canvas>
 </div>
 
-<!-- OPTIONS LADDER -->
 <div class="panel">
   <h2>⚙️ Options Ladder</h2>
 
@@ -56,18 +83,14 @@
   <p id="tradeResult"></p>
 </div>
 
-<!-- RISK PANEL -->
 <div class="panel">
   <h2>🧠 Risk Engine</h2>
   <p id="risk"></p>
 </div>
 
-<!-- JOURNAL -->
 <div class="panel">
-  <h2>📒 Trade Journal</h2>
-
+  <h2>📒 Journal</h2>
   <button onclick="saveTrade()">Save Trade</button>
-
   <div id="journal"></div>
 </div>
 
@@ -80,5 +103,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="charts.js"></script>
+
 </body>
 </html>
