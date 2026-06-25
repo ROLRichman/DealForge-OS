@@ -359,16 +359,30 @@ Execute Simulation
 Position sizing and risk management.
 </p>
 
-<input id="balance" placeholder="Account Size">
+<div class="form-group">
+<label>Account Size</label>
+<input id="balance">
+</div>
 
-<input id="risk" placeholder="Risk %">
+<div class="form-group">
+<label>Risk %</label>
+<input id="risk">
+</div>
 
-<input id="entry" placeholder="Entry">
+<div class="form-group">
+<label>Entry Price</label>
+<input id="entry">
+</div>
 
-<input id="stop" placeholder="Stop">
+<div class="form-group">
+<label>Stop Price</label>
+<input id="stop">
+</div>
 
 <button onclick="calculateTrade()">
-Calculate
+
+  Calculate
+
 </button>
 
 <div id="calcResult"></div>
