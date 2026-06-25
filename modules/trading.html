@@ -305,7 +305,7 @@ Trading • Options • Market Intelligence • Education
 TradingView chart with RSI, MACD, and moving averages.
 </p>
 
-<div id="chart"></div>
+container_id:"tvChart"
 
 </div>
 
@@ -471,7 +471,6 @@ Root Of Lyfe Holdings LLC
 
 <script>
 
-function updateSession(){
 
 const h = new Date().getHours();
 
@@ -536,7 +535,6 @@ theme:"dark"
 
 });
 
-function runTrade(){
 
 let strategy =
 document.getElementById("strategy").value;
@@ -556,8 +554,6 @@ document.getElementById("tradeResult")
 `${strategy} | ${contracts} contracts | ${result}`;
 
 }
-
-function calculateTrade(){
 
 let balance =
 parseFloat(document.getElementById("balance").value)||0;
@@ -603,8 +599,6 @@ Target 3: ${(entry+shareRisk*3).toFixed(2)}
 
 }
 
-function saveJournal(){
-
 document.getElementById("journal")
 .innerHTML +=
 
@@ -647,5 +641,7 @@ document.body.style.background="#001b12";
 
 </script>
 
+
+  
 </body>
 </html>
