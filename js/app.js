@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         await loadResources();
 
-        initializeDashboard();
+        await Router.init();
 
         APP.initialized = true;
 
